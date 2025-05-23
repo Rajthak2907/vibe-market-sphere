@@ -13,6 +13,7 @@ interface LayoutProps {
 const Layout = ({ children }: LayoutProps) => {
   const location = useLocation();
   const [cartCount] = useState(3);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const navItems = [
     { label: "Home", path: "/", icon: Home },
@@ -80,19 +81,29 @@ const Layout = ({ children }: LayoutProps) => {
               </Link>
               
               {/* Mobile Menu */}
-              <Sheet>
+              <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
                 <SheetTrigger asChild>
-                  <Button variant="ghost" size="sm" className="md:hidden">
+                  <Button 
+                    variant="ghost" 
+                    size="sm" 
+                    className="md:hidden"
+                    onClick={() => setMenuOpen(true)}
+                  >
                     <Menu className="h-5 w-5" />
                   </Button>
                 </SheetTrigger>
-                <SheetContent side="right">
+                <SheetContent 
+                  side="right"
+                  className="w-[75%] p-0 sm:max-w-sm"
+                  onClose={() => setMenuOpen(false)}
+                >
                   <div className="mt-6 space-y-4">
                     {navItems.map((item) => (
                       <Link
                         key={item.path}
                         to={item.path}
                         className="block px-4 py-2 text-lg font-medium text-gray-700 hover:bg-gray-100 rounded-lg"
+                        onClick={() => setMenuOpen(false)}
                       >
                         {item.label}
                       </Link>
