@@ -86,7 +86,7 @@ const Layout = ({ children }: LayoutProps) => {
                     <Menu className="h-5 w-5" />
                   </Button>
                 </SheetTrigger>
-                <SheetContent side="right" className="w-80">
+                <SheetContent side="right">
                   <div className="mt-6 space-y-4">
                     {navItems.map((item) => (
                       <Link
