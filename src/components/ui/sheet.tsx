@@ -36,7 +36,8 @@ const sheetVariants = cva(
 interface SheetContentProps
   extends React.ComponentPropsWithoutRef<typeof SheetPrimitive.Content>,
     VariantProps<typeof sheetVariants> {
-  children?: React.ReactNode; // Explicitly adding children property
+  children?: React.ReactNode;
+  className?: string;
 }
 
 const SheetContent = React.forwardRef<
