@@ -4,7 +4,6 @@ import { Link, useLocation } from "react-router-dom";
 import { Home, User, Search, ShoppingCart, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -29,6 +28,42 @@ const Layout = ({ children }: LayoutProps) => {
     { label: "Cart", path: "/cart", icon: ShoppingCart, badge: cartCount },
     { label: "Profile", path: "/profile", icon: User },
   ];
+
+  // Simple mobile menu modal
+  const MobileMenu = () => {
+    if (!menuOpen) return null;
+    
+    return (
+      <>
+        <div 
+          className="fixed inset-0 z-50 bg-background/80 backdrop-blur-sm" 
+          onClick={() => setMenuOpen(false)}
+        />
+        <div className="fixed inset-y-0 right-0 z-50 w-[75%] sm:max-w-sm h-full bg-background p-6 shadow-lg border-l">
+          <button 
+            onClick={() => setMenuOpen(false)}
+            className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none"
+          >
+            <Menu className="h-4 w-4" />
+            <span className="sr-only">Close</span>
+          </button>
+          
+          <div className="mt-6 space-y-4">
+            {navItems.map((item) => (
+              <Link
+                key={item.path}
+                to={item.path}
+                className="block px-4 py-2 text-lg font-medium text-gray-700 hover:bg-gray-100 rounded-lg"
+                onClick={() => setMenuOpen(false)}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </>
+    );
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -80,37 +115,15 @@ const Layout = ({ children }: LayoutProps) => {
                 </Button>
               </Link>
               
-              {/* Mobile Menu */}
-              <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
-                <SheetTrigger asChild>
-                  <Button 
-                    variant="ghost" 
-                    size="sm" 
-                    className="md:hidden"
-                    onClick={() => setMenuOpen(true)}
-                  >
-                    <Menu className="h-5 w-5" />
-                  </Button>
-                </SheetTrigger>
-                <SheetContent 
-                  side="right"
-                  className="w-[75%] p-0 sm:max-w-sm"
-                  onClose={() => setMenuOpen(false)}
-                >
-                  <div className="mt-6 space-y-4">
-                    {navItems.map((item) => (
-                      <Link
-                        key={item.path}
-                        to={item.path}
-                        className="block px-4 py-2 text-lg font-medium text-gray-700 hover:bg-gray-100 rounded-lg"
-                        onClick={() => setMenuOpen(false)}
-                      >
-                        {item.label}
-                      </Link>
-                    ))}
-                  </div>
-                </SheetContent>
-              </Sheet>
+              {/* Mobile Menu Button */}
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                className="md:hidden"
+                onClick={() => setMenuOpen(true)}
+              >
+                <Menu className="h-5 w-5" />
+              </Button>
             </div>
           </div>
         </div>
@@ -131,6 +144,9 @@ const Layout = ({ children }: LayoutProps) => {
       <main className="pb-20 md:pb-4">
         {children}
       </main>
+
+      {/* Mobile Menu Render */}
+      {MobileMenu()}
 
       {/* Bottom Navigation - Mobile */}
       <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 md:hidden z-50">
