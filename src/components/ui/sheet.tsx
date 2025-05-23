@@ -38,6 +38,7 @@ interface SheetContentProps
     VariantProps<typeof sheetVariants> {
   children?: React.ReactNode;
   className?: string;
+  style?: React.CSSProperties;
 }
 
 const SheetContent = React.forwardRef<
