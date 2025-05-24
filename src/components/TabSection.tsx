@@ -1,6 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { useNavigate } from "react-router-dom";
 import ProductCard from "@/components/ProductCard";
 
 interface TabSectionProps {
@@ -23,6 +24,19 @@ interface TabSectionProps {
 }
 
 const TabSection = ({ tabs }: TabSectionProps) => {
+  const navigate = useNavigate();
+
+  const handleTabClick = (tabValue: string) => {
+    if (tabValue === "men") {
+      navigate("/men");
+    } else if (tabValue === "women") {
+      navigate("/women");
+    } else if (tabValue === "kids") {
+      navigate("/kids");
+    }
+    // Don't navigate for "all" tab - stay on current page
+  };
+
   return (
     <section className="px-2 sm:px-4 lg:px-6">
       <div className="flex items-center justify-between mb-3 md:mb-4">
@@ -33,6 +47,7 @@ const TabSection = ({ tabs }: TabSectionProps) => {
                 <TabsTrigger 
                   key={tab.value} 
                   value={tab.value} 
+                  onClick={() => handleTabClick(tab.value)}
                   className="px-3 sm:px-4 text-xs sm:text-sm data-[state=active]:bg-brand-pink data-[state=active]:text-white"
                 >
                   {tab.name}
@@ -44,15 +59,10 @@ const TabSection = ({ tabs }: TabSectionProps) => {
             </Button>
           </div>
           
-          {tabs.map((tab) => (
-            <TabsContent key={tab.value} value={tab.value}>
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-3 lg:gap-4">
-                {tab.products.slice(0, 8).map((product) => (
-                  <ProductCard key={product.id} product={product} />
-                ))}
-              </div>
-            </TabsContent>
-          ))}
+          {/* Only show content for "all" tab since other tabs will navigate away */}
+          <TabsContent value="all">
+            {/* No products grid here - removed as requested */}
+          </TabsContent>
         </Tabs>
       </div>
     </section>

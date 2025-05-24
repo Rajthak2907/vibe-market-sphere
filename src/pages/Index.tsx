@@ -113,27 +113,27 @@ const Index = () => {
     isNew: true
   };
 
-  // Tab section data
+  // Tab section data - simplified since we're not showing products in the All tab
   const tabData = [
     {
       name: "All",
       value: "all",
-      products: featuredProducts
+      products: []
     },
     {
       name: "Men", 
       value: "men",
-      products: featuredProducts.slice(0, 2)
+      products: []
     },
     {
       name: "Women",
       value: "women", 
-      products: featuredProducts.slice(1, 3)
+      products: []
     },
     {
       name: "Kids",
       value: "kids",
-      products: featuredProducts.slice(2, 4)
+      products: []
     }
   ];
 
