@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -63,7 +62,6 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// E-commerce specific colors
 				brand: {
 					pink: '#FF6B9D',
 					purple: '#8B5CF6',
@@ -125,6 +123,14 @@ export default {
 					'50%': {
 						boxShadow: '0 0 20px rgba(255, 107, 157, 0.8)'
 					}
+				},
+				'scroll-left': {
+					'0%': {
+						transform: 'translateX(0)'
+					},
+					'100%': {
+						transform: 'translateX(-50%)'
+					}
 				}
 			},
 			animation: {
@@ -132,7 +138,8 @@ export default {
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'fade-in': 'fade-in 0.5s ease-out',
 				'slide-up': 'slide-up 0.3s ease-out',
-				'pulse-glow': 'pulse-glow 2s infinite'
+				'pulse-glow': 'pulse-glow 2s infinite',
+				'scroll-left': 'scroll-left 20s linear infinite'
 			},
 			backgroundImage: {
 				'gradient-brand': 'linear-gradient(135deg, #FF6B9D 0%, #8B5CF6 100%)',
