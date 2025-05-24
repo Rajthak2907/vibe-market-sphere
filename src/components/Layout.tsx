@@ -73,10 +73,11 @@ const Layout = ({ children }: LayoutProps) => {
           <div className="flex items-center justify-between h-14 sm:h-16">
             {/* Logo */}
             <Link to="/" className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-gradient-to-r from-brand-pink to-brand-orange rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">M</span>
-              </div>
-              <span className="font-bold text-lg sm:text-xl gradient-text hidden sm:block">Marketplace</span>
+              <img 
+                src="/lovable-uploads/6e54bcc0-2cf8-4872-b9f7-695a83c9b15c.png" 
+                alt="Obeyyo" 
+                className="h-8 w-auto"
+              />
             </Link>
 
             {/* Desktop Navigation */}
@@ -85,9 +86,9 @@ const Layout = ({ children }: LayoutProps) => {
                 <Link
                   key={item.path}
                   to={item.path}
-                  className={`text-sm font-medium transition-colors hover:text-brand-pink ${
+                  className={`text-sm font-medium transition-colors hover:text-[#E91E63] ${
                     location.pathname === item.path
-                      ? "text-brand-pink border-b-2 border-brand-pink"
+                      ? "text-[#E91E63] border-b-2 border-[#E91E63]"
                       : "text-gray-600"
                   }`}
                 >
@@ -102,7 +103,7 @@ const Layout = ({ children }: LayoutProps) => {
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                 <Input
                   placeholder="Search for products, brands..."
-                  className="pl-10 bg-gray-50 border-gray-200 focus:border-brand-pink"
+                  className="pl-10 bg-gray-50 border-gray-200 focus:border-[#E91E63]"
                 />
               </div>
             </div>
@@ -110,7 +111,7 @@ const Layout = ({ children }: LayoutProps) => {
             {/* Right Actions */}
             <div className="flex items-center space-x-3 sm:space-x-4">
               <Link to="/login">
-                <Button variant="outline" size="sm" className="hidden sm:inline-flex border-brand-pink text-brand-pink hover:bg-brand-pink hover:text-white">
+                <Button variant="outline" size="sm" className="hidden sm:inline-flex border-[#E91E63] text-[#E91E63] hover:bg-[#E91E63] hover:text-white">
                   Login
                 </Button>
               </Link>
@@ -134,7 +135,7 @@ const Layout = ({ children }: LayoutProps) => {
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
             <Input
               placeholder="Search for products, brands..."
-              className="pl-10 bg-gray-50 border-gray-200 focus:border-brand-pink text-sm"
+              className="pl-10 bg-gray-50 border-gray-200 focus:border-[#E91E63] text-sm"
             />
           </div>
         </div>
@@ -160,13 +161,13 @@ const Layout = ({ children }: LayoutProps) => {
                 key={item.path}
                 to={item.path}
                 className={`flex flex-col items-center justify-center space-y-1 relative ${
-                  isActive ? "text-brand-pink" : "text-gray-500"
+                  isActive ? "text-[#E91E63]" : "text-gray-500"
                 }`}
               >
                 <div className="relative">
                   <Icon className="w-5 h-5" />
                   {item.badge && (
-                    <span className="absolute -top-2 -right-2 bg-brand-pink text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                    <span className="absolute -top-2 -right-2 bg-[#E91E63] text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
                       {item.badge}
                     </span>
                   )}

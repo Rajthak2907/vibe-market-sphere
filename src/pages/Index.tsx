@@ -1,16 +1,12 @@
-
 import Layout from "@/components/Layout";
 import ImageCarousel from "@/components/ImageCarousel";
 import TabSection from "@/components/TabSection";
-import SquareCategorySection from "@/components/SquareCategorySection";
+import RoundCategorySection from "@/components/RoundCategorySection";
 import FeaturesBanner from "@/components/FeaturesBanner";
 import TopCategoriesOffer from "@/components/TopCategoriesOffer";
 import PocketFriendlySection from "@/components/PocketFriendlySection";
-import PromoBanner from "@/components/PromoBanner";
 import DealOfTheDay from "@/components/DealOfTheDay";
-import ProductSlider from "@/components/ProductSlider";
-import CategoryCard from "@/components/CategoryCard";
-import ProductCard from "@/components/ProductCard";
+import Footer from "@/components/Footer";
 
 const Index = () => {
   // Mock data
@@ -292,100 +288,35 @@ const Index = () => {
   return (
     <Layout>
       <div className="space-y-4 md:space-y-6">
-        {/* Tab Section with All, Men, Women, Kids - Moved after navbar */}
+        {/* 1. Navbar (handled by Layout) */}
+        
+        {/* 2. Category Tab Section */}
         <TabSection tabs={tabData} />
 
-        {/* Square Category Section - After tab section */}
-        <SquareCategorySection categories={squareCategories} />
+        {/* 3. Round Product Category Component */}
+        <RoundCategorySection categories={categories} />
 
-        {/* Hero Carousel */}
+        {/* 4. Hero Carousel */}
         <div className="px-2 sm:px-4 lg:px-6">
           <ImageCarousel images={carouselImages} />
         </div>
 
-        {/* Features Banner */}
+        {/* 5. Features Banner */}
         <FeaturesBanner />
 
-        {/* Top Categories on Offer */}
+        {/* 6. Top Categories on Offer */}
         <TopCategoriesOffer categories={topOfferCategories} />
 
-        {/* Pocket Friendly Section */}
-        <PocketFriendlySection products={pocketFriendlyProducts} />
-
-        {/* Main Promo Banner */}
-        <section className="px-2 sm:px-4 lg:px-6">
-          <PromoBanner banner={mainPromoBanner} />
-        </section>
-
-        {/* Shop by Category - Mobile optimized */}
-        <section className="px-2 sm:px-4 lg:px-6">
-          <h2 className="text-lg md:text-xl font-bold text-gray-800 mb-3 md:mb-4">Shop by Category</h2>
-          <div className="flex overflow-x-auto space-x-3 md:space-x-4 pb-2">
-            {categories.map((category) => (
-              <CategoryCard key={category.id} category={category} />
-            ))}
-          </div>
-        </section>
-
-        {/* Trending Collections - Mobile optimized */}
-        <section className="px-2 sm:px-4 lg:px-6">
-          <h2 className="text-lg md:text-xl font-bold text-gray-800 mb-3 md:mb-4">Trending Collections</h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2 md:gap-3">
-            {subCategories.map((category) => (
-              <CategoryCard key={category.id} category={category} size="small" />
-            ))}
-          </div>
-        </section>
-
-        {/* Promo Banners */}
-        <section className="px-2 sm:px-4 lg:px-6">
-          <div className="grid md:grid-cols-2 gap-3 md:gap-4">
-            {promoBanners.map((banner) => (
-              <PromoBanner key={banner.id} banner={banner} />
-            ))}
-          </div>
-        </section>
-
-        {/* Deal of the Day */}
+        {/* 7. Deal of the Day */}
         <section className="px-2 sm:px-4 lg:px-6">
           <DealOfTheDay product={dealProduct} endTime={dealEndTime} />
         </section>
 
-        {/* Brand Offers - Mobile optimized */}
-        <section className="px-2 sm:px-4 lg:px-6">
-          <h2 className="text-lg md:text-xl font-bold text-gray-800 mb-3 md:mb-4">🔥 Brand Offers</h2>
-          <div className="flex overflow-x-auto space-x-3 md:space-x-4 pb-2">
-            {brandOffers.map((offer) => (
-              <div key={offer.id} className="flex-shrink-0 w-40 md:w-48 bg-white rounded-lg md:rounded-xl shadow-sm overflow-hidden">
-                <div className="relative">
-                  <img src={offer.image} alt={offer.brand} className="w-full h-24 md:h-32 object-cover" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-                  <div className="absolute bottom-1 md:bottom-2 left-1 md:left-2">
-                    <h3 className="text-white font-bold text-sm md:text-base">{offer.brand}</h3>
-                    <p className="text-white text-xs md:text-sm">{offer.discount}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
+        {/* 8. Pocket Friendly Section with Slider */}
+        <PocketFriendlySection products={pocketFriendlyProducts} />
 
-        {/* Featured Products */}
-        <section className="px-2 sm:px-4 lg:px-6">
-          <ProductSlider title="Featured Products" products={featuredProducts} />
-        </section>
-
-        {/* Sponsored Products - Mobile optimized */}
-        <section className="px-2 sm:px-4 lg:px-6">
-          <div className="bg-gradient-to-r from-brand-blue/10 to-brand-pink/10 rounded-lg md:rounded-xl p-3 md:p-4">
-            <h2 className="text-lg md:text-xl font-bold text-gray-800 mb-3 md:mb-4">📱 Sponsored Products</h2>
-            <div className="grid md:grid-cols-2 gap-3 md:gap-4">
-              {sponsoredProducts.map((product) => (
-                <ProductCard key={product.id} product={product} />
-              ))}
-            </div>
-          </div>
-        </section>
+        {/* Footer */}
+        <Footer />
       </div>
     </Layout>
   );

@@ -1,31 +1,25 @@
 
 import { useRef } from "react";
+import { Link } from "react-router-dom";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import ProductCard from "@/components/ProductCard";
 
-interface PocketFriendlySectionProps {
-  products: Array<{
+interface RoundCategorySectionProps {
+  categories: Array<{
     id: string;
     name: string;
-    price: number;
-    originalPrice?: number;
-    rating: number;
-    reviews: number;
     image: string;
-    brand: string;
-    isNew?: boolean;
-    isTrending?: boolean;
+    link: string;
   }>;
 }
 
-const PocketFriendlySection = ({ products }: PocketFriendlySectionProps) => {
+const RoundCategorySection = ({ categories }: RoundCategorySectionProps) => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const scroll = (direction: 'left' | 'right') => {
     if (!scrollRef.current) return;
     
-    const scrollAmount = 280;
+    const scrollAmount = 200;
     const newScrollLeft = direction === 'left' 
       ? scrollRef.current.scrollLeft - scrollAmount
       : scrollRef.current.scrollLeft + scrollAmount;
@@ -39,7 +33,7 @@ const PocketFriendlySection = ({ products }: PocketFriendlySectionProps) => {
   return (
     <section className="px-2 sm:px-4 lg:px-6">
       <div className="flex items-center justify-between mb-3 md:mb-4">
-        <h2 className="text-lg md:text-xl font-bold text-gray-800">💰 Pocket Friendly</h2>
+        <h2 className="text-lg md:text-xl font-bold text-gray-800">Shop by Category</h2>
         <div className="hidden md:flex space-x-1">
           <Button
             variant="outline"
@@ -65,14 +59,25 @@ const PocketFriendlySection = ({ products }: PocketFriendlySectionProps) => {
         className="flex overflow-x-auto space-x-3 md:space-x-4 pb-2 scrollbar-hide"
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
       >
-        {products.map((product) => (
-          <div key={product.id} className="flex-shrink-0 w-40 md:w-48">
-            <ProductCard product={product} />
-          </div>
+        {categories.map((category) => (
+          <Link key={category.id} to={category.link} className="flex-shrink-0">
+            <div className="text-center space-y-2 group w-16 md:w-20">
+              <div className="w-16 h-16 md:w-20 md:h-20 mx-auto rounded-full overflow-hidden bg-gradient-to-br from-[#E91E63]/20 to-[#2196F3]/20 p-1 group-hover:scale-105 transition-transform duration-300">
+                <img
+                  src={category.image}
+                  alt={category.name}
+                  className="w-full h-full object-cover rounded-full"
+                />
+              </div>
+              <h3 className="font-medium text-gray-800 text-xs md:text-sm group-hover:text-[#E91E63] transition-colors text-center">
+                {category.name}
+              </h3>
+            </div>
+          </Link>
         ))}
       </div>
     </section>
   );
 };
 
-export default PocketFriendlySection;
+export default RoundCategorySection;
