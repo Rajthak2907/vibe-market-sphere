@@ -8,6 +8,8 @@ import PocketFriendlySection from "@/components/PocketFriendlySection";
 import PromoBanner from "@/components/PromoBanner";
 import DealOfTheDay from "@/components/DealOfTheDay";
 import ProductSlider from "@/components/ProductSlider";
+import CategoryCard from "@/components/CategoryCard";
+import ProductCard from "@/components/ProductCard";
 
 const Index = () => {
   // Mock data
