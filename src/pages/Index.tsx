@@ -1,10 +1,13 @@
-
 import Layout from "@/components/Layout";
 import ImageCarousel from "@/components/ImageCarousel";
-import CategoryCard from "@/components/CategoryCard";
-import ProductCard from "@/components/ProductCard";
+import TabSection from "@/components/TabSection";
+import SquareCategorySection from "@/components/SquareCategorySection";
+import FeaturesBanner from "@/components/FeaturesBanner";
+import TopCategoriesOffer from "@/components/TopCategoriesOffer";
+import PocketFriendlySection from "@/components/PocketFriendlySection";
 import PromoBanner from "@/components/PromoBanner";
 import DealOfTheDay from "@/components/DealOfTheDay";
+import ProductSlider from "@/components/ProductSlider";
 
 const Index = () => {
   // Mock data
@@ -111,6 +114,100 @@ const Index = () => {
     isNew: true
   };
 
+  // Tab section data
+  const tabData = [
+    {
+      name: "All",
+      value: "all",
+      products: featuredProducts
+    },
+    {
+      name: "Men", 
+      value: "men",
+      products: featuredProducts.slice(0, 2)
+    },
+    {
+      name: "Women",
+      value: "women", 
+      products: featuredProducts.slice(1, 3)
+    },
+    {
+      name: "Kids",
+      value: "kids",
+      products: featuredProducts.slice(2, 4)
+    }
+  ];
+
+  // Square categories data
+  const squareCategories = [
+    { id: "1", name: "T-Shirts", image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=300", link: "/men" },
+    { id: "2", name: "Dresses", image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=300", link: "/women" },
+    { id: "3", name: "Jeans", image: "https://images.unsplash.com/photo-1542272604-787c3835535d?w=300", link: "/men" },
+    { id: "4", name: "Shoes", image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=300", link: "/accessories" }
+  ];
+
+  // Top categories on offer
+  const topOfferCategories = [
+    { id: "1", name: "Summer Wear", image: "https://images.unsplash.com/photo-1434389677669-e08b4cac3105?w=300", discount: "Up to 70% OFF", link: "/women" },
+    { id: "2", name: "Footwear", image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=300", discount: "Up to 50% OFF", link: "/accessories" },
+    { id: "3", name: "Accessories", image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=300", discount: "Up to 60% OFF", link: "/accessories" },
+    { id: "4", name: "Ethnic Wear", image: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=300", discount: "Up to 40% OFF", link: "/women" }
+  ];
+
+  // Pocket friendly products
+  const pocketFriendlyProducts = [
+    {
+      id: "pf-1",
+      name: "Basic Cotton T-Shirt",
+      price: 299,
+      originalPrice: 599,
+      rating: 4.2,
+      reviews: 89,
+      image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400",
+      brand: "BasicWear"
+    },
+    {
+      id: "pf-2",
+      name: "Casual Sneakers",
+      price: 799,
+      originalPrice: 1599,
+      rating: 4.0,
+      reviews: 156,
+      image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=400",
+      brand: "ComfortFeet"
+    },
+    {
+      id: "pf-3",
+      name: "Simple Backpack",
+      price: 599,
+      originalPrice: 999,
+      rating: 4.3,
+      reviews: 67,
+      image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400",
+      brand: "EverydayBags"
+    },
+    {
+      id: "pf-4",
+      name: "Classic Jeans",
+      price: 699,
+      originalPrice: 1299,
+      rating: 4.1,
+      reviews: 123,
+      image: "https://images.unsplash.com/photo-1542272604-787c3835535d?w=400",
+      brand: "DenimBasics"
+    }
+  ];
+
+  const mainPromoBanner = {
+    id: "main-promo",
+    title: "FLASH SALE",
+    subtitle: "Limited Time Offer - Don't Miss Out!",
+    buttonText: "Shop Now",
+    buttonLink: "/women",
+    image: "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=600",
+    backgroundColor: "#FF6B9D"
+  };
+
   const promoBanners = [
     {
       id: "1",
@@ -197,6 +294,26 @@ const Index = () => {
           <ImageCarousel images={carouselImages} />
         </div>
 
+        {/* Tab Section with All, Men, Women, Kids */}
+        <TabSection tabs={tabData} />
+
+        {/* Square Category Section */}
+        <SquareCategorySection categories={squareCategories} />
+
+        {/* Features Banner */}
+        <FeaturesBanner />
+
+        {/* Top Categories on Offer */}
+        <TopCategoriesOffer categories={topOfferCategories} />
+
+        {/* Pocket Friendly Section */}
+        <PocketFriendlySection products={pocketFriendlyProducts} />
+
+        {/* Main Promo Banner */}
+        <section className="px-4 sm:px-6 lg:px-8">
+          <PromoBanner banner={mainPromoBanner} />
+        </section>
+
         {/* Categories */}
         <section className="px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl font-bold text-gray-800 mb-6">Shop by Category</h2>
@@ -252,12 +369,7 @@ const Index = () => {
 
         {/* Featured Products */}
         <section className="px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold text-gray-800 mb-6">Featured Products</h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-            {featuredProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
+          <ProductSlider title="Featured Products" products={featuredProducts} />
         </section>
 
         {/* Sponsored Products */}
