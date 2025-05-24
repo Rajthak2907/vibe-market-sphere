@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -63,17 +64,17 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				},
 				brand: {
-					pink: '#FF6B9D',
+					pink: '#FF1F7A',
+					orange: '#FF6B35',
+					blue: '#0AA5FF',
 					purple: '#8B5CF6',
-					blue: '#3B82F6',
-					orange: '#F97316',
 					green: '#10B981',
 					yellow: '#F59E0B'
 				},
 				gradient: {
-					'pink-purple': 'linear-gradient(135deg, #FF6B9D 0%, #8B5CF6 100%)',
-					'blue-purple': 'linear-gradient(135deg, #3B82F6 0%, #8B5CF6 100%)',
-					'orange-pink': 'linear-gradient(135deg, #F97316 0%, #FF6B9D 100%)'
+					'pink-orange': 'linear-gradient(135deg, #FF1F7A 0%, #FF6B35 100%)',
+					'blue-pink': 'linear-gradient(135deg, #0AA5FF 0%, #FF1F7A 100%)',
+					'orange-blue': 'linear-gradient(135deg, #FF6B35 0%, #0AA5FF 100%)'
 				}
 			},
 			borderRadius: {
@@ -118,10 +119,10 @@ export default {
 				},
 				'pulse-glow': {
 					'0%, 100%': {
-						boxShadow: '0 0 5px rgba(255, 107, 157, 0.5)'
+						boxShadow: '0 0 5px rgba(255, 31, 122, 0.5)'
 					},
 					'50%': {
-						boxShadow: '0 0 20px rgba(255, 107, 157, 0.8)'
+						boxShadow: '0 0 20px rgba(255, 31, 122, 0.8)'
 					}
 				},
 				'scroll-left': {
@@ -142,9 +143,9 @@ export default {
 				'scroll-left': 'scroll-left 20s linear infinite'
 			},
 			backgroundImage: {
-				'gradient-brand': 'linear-gradient(135deg, #FF6B9D 0%, #8B5CF6 100%)',
-				'gradient-blue': 'linear-gradient(135deg, #3B82F6 0%, #8B5CF6 100%)',
-				'gradient-orange': 'linear-gradient(135deg, #F97316 0%, #FF6B9D 100%)'
+				'gradient-brand': 'linear-gradient(135deg, #FF1F7A 0%, #FF6B35 100%)',
+				'gradient-blue': 'linear-gradient(135deg, #0AA5FF 0%, #FF1F7A 100%)',
+				'gradient-orange': 'linear-gradient(135deg, #FF6B35 0%, #0AA5FF 100%)'
 			}
 		}
 	},

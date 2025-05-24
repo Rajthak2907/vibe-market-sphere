@@ -69,25 +69,25 @@ const Layout = ({ children }: LayoutProps) => {
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
       <header className="bg-white shadow-sm border-b sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
+        <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6">
+          <div className="flex items-center justify-between h-14 sm:h-16">
             {/* Logo */}
             <Link to="/" className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-gradient-brand rounded-lg flex items-center justify-center">
+              <div className="w-8 h-8 bg-gradient-to-r from-brand-pink to-brand-orange rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-sm">M</span>
               </div>
-              <span className="font-bold text-xl gradient-text hidden sm:block">Marketplace</span>
+              <span className="font-bold text-lg sm:text-xl gradient-text hidden sm:block">Marketplace</span>
             </Link>
 
             {/* Desktop Navigation */}
-            <nav className="hidden md:flex space-x-8">
+            <nav className="hidden md:flex space-x-6 lg:space-x-8">
               {navItems.map((item) => (
                 <Link
                   key={item.path}
                   to={item.path}
-                  className={`text-sm font-medium transition-colors hover:text-primary ${
+                  className={`text-sm font-medium transition-colors hover:text-brand-pink ${
                     location.pathname === item.path
-                      ? "text-primary border-b-2 border-primary"
+                      ? "text-brand-pink border-b-2 border-brand-pink"
                       : "text-gray-600"
                   }`}
                 >
@@ -102,15 +102,15 @@ const Layout = ({ children }: LayoutProps) => {
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                 <Input
                   placeholder="Search for products, brands..."
-                  className="pl-10 bg-gray-50 border-gray-200"
+                  className="pl-10 bg-gray-50 border-gray-200 focus:border-brand-pink"
                 />
               </div>
             </div>
 
             {/* Right Actions */}
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-3 sm:space-x-4">
               <Link to="/login">
-                <Button variant="outline" size="sm" className="hidden sm:inline-flex">
+                <Button variant="outline" size="sm" className="hidden sm:inline-flex border-brand-pink text-brand-pink hover:bg-brand-pink hover:text-white">
                   Login
                 </Button>
               </Link>
@@ -129,12 +129,12 @@ const Layout = ({ children }: LayoutProps) => {
         </div>
 
         {/* Mobile Search */}
-        <div className="lg:hidden px-4 pb-4">
+        <div className="lg:hidden px-2 sm:px-4 pb-3">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
             <Input
               placeholder="Search for products, brands..."
-              className="pl-10 bg-gray-50 border-gray-200"
+              className="pl-10 bg-gray-50 border-gray-200 focus:border-brand-pink text-sm"
             />
           </div>
         </div>
@@ -160,7 +160,7 @@ const Layout = ({ children }: LayoutProps) => {
                 key={item.path}
                 to={item.path}
                 className={`flex flex-col items-center justify-center space-y-1 relative ${
-                  isActive ? "text-primary" : "text-gray-500"
+                  isActive ? "text-brand-pink" : "text-gray-500"
                 }`}
               >
                 <div className="relative">
