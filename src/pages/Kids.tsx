@@ -54,48 +54,56 @@ const Kids = () => {
 
   return (
     <Layout>
-      <div className="px-4 sm:px-6 lg:px-8 py-6">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-800 mb-2">Kids Fashion</h1>
-          <p className="text-gray-600">Adorable and comfortable clothing for your little ones</p>
+      <div className="bg-white min-h-screen">
+        {/* Header with gradient background */}
+        <div className="bg-gradient-to-r from-[#4A90E2] to-[#FF9A6B] text-white px-4 sm:px-6 lg:px-8 py-8">
+          <div className="max-w-7xl mx-auto">
+            <h1 className="text-3xl sm:text-4xl font-bold mb-2">Kids Fashion</h1>
+            <p className="text-lg opacity-90">Adorable and comfortable clothing for your little ones</p>
+          </div>
         </div>
 
-        {/* Filters */}
-        <div className="flex flex-wrap items-center gap-4 mb-8">
-          <div className="flex overflow-x-auto space-x-2 pb-2">
-            {categories.map((category) => (
-              <Button
-                key={category}
-                variant={category === "All" ? "default" : "outline"}
-                size="sm"
-                className="whitespace-nowrap"
-              >
-                {category}
-              </Button>
+        <div className="px-4 sm:px-6 lg:px-8 py-6">
+          {/* Filters */}
+          <div className="flex flex-wrap items-center gap-4 mb-8 py-4 border-b border-gray-200">
+            <div className="flex overflow-x-auto space-x-2 pb-2">
+              {categories.map((category) => (
+                <Button
+                  key={category}
+                  variant={category === "All" ? "default" : "outline"}
+                  size="sm"
+                  className={`whitespace-nowrap rounded-full ${
+                    category === "All" 
+                      ? "bg-[#4A90E2] hover:bg-[#4A90E2]/90" 
+                      : "border-gray-300 hover:border-[#4A90E2] hover:text-[#4A90E2]"
+                  }`}
+                >
+                  {category}
+                </Button>
+              ))}
+            </div>
+            <div className="ml-auto">
+              <Select>
+                <SelectTrigger className="w-48 rounded-full">
+                  <SelectValue placeholder="Sort by" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="popular">Most Popular</SelectItem>
+                  <SelectItem value="price-low">Price: Low to High</SelectItem>
+                  <SelectItem value="price-high">Price: High to Low</SelectItem>
+                  <SelectItem value="rating">Highest Rated</SelectItem>
+                  <SelectItem value="newest">Newest First</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+
+          {/* Products Grid */}
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+            {products.map((product) => (
+              <ProductCard key={product.id} product={product} />
             ))}
           </div>
-          <div className="ml-auto">
-            <Select>
-              <SelectTrigger className="w-48">
-                <SelectValue placeholder="Sort by" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="popular">Most Popular</SelectItem>
-                <SelectItem value="price-low">Price: Low to High</SelectItem>
-                <SelectItem value="price-high">Price: High to Low</SelectItem>
-                <SelectItem value="rating">Highest Rated</SelectItem>
-                <SelectItem value="newest">Newest First</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
-
-        {/* Products Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-          {products.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
         </div>
       </div>
     </Layout>

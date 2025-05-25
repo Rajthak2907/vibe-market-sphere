@@ -66,18 +66,21 @@ const Layout = ({ children }: LayoutProps) => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-white">
       {/* Header */}
       <header className="bg-white shadow-sm border-b sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6">
-          <div className="flex items-center justify-between h-14 sm:h-16">
-            {/* Logo */}
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6">
+          <div className="flex items-center justify-between h-16 sm:h-18">
+            {/* Logo - Made larger and bolder */}
             <Link to="/" className="flex items-center space-x-2">
               <img 
-                src="/lovable-uploads/6e54bcc0-2cf8-4872-b9f7-695a83c9b15c.png" 
+                src="/lovable-uploads/164ea4a6-a57e-4afe-9e7a-0190149b95b6.png" 
                 alt="Obeyyo" 
-                className="h-8 w-auto"
+                className="h-10 sm:h-12 w-auto object-contain"
               />
+              <span className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-[#FF6B9D] to-[#4A90E2] bg-clip-text text-transparent">
+                obeyyo
+              </span>
             </Link>
 
             {/* Desktop Navigation */}
@@ -86,10 +89,10 @@ const Layout = ({ children }: LayoutProps) => {
                 <Link
                   key={item.path}
                   to={item.path}
-                  className={`text-sm font-medium transition-colors hover:text-[#E91E63] ${
+                  className={`text-sm font-medium transition-colors hover:text-[#FF6B9D] ${
                     location.pathname === item.path
-                      ? "text-[#E91E63] border-b-2 border-[#E91E63]"
-                      : "text-gray-600"
+                      ? "text-[#FF6B9D] border-b-2 border-[#FF6B9D]"
+                      : "text-gray-700"
                   }`}
                 >
                   {item.label}
@@ -103,7 +106,7 @@ const Layout = ({ children }: LayoutProps) => {
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                 <Input
                   placeholder="Search for products, brands..."
-                  className="pl-10 bg-gray-50 border-gray-200 focus:border-[#E91E63]"
+                  className="pl-10 bg-gray-50 border-gray-200 focus:border-[#FF6B9D] rounded-full"
                 />
               </div>
             </div>
@@ -111,7 +114,7 @@ const Layout = ({ children }: LayoutProps) => {
             {/* Right Actions */}
             <div className="flex items-center space-x-3 sm:space-x-4">
               <Link to="/login">
-                <Button variant="outline" size="sm" className="hidden sm:inline-flex border-[#E91E63] text-[#E91E63] hover:bg-[#E91E63] hover:text-white">
+                <Button variant="outline" size="sm" className="hidden sm:inline-flex border-[#FF6B9D] text-[#FF6B9D] hover:bg-[#FF6B9D] hover:text-white rounded-full">
                   Login
                 </Button>
               </Link>
@@ -130,12 +133,12 @@ const Layout = ({ children }: LayoutProps) => {
         </div>
 
         {/* Mobile Search */}
-        <div className="lg:hidden px-2 sm:px-4 pb-3">
+        <div className="lg:hidden px-3 sm:px-4 pb-3">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
             <Input
               placeholder="Search for products, brands..."
-              className="pl-10 bg-gray-50 border-gray-200 focus:border-[#E91E63] text-sm"
+              className="pl-10 bg-gray-50 border-gray-200 focus:border-[#FF6B9D] text-sm rounded-full"
             />
           </div>
         </div>
@@ -161,13 +164,13 @@ const Layout = ({ children }: LayoutProps) => {
                 key={item.path}
                 to={item.path}
                 className={`flex flex-col items-center justify-center space-y-1 relative ${
-                  isActive ? "text-[#E91E63]" : "text-gray-500"
+                  isActive ? "text-[#FF6B9D]" : "text-gray-500"
                 }`}
               >
                 <div className="relative">
                   <Icon className="w-5 h-5" />
                   {item.badge && (
-                    <span className="absolute -top-2 -right-2 bg-[#E91E63] text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                    <span className="absolute -top-2 -right-2 bg-[#FF6B9D] text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
                       {item.badge}
                     </span>
                   )}

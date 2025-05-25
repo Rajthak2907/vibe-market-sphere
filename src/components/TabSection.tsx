@@ -2,7 +2,6 @@
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { useNavigate } from "react-router-dom";
-import ProductCard from "@/components/ProductCard";
 
 interface TabSectionProps {
   tabs: Array<{
@@ -38,23 +37,23 @@ const TabSection = ({ tabs }: TabSectionProps) => {
   };
 
   return (
-    <section className="px-2 sm:px-4 lg:px-6">
-      <div className="flex items-center justify-between mb-3 md:mb-4">
+    <section className="px-3 sm:px-4 lg:px-6 py-2">
+      <div className="flex items-center justify-between mb-4">
         <Tabs defaultValue="all" className="w-full">
-          <div className="flex items-center justify-between mb-3 md:mb-4">
-            <TabsList className="grid w-auto grid-cols-4 h-8 sm:h-10">
+          <div className="flex items-center justify-between mb-4">
+            <TabsList className="grid w-auto grid-cols-4 h-10 sm:h-12 bg-gray-100 rounded-full p-1">
               {tabs.map((tab) => (
                 <TabsTrigger 
                   key={tab.value} 
                   value={tab.value} 
                   onClick={() => handleTabClick(tab.value)}
-                  className="px-3 sm:px-4 text-xs sm:text-sm data-[state=active]:bg-brand-pink data-[state=active]:text-white"
+                  className="px-4 sm:px-6 text-sm sm:text-base font-medium data-[state=active]:bg-white data-[state=active]:text-[#FF6B9D] data-[state=active]:shadow-sm rounded-full transition-all"
                 >
                   {tab.name}
                 </TabsTrigger>
               ))}
             </TabsList>
-            <Button variant="outline" size="sm" className="text-xs sm:text-sm border-brand-pink text-brand-pink hover:bg-brand-pink hover:text-white">
+            <Button variant="outline" size="sm" className="text-sm border-[#FF6B9D] text-[#FF6B9D] hover:bg-[#FF6B9D] hover:text-white rounded-full ml-4">
               View All
             </Button>
           </div>
