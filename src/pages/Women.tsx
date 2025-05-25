@@ -1,4 +1,3 @@
-
 import Layout from "@/components/Layout";
 import ProductCard from "@/components/ProductCard";
 import ImageCarousel from "@/components/ImageCarousel";
@@ -6,6 +5,8 @@ import PromoBanner from "@/components/PromoBanner";
 import ProductSlider from "@/components/ProductSlider";
 import PocketFriendlySection from "@/components/PocketFriendlySection";
 import DealOfTheDay from "@/components/DealOfTheDay";
+import TabSection from "@/components/TabSection";
+import RoundCategorySection from "@/components/RoundCategorySection";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
@@ -292,6 +293,63 @@ const Women = () => {
   const dealEndTime = new Date();
   dealEndTime.setHours(dealEndTime.getHours() + 8);
 
+  const categories = [
+    {
+      id: "c1",
+      name: "Dresses",
+      image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=100",
+      link: "/women/dresses"
+    },
+    {
+      id: "c2",
+      name: "Tops",
+      image: "https://images.unsplash.com/photo-1571945153237-4929e783af4a?w=100",
+      link: "/women/tops"
+    },
+    {
+      id: "c3",
+      name: "Ethnic",
+      image: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=100",
+      link: "/women/ethnic"
+    },
+    {
+      id: "c4",
+      name: "Shoes",
+      image: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=100",
+      link: "/women/shoes"
+    },
+    {
+      id: "c5",
+      name: "Handbags",
+      image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=100",
+      link: "/women/handbags"
+    },
+    {
+      id: "c6",
+      name: "Jewelry",
+      image: "https://images.unsplash.com/photo-1590736969955-71cc94901144?w=100",
+      link: "/women/jewelry"
+    }
+  ];
+
+  const subcategories = [
+    { id: "s1", name: "Casual Wear", image: "https://images.unsplash.com/photo-1571945153237-4929e783af4a?w=80", link: "/women/casual" },
+    { id: "s2", name: "Formal Wear", image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=80", link: "/women/formal" },
+    { id: "s3", name: "Party Wear", image: "https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=80", link: "/women/party" },
+    { id: "s4", name: "Ethnic Wear", image: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=80", link: "/women/ethnic" },
+    { id: "s5", name: "Western Wear", image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=80", link: "/women/western" },
+    { id: "s6", name: "Summer Collection", image: "https://images.unsplash.com/photo-1571945153237-4929e783af4a?w=80", link: "/women/summer" },
+    { id: "s7", name: "Footwear", image: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=80", link: "/women/footwear" },
+    { id: "s8", name: "Accessories", image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=80", link: "/women/accessories" }
+  ];
+
+  const tabs = [
+    { name: "All", value: "all", products: [] },
+    { name: "Men", value: "men", products: [] },
+    { name: "Women", value: "women", products: [] },
+    { name: "Kids", value: "kids", products: [] }
+  ];
+
   return (
     <Layout>
       <div className="space-y-2 bg-gray-50">
@@ -303,10 +361,42 @@ const Women = () => {
           </div>
         </div>
 
+        {/* Tabs Section */}
+        <TabSection tabs={tabs} />
+
+        {/* Shop by Category */}
+        <RoundCategorySection categories={categories} />
+
         {/* Hero Carousel */}
         <div className="px-3">
           <ImageCarousel images={carouselImages} />
         </div>
+
+        {/* Subcategory Section */}
+        <section className="px-3">
+          <div className="bg-white rounded-lg p-4">
+            <div className="flex items-center justify-between mb-3">
+              <h2 className="text-base font-semibold text-gray-800">Shop by Style</h2>
+              <Button variant="outline" size="sm" className="text-xs border-[#FF6B9D] text-[#FF6B9D] hover:bg-[#FF6B9D] hover:text-white rounded-lg px-3 py-1.5">
+                View All
+              </Button>
+            </div>
+            <div className="grid grid-cols-4 gap-2">
+              {subcategories.map((subcategory) => (
+                <div key={subcategory.id} className="text-center">
+                  <div className="aspect-square rounded-lg overflow-hidden bg-gray-100 mb-1">
+                    <img
+                      src={subcategory.image}
+                      alt={subcategory.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <p className="text-xs text-gray-600 leading-tight">{subcategory.name}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
 
         {/* Deal of the Day */}
         <section className="px-3">
@@ -322,10 +412,26 @@ const Women = () => {
         </section>
 
         {/* GenZ Picks */}
-        <ProductSlider title="🔥 GenZ Picks" products={genzPicksProducts} />
+        <section className="px-3">
+          <div className="flex items-center justify-between mb-3">
+            <h2 className="text-lg font-bold text-gray-800">🔥 GenZ Picks</h2>
+            <Button variant="outline" size="sm" className="text-xs border-[#FF6B9D] text-[#FF6B9D] hover:bg-[#FF6B9D] hover:text-white rounded-lg px-3 py-1.5">
+              View All
+            </Button>
+          </div>
+          <ProductSlider title="" products={genzPicksProducts} />
+        </section>
 
         {/* Top Brands on Offer */}
-        <ProductSlider title="🏆 Top Brands on Offer" products={topBrandsProducts} />
+        <section className="px-3">
+          <div className="flex items-center justify-between mb-3">
+            <h2 className="text-lg font-bold text-gray-800">🏆 Top Brands on Offer</h2>
+            <Button variant="outline" size="sm" className="text-xs border-[#FF6B9D] text-[#FF6B9D] hover:bg-[#FF6B9D] hover:text-white rounded-lg px-3 py-1.5">
+              View All
+            </Button>
+          </div>
+          <ProductSlider title="" products={topBrandsProducts} />
+        </section>
 
         {/* Promo Banner 2 */}
         <section className="px-3">
@@ -333,10 +439,26 @@ const Women = () => {
         </section>
 
         {/* GenZ Brands on Offer */}
-        <ProductSlider title="✨ GenZ Brands on Offer" products={genzBrandsProducts} />
+        <section className="px-3">
+          <div className="flex items-center justify-between mb-3">
+            <h2 className="text-lg font-bold text-gray-800">✨ GenZ Brands on Offer</h2>
+            <Button variant="outline" size="sm" className="text-xs border-[#FF6B9D] text-[#FF6B9D] hover:bg-[#FF6B9D] hover:text-white rounded-lg px-3 py-1.5">
+              View All
+            </Button>
+          </div>
+          <ProductSlider title="" products={genzBrandsProducts} />
+        </section>
 
         {/* Deals on Men's Wardrobe */}
-        <ProductSlider title="👔 Deals on Men's Wardrobe" products={mensWardrobeProducts} />
+        <section className="px-3">
+          <div className="flex items-center justify-between mb-3">
+            <h2 className="text-lg font-bold text-gray-800">👔 Deals on Men's Wardrobe</h2>
+            <Button variant="outline" size="sm" className="text-xs border-[#FF6B9D] text-[#FF6B9D] hover:bg-[#FF6B9D] hover:text-white rounded-lg px-3 py-1.5">
+              View All
+            </Button>
+          </div>
+          <ProductSlider title="" products={mensWardrobeProducts} />
+        </section>
 
         {/* Promo Banner 3 */}
         <section className="px-3">
@@ -344,16 +466,48 @@ const Women = () => {
         </section>
 
         {/* Brands Deal You Can't Miss */}
-        <ProductSlider title="💎 Brands Deal You Can't Miss" products={brandsDealsProducts} />
+        <section className="px-3">
+          <div className="flex items-center justify-between mb-3">
+            <h2 className="text-lg font-bold text-gray-800">💎 Brands Deal You Can't Miss</h2>
+            <Button variant="outline" size="sm" className="text-xs border-[#FF6B9D] text-[#FF6B9D] hover:bg-[#FF6B9D] hover:text-white rounded-lg px-3 py-1.5">
+              View All
+            </Button>
+          </div>
+          <ProductSlider title="" products={brandsDealsProducts} />
+        </section>
 
         {/* Deals on Women's Wardrobe */}
-        <ProductSlider title="👗 Deals on Women's Wardrobe" products={womensWardrobeProducts} />
+        <section className="px-3">
+          <div className="flex items-center justify-between mb-3">
+            <h2 className="text-lg font-bold text-gray-800">👗 Deals on Women's Wardrobe</h2>
+            <Button variant="outline" size="sm" className="text-xs border-[#FF6B9D] text-[#FF6B9D] hover:bg-[#FF6B9D] hover:text-white rounded-lg px-3 py-1.5">
+              View All
+            </Button>
+          </div>
+          <ProductSlider title="" products={womensWardrobeProducts} />
+        </section>
 
         {/* Featured Brands */}
-        <ProductSlider title="⭐ Featured Brands" products={featuredBrandsProducts} />
+        <section className="px-3">
+          <div className="flex items-center justify-between mb-3">
+            <h2 className="text-lg font-bold text-gray-800">⭐ Featured Brands</h2>
+            <Button variant="outline" size="sm" className="text-xs border-[#FF6B9D] text-[#FF6B9D] hover:bg-[#FF6B9D] hover:text-white rounded-lg px-3 py-1.5">
+              View All
+            </Button>
+          </div>
+          <ProductSlider title="" products={featuredBrandsProducts} />
+        </section>
 
         {/* Best Brands */}
-        <ProductSlider title="🎯 Best Brands" products={bestBrandsProducts} />
+        <section className="px-3">
+          <div className="flex items-center justify-between mb-3">
+            <h2 className="text-lg font-bold text-gray-800">🎯 Best Brands</h2>
+            <Button variant="outline" size="sm" className="text-xs border-[#FF6B9D] text-[#FF6B9D] hover:bg-[#FF6B9D] hover:text-white rounded-lg px-3 py-1.5">
+              View All
+            </Button>
+          </div>
+          <ProductSlider title="" products={bestBrandsProducts} />
+        </section>
 
         {/* Final Promo Banner */}
         <section className="px-3">

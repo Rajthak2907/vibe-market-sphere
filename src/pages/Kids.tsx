@@ -1,4 +1,3 @@
-
 import Layout from "@/components/Layout";
 import ProductCard from "@/components/ProductCard";
 import ImageCarousel from "@/components/ImageCarousel";
@@ -6,6 +5,8 @@ import PromoBanner from "@/components/PromoBanner";
 import ProductSlider from "@/components/ProductSlider";
 import PocketFriendlySection from "@/components/PocketFriendlySection";
 import DealOfTheDay from "@/components/DealOfTheDay";
+import TabSection from "@/components/TabSection";
+import RoundCategorySection from "@/components/RoundCategorySection";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
@@ -29,7 +30,7 @@ const Kids = () => {
       originalPrice: 1299,
       rating: 4.5,
       reviews: 167,
-      image: "https://images.unsplash.com/photo-1569263979104-865ab7cd8d13?w=400",
+      image: "https://images.unsplash.com/photo-1518917439142-deacd78191de?w=400",
       brand: "SchoolWear"
     },
     {
@@ -278,6 +279,63 @@ const Kids = () => {
     }
   ];
 
+  const categories = [
+    {
+      id: "c1",
+      name: "Boys",
+      image: "https://images.unsplash.com/photo-1503944583220-79d8926ad5e2?w=100",
+      link: "/kids/boys"
+    },
+    {
+      id: "c2",
+      name: "Girls",
+      image: "https://images.unsplash.com/photo-1518917439142-deacd78191de?w=100",
+      link: "/kids/girls"
+    },
+    {
+      id: "c3",
+      name: "School",
+      image: "https://images.unsplash.com/photo-1569263979104-865ab7cd8d13?w=100",
+      link: "/kids/school"
+    },
+    {
+      id: "c4",
+      name: "Shoes",
+      image: "https://images.unsplash.com/photo-1607522370275-f14206abe5d3?w=100",
+      link: "/kids/shoes"
+    },
+    {
+      id: "c5",
+      name: "Toys",
+      image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=100",
+      link: "/kids/toys"
+    },
+    {
+      id: "c6",
+      name: "Baby",
+      image: "https://images.unsplash.com/photo-1544965503-7ad535c4ead7?w=100",
+      link: "/kids/baby"
+    }
+  ];
+
+  const subcategories = [
+    { id: "s1", name: "Newborn", image: "https://images.unsplash.com/photo-1544965503-7ad535c4ead7?w=80", link: "/kids/newborn" },
+    { id: "s2", name: "Toddler", image: "https://images.unsplash.com/photo-1503944583220-79d8926ad5e2?w=80", link: "/kids/toddler" },
+    { id: "s3", name: "School Age", image: "https://images.unsplash.com/photo-1569263979104-865ab7cd8d13?w=80", link: "/kids/school-age" },
+    { id: "s4", name: "Teen", image: "https://images.unsplash.com/photo-1518917439142-deacd78191de?w=80", link: "/kids/teen" },
+    { id: "s5", name: "Party Wear", image: "https://images.unsplash.com/photo-1518917439142-deacd78191de?w=80", link: "/kids/party" },
+    { id: "s6", name: "Casual Wear", image: "https://images.unsplash.com/photo-1503944583220-79d8926ad5e2?w=80", link: "/kids/casual" },
+    { id: "s7", name: "Footwear", image: "https://images.unsplash.com/photo-1607522370275-f14206abe5d3?w=80", link: "/kids/footwear" },
+    { id: "s8", name: "Accessories", image: "https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=80", link: "/kids/accessories" }
+  ];
+
+  const tabs = [
+    { name: "All", value: "all", products: [] },
+    { name: "Men", value: "men", products: [] },
+    { name: "Women", value: "women", products: [] },
+    { name: "Kids", value: "kids", products: [] }
+  ];
+
   const filterCategories = ["All", "Boys", "Girls", "Shoes", "Toys", "Accessories"];
   const dealEndTime = new Date();
   dealEndTime.setHours(dealEndTime.getHours() + 4);
@@ -293,10 +351,42 @@ const Kids = () => {
           </div>
         </div>
 
+        {/* Tabs Section */}
+        <TabSection tabs={tabs} />
+
+        {/* Shop by Category */}
+        <RoundCategorySection categories={categories} />
+
         {/* Hero Carousel */}
         <div className="px-3">
           <ImageCarousel images={carouselImages} />
         </div>
+
+        {/* Subcategory Section */}
+        <section className="px-3">
+          <div className="bg-white rounded-lg p-4">
+            <div className="flex items-center justify-between mb-3">
+              <h2 className="text-base font-semibold text-gray-800">Shop by Age</h2>
+              <Button variant="outline" size="sm" className="text-xs border-[#4A90E2] text-[#4A90E2] hover:bg-[#4A90E2] hover:text-white rounded-lg px-3 py-1.5">
+                View All
+              </Button>
+            </div>
+            <div className="grid grid-cols-4 gap-2">
+              {subcategories.map((subcategory) => (
+                <div key={subcategory.id} className="text-center">
+                  <div className="aspect-square rounded-lg overflow-hidden bg-gray-100 mb-1">
+                    <img
+                      src={subcategory.image}
+                      alt={subcategory.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <p className="text-xs text-gray-600 leading-tight">{subcategory.name}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
 
         {/* Deal of the Day */}
         <section className="px-3">
@@ -312,10 +402,26 @@ const Kids = () => {
         </section>
 
         {/* GenZ Picks */}
-        <ProductSlider title="🔥 GenZ Picks" products={genzPicksProducts} />
+        <section className="px-3">
+          <div className="flex items-center justify-between mb-3">
+            <h2 className="text-lg font-bold text-gray-800">🔥 GenZ Picks</h2>
+            <Button variant="outline" size="sm" className="text-xs border-[#4A90E2] text-[#4A90E2] hover:bg-[#4A90E2] hover:text-white rounded-lg px-3 py-1.5">
+              View All
+            </Button>
+          </div>
+          <ProductSlider title="" products={genzPicksProducts} />
+        </section>
 
         {/* Top Brands on Offer */}
-        <ProductSlider title="🏆 Top Brands on Offer" products={topBrandsProducts} />
+        <section className="px-3">
+          <div className="flex items-center justify-between mb-3">
+            <h2 className="text-lg font-bold text-gray-800">🏆 Top Brands on Offer</h2>
+            <Button variant="outline" size="sm" className="text-xs border-[#4A90E2] text-[#4A90E2] hover:bg-[#4A90E2] hover:text-white rounded-lg px-3 py-1.5">
+              View All
+            </Button>
+          </div>
+          <ProductSlider title="" products={topBrandsProducts} />
+        </section>
 
         {/* Promo Banner 2 */}
         <section className="px-3">
@@ -323,10 +429,26 @@ const Kids = () => {
         </section>
 
         {/* GenZ Brands on Offer */}
-        <ProductSlider title="✨ GenZ Brands on Offer" products={genzBrandsProducts} />
+        <section className="px-3">
+          <div className="flex items-center justify-between mb-3">
+            <h2 className="text-lg font-bold text-gray-800">✨ GenZ Brands on Offer</h2>
+            <Button variant="outline" size="sm" className="text-xs border-[#4A90E2] text-[#4A90E2] hover:bg-[#4A90E2] hover:text-white rounded-lg px-3 py-1.5">
+              View All
+            </Button>
+          </div>
+          <ProductSlider title="" products={genzBrandsProducts} />
+        </section>
 
         {/* Deals on Men's Wardrobe */}
-        <ProductSlider title="👔 Deals on Men's Wardrobe" products={mensWardrobeProducts} />
+        <section className="px-3">
+          <div className="flex items-center justify-between mb-3">
+            <h2 className="text-lg font-bold text-gray-800">👔 Deals on Men's Wardrobe</h2>
+            <Button variant="outline" size="sm" className="text-xs border-[#4A90E2] text-[#4A90E2] hover:bg-[#4A90E2] hover:text-white rounded-lg px-3 py-1.5">
+              View All
+            </Button>
+          </div>
+          <ProductSlider title="" products={mensWardrobeProducts} />
+        </section>
 
         {/* Promo Banner 3 */}
         <section className="px-3">
@@ -334,16 +456,48 @@ const Kids = () => {
         </section>
 
         {/* Brands Deal You Can't Miss */}
-        <ProductSlider title="💎 Brands Deal You Can't Miss" products={brandsDealsProducts} />
+        <section className="px-3">
+          <div className="flex items-center justify-between mb-3">
+            <h2 className="text-lg font-bold text-gray-800">💎 Brands Deal You Can't Miss</h2>
+            <Button variant="outline" size="sm" className="text-xs border-[#4A90E2] text-[#4A90E2] hover:bg-[#4A90E2] hover:text-white rounded-lg px-3 py-1.5">
+              View All
+            </Button>
+          </div>
+          <ProductSlider title="" products={brandsDealsProducts} />
+        </section>
 
         {/* Deals on Women's Wardrobe */}
-        <ProductSlider title="👗 Deals on Women's Wardrobe" products={womensWardrobeProducts} />
+        <section className="px-3">
+          <div className="flex items-center justify-between mb-3">
+            <h2 className="text-lg font-bold text-gray-800">👗 Deals on Women's Wardrobe</h2>
+            <Button variant="outline" size="sm" className="text-xs border-[#4A90E2] text-[#4A90E2] hover:bg-[#4A90E2] hover:text-white rounded-lg px-3 py-1.5">
+              View All
+            </Button>
+          </div>
+          <ProductSlider title="" products={womensWardrobeProducts} />
+        </section>
 
         {/* Featured Brands */}
-        <ProductSlider title="⭐ Featured Brands" products={featuredBrandsProducts} />
+        <section className="px-3">
+          <div className="flex items-center justify-between mb-3">
+            <h2 className="text-lg font-bold text-gray-800">⭐ Featured Brands</h2>
+            <Button variant="outline" size="sm" className="text-xs border-[#4A90E2] text-[#4A90E2] hover:bg-[#4A90E2] hover:text-white rounded-lg px-3 py-1.5">
+              View All
+            </Button>
+          </div>
+          <ProductSlider title="" products={featuredBrandsProducts} />
+        </section>
 
         {/* Best Brands */}
-        <ProductSlider title="🎯 Best Brands" products={bestBrandsProducts} />
+        <section className="px-3">
+          <div className="flex items-center justify-between mb-3">
+            <h2 className="text-lg font-bold text-gray-800">🎯 Best Brands</h2>
+            <Button variant="outline" size="sm" className="text-xs border-[#4A90E2] text-[#4A90E2] hover:bg-[#4A90E2] hover:text-white rounded-lg px-3 py-1.5">
+              View All
+            </Button>
+          </div>
+          <ProductSlider title="" products={bestBrandsProducts} />
+        </section>
 
         {/* Final Promo Banner */}
         <section className="px-3">
