@@ -1,7 +1,5 @@
 
 import { useRef } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import ProductCard from "@/components/ProductCard";
 
 interface PocketFriendlySectionProps {
@@ -22,51 +20,19 @@ interface PocketFriendlySectionProps {
 const PocketFriendlySection = ({ products }: PocketFriendlySectionProps) => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  const scroll = (direction: 'left' | 'right') => {
-    if (!scrollRef.current) return;
-    
-    const scrollAmount = 280;
-    const newScrollLeft = direction === 'left' 
-      ? scrollRef.current.scrollLeft - scrollAmount
-      : scrollRef.current.scrollLeft + scrollAmount;
-    
-    scrollRef.current.scrollTo({
-      left: newScrollLeft,
-      behavior: 'smooth'
-    });
-  };
-
   return (
-    <section className="px-2 sm:px-4 lg:px-6">
-      <div className="flex items-center justify-between mb-3 md:mb-4">
-        <h2 className="text-lg md:text-xl font-bold text-gray-800">💰 Pocket Friendly</h2>
-        <div className="hidden md:flex space-x-1">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => scroll('left')}
-            className="p-2"
-          >
-            <ChevronLeft className="w-4 h-4" />
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => scroll('right')}
-            className="p-2"
-          >
-            <ChevronRight className="w-4 h-4" />
-          </Button>
-        </div>
+    <section className="px-4 py-4 bg-white">
+      <div className="flex items-center justify-between mb-3">
+        <h2 className="text-base font-semibold text-gray-800">💰 Pocket Friendly</h2>
       </div>
       
       <div 
         ref={scrollRef}
-        className="flex overflow-x-auto space-x-3 md:space-x-4 pb-2 scrollbar-hide"
+        className="flex overflow-x-auto space-x-3 pb-2 scrollbar-hide"
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
       >
         {products.map((product) => (
-          <div key={product.id} className="flex-shrink-0 w-40 md:w-48">
+          <div key={product.id} className="flex-shrink-0 w-36">
             <ProductCard product={product} />
           </div>
         ))}

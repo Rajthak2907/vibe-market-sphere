@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Home, User, Search, ShoppingCart, Menu } from "lucide-react";
+import { Home, User, Search, ShoppingCart, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
@@ -29,36 +29,47 @@ const Layout = ({ children }: LayoutProps) => {
     { label: "Profile", path: "/profile", icon: User },
   ];
 
-  // Simple mobile menu modal
+  // Mobile menu modal
   const MobileMenu = () => {
     if (!menuOpen) return null;
     
     return (
       <>
         <div 
-          className="fixed inset-0 z-50 bg-background/80 backdrop-blur-sm" 
+          className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm" 
           onClick={() => setMenuOpen(false)}
         />
-        <div className="fixed inset-y-0 right-0 z-50 w-[75%] sm:max-w-sm h-full bg-background p-6 shadow-lg border-l">
-          <button 
-            onClick={() => setMenuOpen(false)}
-            className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none"
-          >
-            <Menu className="h-4 w-4" />
-            <span className="sr-only">Close</span>
-          </button>
+        <div className="fixed inset-y-0 right-0 z-50 w-[80%] max-w-sm h-full bg-white shadow-2xl">
+          <div className="flex items-center justify-between p-4 border-b">
+            <span className="text-lg font-semibold">Menu</span>
+            <button 
+              onClick={() => setMenuOpen(false)}
+              className="p-2 hover:bg-gray-100 rounded-full"
+            >
+              <X className="h-5 w-5" />
+            </button>
+          </div>
           
-          <div className="mt-6 space-y-4">
+          <div className="p-4 space-y-2">
             {navItems.map((item) => (
               <Link
                 key={item.path}
                 to={item.path}
-                className="block px-4 py-2 text-lg font-medium text-gray-700 hover:bg-gray-100 rounded-lg"
+                className="block px-4 py-3 text-base font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
                 onClick={() => setMenuOpen(false)}
               >
                 {item.label}
               </Link>
             ))}
+            <div className="pt-4 border-t">
+              <Link
+                to="/login"
+                className="block px-4 py-3 text-base font-medium text-[#FF6B9D] hover:bg-pink-50 rounded-lg transition-colors"
+                onClick={() => setMenuOpen(false)}
+              >
+                Login
+              </Link>
+            </div>
           </div>
         </div>
       </>
@@ -66,25 +77,25 @@ const Layout = ({ children }: LayoutProps) => {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <header className="bg-white shadow-sm border-b sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6">
-          <div className="flex items-center justify-between h-16 sm:h-18">
-            {/* Logo - Made larger and bolder */}
+      <header className="bg-white shadow-sm border-b sticky top-0 z-40">
+        <div className="px-4">
+          <div className="flex items-center justify-between h-14">
+            {/* Logo */}
             <Link to="/" className="flex items-center space-x-2">
               <img 
                 src="/lovable-uploads/164ea4a6-a57e-4afe-9e7a-0190149b95b6.png" 
                 alt="Obeyyo" 
-                className="h-10 sm:h-12 w-auto object-contain"
+                className="h-8 w-auto object-contain"
               />
-              <span className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-[#FF6B9D] to-[#4A90E2] bg-clip-text text-transparent">
+              <span className="text-xl font-bold bg-gradient-to-r from-[#FF6B9D] to-[#4A90E2] bg-clip-text text-transparent">
                 obeyyo
               </span>
             </Link>
 
             {/* Desktop Navigation */}
-            <nav className="hidden md:flex space-x-6 lg:space-x-8">
+            <nav className="hidden md:flex space-x-6">
               {navItems.map((item) => (
                 <Link
                   key={item.path}
@@ -101,29 +112,39 @@ const Layout = ({ children }: LayoutProps) => {
             </nav>
 
             {/* Search Bar - Desktop */}
-            <div className="hidden lg:flex flex-1 max-w-lg mx-8">
+            <div className="hidden lg:flex flex-1 max-w-md mx-6">
               <div className="relative w-full">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                 <Input
                   placeholder="Search for products, brands..."
-                  className="pl-10 bg-gray-50 border-gray-200 focus:border-[#FF6B9D] rounded-full"
+                  className="pl-10 bg-gray-50 border-gray-200 focus:border-[#FF6B9D] rounded-lg text-sm"
                 />
               </div>
             </div>
 
             {/* Right Actions */}
-            <div className="flex items-center space-x-3 sm:space-x-4">
-              <Link to="/login">
-                <Button variant="outline" size="sm" className="hidden sm:inline-flex border-[#FF6B9D] text-[#FF6B9D] hover:bg-[#FF6B9D] hover:text-white rounded-full">
+            <div className="flex items-center space-x-2">
+              <Link to="/login" className="hidden sm:block">
+                <Button variant="outline" size="sm" className="border-[#FF6B9D] text-[#FF6B9D] hover:bg-[#FF6B9D] hover:text-white rounded-lg text-xs px-3 py-1.5">
                   Login
                 </Button>
+              </Link>
+              
+              {/* Cart - Desktop */}
+              <Link to="/cart" className="hidden md:flex relative p-2">
+                <ShoppingCart className="h-5 w-5 text-gray-600" />
+                {cartCount > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-[#FF6B9D] text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                    {cartCount}
+                  </span>
+                )}
               </Link>
               
               {/* Mobile Menu Button */}
               <Button 
                 variant="ghost" 
                 size="sm" 
-                className="md:hidden"
+                className="md:hidden p-2"
                 onClick={() => setMenuOpen(true)}
               >
                 <Menu className="h-5 w-5" />
@@ -133,28 +154,28 @@ const Layout = ({ children }: LayoutProps) => {
         </div>
 
         {/* Mobile Search */}
-        <div className="lg:hidden px-3 sm:px-4 pb-3">
+        <div className="lg:hidden px-4 pb-3">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
             <Input
               placeholder="Search for products, brands..."
-              className="pl-10 bg-gray-50 border-gray-200 focus:border-[#FF6B9D] text-sm rounded-full"
+              className="pl-10 bg-gray-50 border-gray-200 focus:border-[#FF6B9D] text-sm rounded-lg"
             />
           </div>
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="pb-20 md:pb-4">
+      <main className="pb-16 md:pb-4">
         {children}
       </main>
 
-      {/* Mobile Menu Render */}
-      {MobileMenu()}
+      {/* Mobile Menu */}
+      <MobileMenu />
 
       {/* Bottom Navigation - Mobile */}
-      <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 md:hidden z-50">
-        <div className="grid grid-cols-4 h-16">
+      <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 md:hidden z-40">
+        <div className="grid grid-cols-4 h-14">
           {bottomNavItems.map((item) => {
             const Icon = item.icon;
             const isActive = location.pathname === item.path;
@@ -163,14 +184,14 @@ const Layout = ({ children }: LayoutProps) => {
               <Link
                 key={item.path}
                 to={item.path}
-                className={`flex flex-col items-center justify-center space-y-1 relative ${
+                className={`flex flex-col items-center justify-center space-y-0.5 relative ${
                   isActive ? "text-[#FF6B9D]" : "text-gray-500"
                 }`}
               >
                 <div className="relative">
                   <Icon className="w-5 h-5" />
                   {item.badge && (
-                    <span className="absolute -top-2 -right-2 bg-[#FF6B9D] text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                    <span className="absolute -top-1 -right-1 bg-[#FF6B9D] text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
                       {item.badge}
                     </span>
                   )}

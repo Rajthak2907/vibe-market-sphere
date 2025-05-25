@@ -1,4 +1,3 @@
-
 import Layout from "@/components/Layout";
 import ImageCarousel from "@/components/ImageCarousel";
 import TabSection from "@/components/TabSection";
@@ -472,91 +471,73 @@ const Index = () => {
 
   return (
     <Layout>
-      <div className="space-y-6 bg-white">
-        {/* 1. Navbar (handled by Layout) */}
-        
-        {/* 2. Category Tab Section */}
+      <div className="space-y-2 bg-gray-50">
+        {/* Category Tab Section */}
         <TabSection tabs={tabData} />
 
-        {/* 3. Round Product Category Component */}
+        {/* Round Product Category Component */}
         <RoundCategorySection categories={categories} />
 
-        {/* 4. Hero Carousel */}
-        <div className="px-3 sm:px-4 lg:px-6">
+        {/* Hero Carousel */}
+        <div className="px-4">
           <ImageCarousel images={carouselImages} />
         </div>
 
-        {/* 5. Features Banner */}
+        {/* Features Banner */}
         <FeaturesBanner />
 
-        {/* 6. Top Categories on Offer */}
+        {/* Top Categories on Offer */}
         <TopCategoriesOffer categories={topOfferCategories} />
 
-        {/* 7. ⚡ Deal of the Day */}
-        <section className="px-3 sm:px-4 lg:px-6">
+        {/* Deal of the Day */}
+        <section className="px-4">
           <DealOfTheDay product={dealProduct} endTime={dealEndTime} />
         </section>
 
-        {/* 8. Pocket Friendly Section with Slider */}
+        {/* Pocket Friendly Section */}
         <PocketFriendlySection products={pocketFriendlyProducts} />
 
-        {/* 9. Promo Banner 1 */}
-        <section className="px-3 sm:px-4 lg:px-6">
+        {/* Promo Banner 1 */}
+        <section className="px-4">
           <PromoBanner banner={promoBanners[0]} />
         </section>
 
-        {/* 10. GenZ Picks */}
-        <section className="px-3 sm:px-4 lg:px-6">
-          <ProductSlider title="🔥 GenZ Picks" products={genzPicksProducts} />
-        </section>
+        {/* GenZ Picks */}
+        <ProductSlider title="🔥 GenZ Picks" products={genzPicksProducts} />
 
-        {/* 11. Top Brands on Offer */}
-        <section className="px-3 sm:px-4 lg:px-6">
-          <ProductSlider title="🏆 Top Brands on Offer" products={topBrandsProducts} />
-        </section>
+        {/* Top Brands on Offer */}
+        <ProductSlider title="🏆 Top Brands on Offer" products={topBrandsProducts} />
 
-        {/* 12. Promo Banner 2 */}
-        <section className="px-3 sm:px-4 lg:px-6">
+        {/* Promo Banner 2 */}
+        <section className="px-4">
           <PromoBanner banner={promoBanners[1]} />
         </section>
 
-        {/* 13. GenZ Brands on Offer */}
-        <section className="px-3 sm:px-4 lg:px-6">
-          <ProductSlider title="✨ GenZ Brands on Offer" products={genzBrandsProducts} />
-        </section>
+        {/* GenZ Brands on Offer */}
+        <ProductSlider title="✨ GenZ Brands on Offer" products={genzBrandsProducts} />
 
-        {/* 14. Deals on Men's Wardrobe */}
-        <section className="px-3 sm:px-4 lg:px-6">
-          <ProductSlider title="👔 Deals on Men's Wardrobe" products={mensWardrobeProducts} />
-        </section>
+        {/* Deals on Men's Wardrobe */}
+        <ProductSlider title="👔 Deals on Men's Wardrobe" products={mensWardrobeProducts} />
 
-        {/* 15. Promo Banner 3 */}
-        <section className="px-3 sm:px-4 lg:px-6">
+        {/* Promo Banner 3 */}
+        <section className="px-4">
           <PromoBanner banner={promoBanners[2]} />
         </section>
 
-        {/* 16. Brands Deal You Can't Miss */}
-        <section className="px-3 sm:px-4 lg:px-6">
-          <ProductSlider title="💎 Brands Deal You Can't Miss" products={brandsDealsProducts} />
-        </section>
+        {/* Brands Deal You Can't Miss */}
+        <ProductSlider title="💎 Brands Deal You Can't Miss" products={brandsDealsProducts} />
 
-        {/* 17. Deals on Women's Wardrobe */}
-        <section className="px-3 sm:px-4 lg:px-6">
-          <ProductSlider title="👗 Deals on Women's Wardrobe" products={womensWardrobeProducts} />
-        </section>
+        {/* Deals on Women's Wardrobe */}
+        <ProductSlider title="👗 Deals on Women's Wardrobe" products={womensWardrobeProducts} />
 
-        {/* 18. Featured Brands */}
-        <section className="px-3 sm:px-4 lg:px-6">
-          <ProductSlider title="⭐ Featured Brands" products={featuredBrandsProducts} />
-        </section>
+        {/* Featured Brands */}
+        <ProductSlider title="⭐ Featured Brands" products={featuredBrandsProducts} />
 
-        {/* 19. Best Brands */}
-        <section className="px-3 sm:px-4 lg:px-6">
-          <ProductSlider title="🎯 Best Brands" products={bestBrandsProducts} />
-        </section>
+        {/* Best Brands */}
+        <ProductSlider title="🎯 Best Brands" products={bestBrandsProducts} />
 
-        {/* 20. Final Promo Banner */}
-        <section className="px-3 sm:px-4 lg:px-6">
+        {/* Final Promo Banner */}
+        <section className="px-4">
           <PromoBanner banner={promoBanners[3]} />
         </section>
 
