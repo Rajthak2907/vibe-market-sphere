@@ -2,9 +2,10 @@
 import Layout from "@/components/Layout";
 import ProductCard from "@/components/ProductCard";
 import ImageCarousel from "@/components/ImageCarousel";
-import CategoryCard from "@/components/CategoryCard";
 import PromoBanner from "@/components/PromoBanner";
 import ProductSlider from "@/components/ProductSlider";
+import PocketFriendlySection from "@/components/PocketFriendlySection";
+import DealOfTheDay from "@/components/DealOfTheDay";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
@@ -51,27 +52,6 @@ const Men = () => {
       image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400",
       brand: "SportMax",
       isTrending: true
-    },
-    {
-      id: "m5",
-      name: "Leather Jacket",
-      price: 3499,
-      originalPrice: 4999,
-      rating: 4.6,
-      reviews: 94,
-      image: "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400",
-      brand: "LeatherCo",
-      isTrending: true
-    },
-    {
-      id: "m6",
-      name: "Casual Polo Shirt",
-      price: 799,
-      originalPrice: 1299,
-      rating: 4.4,
-      reviews: 156,
-      image: "https://images.unsplash.com/photo-1586790170083-2f9ceadc732d?w=400",
-      brand: "CasualWear"
     }
   ];
 
@@ -90,73 +70,297 @@ const Men = () => {
     }
   ];
 
-  const categories = [
+  const dealProduct = {
+    id: "deal-m1",
+    name: "Premium Leather Jacket",
+    price: 2999,
+    originalPrice: 5999,
+    rating: 4.8,
+    reviews: 234,
+    image: "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400",
+    brand: "LeatherCraft",
+    isNew: true
+  };
+
+  const pocketFriendlyProducts = [
     {
-      id: "shirts",
-      name: "Shirts",
-      image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=200",
-      itemCount: 45,
-      link: "/men/shirts"
+      id: "pf-m1",
+      name: "Basic Cotton Tee",
+      price: 299,
+      originalPrice: 599,
+      rating: 4.2,
+      reviews: 89,
+      image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400",
+      brand: "BasicWear"
     },
     {
-      id: "jeans", 
-      name: "Jeans",
-      image: "https://images.unsplash.com/photo-1542272604-787c3835535d?w=200",
-      itemCount: 32,
-      link: "/men/jeans"
+      id: "pf-m2",
+      name: "Casual Shorts",
+      price: 499,
+      originalPrice: 899,
+      rating: 4.0,
+      reviews: 156,
+      image: "https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=400",
+      brand: "CasualCo"
     },
     {
-      id: "shoes",
-      name: "Shoes", 
-      image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=200",
-      itemCount: 28,
-      link: "/men/shoes"
+      id: "pf-m3",
+      name: "Canvas Sneakers",
+      price: 699,
+      originalPrice: 1299,
+      rating: 4.3,
+      reviews: 67,
+      image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=400",
+      brand: "SneakerHub"
+    }
+  ];
+
+  const genzPicksProducts = [
+    {
+      id: "gz-m1",
+      name: "Oversized Graphic Hoodie",
+      price: 1299,
+      originalPrice: 2499,
+      rating: 4.8,
+      reviews: 245,
+      image: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400",
+      brand: "UrbanVibe",
+      isTrending: true
     },
     {
-      id: "jackets",
-      name: "Jackets",
-      image: "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=200", 
-      itemCount: 19,
-      link: "/men/jackets"
+      id: "gz-m2",
+      name: "Distressed Denim Jacket",
+      price: 1599,
+      originalPrice: 2999,
+      rating: 4.6,
+      reviews: 189,
+      image: "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400",
+      brand: "RebelWear"
+    }
+  ];
+
+  const topBrandsProducts = [
+    {
+      id: "tb-m1",
+      name: "Nike Air Max Sneakers",
+      price: 8999,
+      originalPrice: 12999,
+      rating: 4.9,
+      reviews: 892,
+      image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400",
+      brand: "Nike"
+    },
+    {
+      id: "tb-m2",
+      name: "Adidas Track Jacket",
+      price: 3999,
+      originalPrice: 5999,
+      rating: 4.7,
+      reviews: 445,
+      image: "https://images.unsplash.com/photo-1544966503-7cc5ac882d5f?w=400",
+      brand: "Adidas"
+    }
+  ];
+
+  const genzBrandsProducts = [
+    {
+      id: "gb-m1",
+      name: "Supreme Style Hoodie",
+      price: 2999,
+      originalPrice: 4999,
+      rating: 4.5,
+      reviews: 234,
+      image: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400",
+      brand: "StreetCore"
+    }
+  ];
+
+  const mensWardrobeProducts = [
+    {
+      id: "mw-m1",
+      name: "Formal White Shirt",
+      price: 1299,
+      originalPrice: 2499,
+      rating: 4.6,
+      reviews: 456,
+      image: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=400",
+      brand: "ClassicMen"
+    }
+  ];
+
+  const brandsDealsProducts = [
+    {
+      id: "bd-m1",
+      name: "Ray-Ban Sunglasses",
+      price: 7999,
+      originalPrice: 12999,
+      rating: 4.8,
+      reviews: 456,
+      image: "https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=400",
+      brand: "Ray-Ban"
+    }
+  ];
+
+  const womensWardrobeProducts = [
+    {
+      id: "ww-m1",
+      name: "Gift for Her - Silk Scarf",
+      price: 899,
+      originalPrice: 1599,
+      rating: 4.5,
+      reviews: 123,
+      image: "https://images.unsplash.com/photo-1590736969955-71cc94901144?w=400",
+      brand: "SilkTouch"
+    }
+  ];
+
+  const featuredBrandsProducts = [
+    {
+      id: "fb-m1",
+      name: "Premium Watch",
+      price: 15999,
+      originalPrice: 24999,
+      rating: 4.9,
+      reviews: 345,
+      image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400",
+      brand: "TimeMaster"
+    }
+  ];
+
+  const bestBrandsProducts = [
+    {
+      id: "bb-m1",
+      name: "Smart Fitness Tracker",
+      price: 8999,
+      originalPrice: 12999,
+      rating: 4.6,
+      reviews: 789,
+      image: "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=400",
+      brand: "FitTech"
+    }
+  ];
+
+  const promoBanners = [
+    {
+      id: "promo-m1",
+      title: "Men's Fashion Week",
+      subtitle: "Up to 70% off on trending styles",
+      buttonText: "Shop Now",
+      buttonLink: "/men/sale",
+      image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800",
+      backgroundColor: "#4A90E2"
+    },
+    {
+      id: "promo-m2",
+      title: "New Arrivals",
+      subtitle: "Fresh men's collection just dropped",
+      buttonText: "Explore",
+      buttonLink: "/men/new",
+      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800",
+      backgroundColor: "#FF9A6B"
+    },
+    {
+      id: "promo-m3",
+      title: "Brand Festival",
+      subtitle: "Best men's brands, unbeatable prices",
+      buttonText: "Shop Brands",
+      buttonLink: "/men/brands",
+      image: "https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=800",
+      backgroundColor: "#FF6B9D"
+    },
+    {
+      id: "promo-m4",
+      title: "Final Sale",
+      subtitle: "Last chance to grab men's deals",
+      buttonText: "Grab Deals",
+      buttonLink: "/men/final-sale",
+      image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800",
+      backgroundColor: "#4A90E2"
     }
   ];
 
   const filterCategories = ["All", "T-Shirts", "Shirts", "Jeans", "Shoes", "Accessories"];
+  const dealEndTime = new Date();
+  dealEndTime.setHours(dealEndTime.getHours() + 6);
 
   return (
     <Layout>
-      <div className="bg-white min-h-screen">
+      <div className="space-y-2 bg-gray-50">
         {/* Header with gradient background */}
-        <div className="bg-gradient-to-r from-[#FF6B9D] to-[#4A90E2] text-white px-4 sm:px-6 lg:px-8 py-8">
+        <div className="bg-gradient-to-r from-[#FF6B9D] to-[#4A90E2] text-white px-3 py-6">
           <div className="max-w-7xl mx-auto">
-            <h1 className="text-3xl sm:text-4xl font-bold mb-2">Men's Fashion</h1>
-            <p className="text-lg opacity-90">Discover the latest trends in men's clothing</p>
+            <h1 className="text-2xl sm:text-3xl font-bold mb-1">Men's Fashion</h1>
+            <p className="text-sm sm:text-base opacity-90">Discover the latest trends in men's clothing</p>
           </div>
         </div>
 
-        <div className="px-4 sm:px-6 lg:px-8 py-6 space-y-8">
-          {/* Image Carousel */}
+        {/* Hero Carousel */}
+        <div className="px-3">
           <ImageCarousel images={carouselImages} />
+        </div>
 
-          {/* Category Section */}
-          <div>
-            <h2 className="text-xl font-bold text-gray-800 mb-4">Shop by Category</h2>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-              {categories.map((category) => (
-                <CategoryCard key={category.id} category={category} size="medium" />
-              ))}
-            </div>
-          </div>
+        {/* Deal of the Day */}
+        <section className="px-3">
+          <DealOfTheDay product={dealProduct} endTime={dealEndTime} />
+        </section>
 
-          {/* Filters */}
-          <div className="flex flex-wrap items-center gap-4 py-4 border-t border-gray-200">
+        {/* Pocket Friendly Section */}
+        <PocketFriendlySection products={pocketFriendlyProducts} />
+
+        {/* Promo Banner 1 */}
+        <section className="px-3">
+          <PromoBanner banner={promoBanners[0]} />
+        </section>
+
+        {/* GenZ Picks */}
+        <ProductSlider title="🔥 GenZ Picks" products={genzPicksProducts} />
+
+        {/* Top Brands on Offer */}
+        <ProductSlider title="🏆 Top Brands on Offer" products={topBrandsProducts} />
+
+        {/* Promo Banner 2 */}
+        <section className="px-3">
+          <PromoBanner banner={promoBanners[1]} />
+        </section>
+
+        {/* GenZ Brands on Offer */}
+        <ProductSlider title="✨ GenZ Brands on Offer" products={genzBrandsProducts} />
+
+        {/* Deals on Men's Wardrobe */}
+        <ProductSlider title="👔 Deals on Men's Wardrobe" products={mensWardrobeProducts} />
+
+        {/* Promo Banner 3 */}
+        <section className="px-3">
+          <PromoBanner banner={promoBanners[2]} />
+        </section>
+
+        {/* Brands Deal You Can't Miss */}
+        <ProductSlider title="💎 Brands Deal You Can't Miss" products={brandsDealsProducts} />
+
+        {/* Deals on Women's Wardrobe */}
+        <ProductSlider title="👗 Deals on Women's Wardrobe" products={womensWardrobeProducts} />
+
+        {/* Featured Brands */}
+        <ProductSlider title="⭐ Featured Brands" products={featuredBrandsProducts} />
+
+        {/* Best Brands */}
+        <ProductSlider title="🎯 Best Brands" products={bestBrandsProducts} />
+
+        {/* Final Promo Banner */}
+        <section className="px-3">
+          <PromoBanner banner={promoBanners[3]} />
+        </section>
+
+        {/* Filters */}
+        <div className="px-3">
+          <div className="flex flex-wrap items-center gap-3 py-3 border-t border-gray-200 bg-white rounded-lg">
             <div className="flex overflow-x-auto space-x-2 pb-2">
               {filterCategories.map((category) => (
                 <Button
                   key={category}
                   variant={category === "All" ? "default" : "outline"}
                   size="sm"
-                  className={`whitespace-nowrap rounded-full ${
+                  className={`whitespace-nowrap rounded-full text-xs px-3 py-1.5 ${
                     category === "All" 
                       ? "bg-[#FF6B9D] hover:bg-[#FF6B9D]/90" 
                       : "border-gray-300 hover:border-[#FF6B9D] hover:text-[#FF6B9D]"
@@ -168,7 +372,7 @@ const Men = () => {
             </div>
             <div className="ml-auto">
               <Select>
-                <SelectTrigger className="w-48 rounded-full">
+                <SelectTrigger className="w-40 rounded-full text-xs">
                   <SelectValue placeholder="Sort by" />
                 </SelectTrigger>
                 <SelectContent>
@@ -181,9 +385,11 @@ const Men = () => {
               </Select>
             </div>
           </div>
+        </div>
 
-          {/* Products Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+        {/* Products Grid */}
+        <div className="px-3">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
             {products.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
