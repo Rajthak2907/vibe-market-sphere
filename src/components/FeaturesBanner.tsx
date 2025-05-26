@@ -26,18 +26,18 @@ const FeaturesBanner = () => {
   ];
 
   return (
-    <section className="px-4 sm:px-6 lg:px-8">
-      <div className="bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl p-6">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+    <section className="px-4">
+      <div className="bg-gradient-to-r from-gray-50 to-gray-100 rounded-lg p-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {features.map((feature, index) => {
             const Icon = feature.icon;
             return (
               <div key={index} className="text-center">
-                <div className="w-12 h-12 bg-brand-pink rounded-full flex items-center justify-center mx-auto mb-3">
-                  <Icon className="w-6 h-6 text-white" />
+                <div className="w-8 h-8 bg-[#FF6B9D] rounded-full flex items-center justify-center mx-auto mb-2">
+                  <Icon className="w-4 h-4 text-white" />
                 </div>
-                <h3 className="font-semibold text-gray-800 mb-1">{feature.title}</h3>
-                <p className="text-sm text-gray-600">{feature.description}</p>
+                <h3 className="font-semibold text-gray-800 text-sm mb-1">{feature.title}</h3>
+                <p className="text-xs text-gray-600">{feature.description}</p>
               </div>
             );
           })}

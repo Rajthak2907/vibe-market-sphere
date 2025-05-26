@@ -1,3 +1,4 @@
+
 import Layout from "@/components/Layout";
 import ImageCarousel from "@/components/ImageCarousel";
 import TabSection from "@/components/TabSection";
@@ -9,6 +10,8 @@ import DealOfTheDay from "@/components/DealOfTheDay";
 import PromoBanner from "@/components/PromoBanner";
 import ProductSlider from "@/components/ProductSlider";
 import Footer from "@/components/Footer";
+import NarrowPromoBanner from "@/components/NarrowPromoBanner";
+import SectionHeader from "@/components/SectionHeader";
 
 const Index = () => {
   // Mock data
@@ -33,7 +36,6 @@ const Index = () => {
     }
   ];
 
-  // Categories matching the reference design
   const categories = [
     { id: "1", name: "T-Shirts", image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=300", itemCount: 1200, link: "/men" },
     { id: "2", name: "Kurtas", image: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=300", itemCount: 800, link: "/women" },
@@ -57,7 +59,6 @@ const Index = () => {
     isNew: true
   };
 
-  // Tab section data - simplified since we're not showing products in the All tab
   const tabData = [
     {
       name: "All",
@@ -81,7 +82,6 @@ const Index = () => {
     }
   ];
 
-  // Top categories on offer matching reference design
   const topOfferCategories = [
     { id: "1", name: "Casual Shirts", image: "https://images.unsplash.com/photo-1434389677669-e08b4cac3105?w=300", discount: "Up to 70% OFF", link: "/men" },
     { id: "2", name: "Designer Dresses", image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=300", discount: "Up to 50% OFF", link: "/women" },
@@ -153,7 +153,6 @@ const Index = () => {
     }
   ];
 
-  // GenZ picks products
   const genzPicksProducts = [
     {
       id: "gz-1",
@@ -188,7 +187,6 @@ const Index = () => {
     }
   ];
 
-  // Top brands products
   const topBrandsProducts = [
     {
       id: "tb-1",
@@ -256,7 +254,6 @@ const Index = () => {
     }
   ];
 
-  // Men's wardrobe products
   const mensWardrobeProducts = [
     {
       id: "mw-1",
@@ -290,7 +287,6 @@ const Index = () => {
     }
   ];
 
-  // Women's wardrobe products
   const womensWardrobeProducts = [
     {
       id: "ww-1",
@@ -324,7 +320,6 @@ const Index = () => {
     }
   ];
 
-  // Featured brands products
   const featuredBrandsProducts = [
     {
       id: "fb-1",
@@ -358,7 +353,6 @@ const Index = () => {
     }
   ];
 
-  // Best brands products
   const bestBrandsProducts = [
     {
       id: "bb-1",
@@ -392,7 +386,6 @@ const Index = () => {
     }
   ];
 
-  // Brands deal products
   const brandsDealsProducts = [
     {
       id: "bd-1",
@@ -426,7 +419,6 @@ const Index = () => {
     }
   ];
 
-  // Promo banners data
   const promoBanners = [
     {
       id: "promo-1",
@@ -471,31 +463,43 @@ const Index = () => {
 
   return (
     <Layout>
-      <div className="space-y-2 bg-gray-50">
+      <div className="space-y-4 bg-gray-50">
         {/* Category Tab Section */}
         <TabSection tabs={tabData} />
 
         {/* Round Product Category Component */}
         <RoundCategorySection categories={categories} />
 
-        {/* Hero Carousel */}
-        <div className="px-4">
-          <ImageCarousel images={carouselImages} />
+        {/* Narrow Promo Banner */}
+        <NarrowPromoBanner />
+
+        {/* Hero Carousel - Full Width and Increased Height */}
+        <div className="px-0">
+          <div className="relative w-full h-80 md:h-96 lg:h-[500px] overflow-hidden">
+            <ImageCarousel images={carouselImages} />
+          </div>
         </div>
 
-        {/* Features Banner */}
+        {/* Features Banner - Compact */}
         <FeaturesBanner />
 
         {/* Top Categories on Offer */}
-        <TopCategoriesOffer categories={topOfferCategories} />
+        <section className="px-4">
+          <SectionHeader title="🔥 Top Categories on Offer" viewAllLink="/categories" />
+          <TopCategoriesOffer categories={topOfferCategories} />
+        </section>
 
         {/* Deal of the Day */}
         <section className="px-4">
+          <SectionHeader title="⚡ Deal of the Day" viewAllLink="/deals" />
           <DealOfTheDay product={dealProduct} endTime={dealEndTime} />
         </section>
 
         {/* Pocket Friendly Section */}
-        <PocketFriendlySection products={pocketFriendlyProducts} />
+        <section className="px-4">
+          <SectionHeader title="💰 Pocket Friendly" viewAllLink="/pocket-friendly" />
+          <PocketFriendlySection products={pocketFriendlyProducts} />
+        </section>
 
         {/* Promo Banner 1 */}
         <section className="px-4">
@@ -503,10 +507,16 @@ const Index = () => {
         </section>
 
         {/* GenZ Picks */}
-        <ProductSlider title="🔥 GenZ Picks" products={genzPicksProducts} />
+        <section className="px-4">
+          <SectionHeader title="🔥 GenZ Picks" viewAllLink="/genz-picks" />
+          <ProductSlider title="" products={genzPicksProducts} />
+        </section>
 
         {/* Top Brands on Offer */}
-        <ProductSlider title="🏆 Top Brands on Offer" products={topBrandsProducts} />
+        <section className="px-4">
+          <SectionHeader title="🏆 Top Brands on Offer" viewAllLink="/top-brands" />
+          <ProductSlider title="" products={topBrandsProducts} />
+        </section>
 
         {/* Promo Banner 2 */}
         <section className="px-4">
@@ -514,10 +524,16 @@ const Index = () => {
         </section>
 
         {/* GenZ Brands on Offer */}
-        <ProductSlider title="✨ GenZ Brands on Offer" products={genzBrandsProducts} />
+        <section className="px-4">
+          <SectionHeader title="✨ GenZ Brands on Offer" viewAllLink="/genz-brands" />
+          <ProductSlider title="" products={genzBrandsProducts} />
+        </section>
 
         {/* Deals on Men's Wardrobe */}
-        <ProductSlider title="👔 Deals on Men's Wardrobe" products={mensWardrobeProducts} />
+        <section className="px-4">
+          <SectionHeader title="👔 Deals on Men's Wardrobe" viewAllLink="/mens-deals" />
+          <ProductSlider title="" products={mensWardrobeProducts} />
+        </section>
 
         {/* Promo Banner 3 */}
         <section className="px-4">
@@ -525,16 +541,28 @@ const Index = () => {
         </section>
 
         {/* Brands Deal You Can't Miss */}
-        <ProductSlider title="💎 Brands Deal You Can't Miss" products={brandsDealsProducts} />
+        <section className="px-4">
+          <SectionHeader title="💎 Brands Deal You Can't Miss" viewAllLink="/brand-deals" />
+          <ProductSlider title="" products={brandsDealsProducts} />
+        </section>
 
         {/* Deals on Women's Wardrobe */}
-        <ProductSlider title="👗 Deals on Women's Wardrobe" products={womensWardrobeProducts} />
+        <section className="px-4">
+          <SectionHeader title="👗 Deals on Women's Wardrobe" viewAllLink="/womens-deals" />
+          <ProductSlider title="" products={womensWardrobeProducts} />
+        </section>
 
         {/* Featured Brands */}
-        <ProductSlider title="⭐ Featured Brands" products={featuredBrandsProducts} />
+        <section className="px-4">
+          <SectionHeader title="⭐ Featured Brands" viewAllLink="/featured-brands" />
+          <ProductSlider title="" products={featuredBrandsProducts} />
+        </section>
 
         {/* Best Brands */}
-        <ProductSlider title="🎯 Best Brands" products={bestBrandsProducts} />
+        <section className="px-4">
+          <SectionHeader title="🎯 Best Brands" viewAllLink="/best-brands" />
+          <ProductSlider title="" products={bestBrandsProducts} />
+        </section>
 
         {/* Final Promo Banner */}
         <section className="px-4">

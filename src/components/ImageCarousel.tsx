@@ -38,7 +38,7 @@ const ImageCarousel = ({ images, autoPlay = true, interval = 5000 }: CarouselPro
   };
 
   return (
-    <div className="relative w-full h-64 md:h-80 lg:h-96 overflow-hidden rounded-xl">
+    <div className="relative w-full h-full overflow-hidden">
       {/* Images */}
       <div 
         className="flex transition-transform duration-500 ease-in-out h-full"
@@ -53,9 +53,9 @@ const ImageCarousel = ({ images, autoPlay = true, interval = 5000 }: CarouselPro
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
             <div className="absolute bottom-6 left-6 text-white">
-              <h3 className="text-xl md:text-2xl font-bold">{image.title}</h3>
+              <h3 className="text-xl md:text-3xl lg:text-4xl font-bold">{image.title}</h3>
               {image.subtitle && (
-                <p className="text-sm md:text-base opacity-90">{image.subtitle}</p>
+                <p className="text-sm md:text-lg lg:text-xl opacity-90 mt-2">{image.subtitle}</p>
               )}
             </div>
           </div>
@@ -66,7 +66,7 @@ const ImageCarousel = ({ images, autoPlay = true, interval = 5000 }: CarouselPro
       <Button
         variant="ghost"
         size="sm"
-        className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white rounded-full p-2"
+        className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white rounded-full p-3"
         onClick={goToPrevious}
       >
         <ChevronLeft className="w-5 h-5" />
@@ -75,7 +75,7 @@ const ImageCarousel = ({ images, autoPlay = true, interval = 5000 }: CarouselPro
       <Button
         variant="ghost"
         size="sm"
-        className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white rounded-full p-2"
+        className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white rounded-full p-3"
         onClick={goToNext}
       >
         <ChevronRight className="w-5 h-5" />
@@ -86,7 +86,7 @@ const ImageCarousel = ({ images, autoPlay = true, interval = 5000 }: CarouselPro
         {images.map((_, index) => (
           <button
             key={index}
-            className={`w-2 h-2 rounded-full transition-colors ${
+            className={`w-3 h-3 rounded-full transition-colors ${
               index === currentIndex ? "bg-white" : "bg-white/50"
             }`}
             onClick={() => setCurrentIndex(index)}
