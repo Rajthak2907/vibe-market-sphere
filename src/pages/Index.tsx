@@ -1,4 +1,3 @@
-
 import Layout from "@/components/Layout";
 import ImageCarousel from "@/components/ImageCarousel";
 import TabSection from "@/components/TabSection";
@@ -12,6 +11,9 @@ import ProductSlider from "@/components/ProductSlider";
 import Footer from "@/components/Footer";
 import NarrowPromoBanner from "@/components/NarrowPromoBanner";
 import SectionHeader from "@/components/SectionHeader";
+import FeaturedBrands from "@/components/FeaturedBrands";
+import NarrowPromoCarousel from "@/components/NarrowPromoCarousel";
+import PriceDroppedSection from "@/components/PriceDroppedSection";
 
 const Index = () => {
   // Mock data
@@ -461,6 +463,147 @@ const Index = () => {
   const dealEndTime = new Date();
   dealEndTime.setHours(dealEndTime.getHours() + 8);
 
+  // Featured brands data
+  const featuredBrands = [
+    {
+      id: "fb-1",
+      name: "Nike",
+      logo: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=100",
+      discount: "Up to 50% OFF",
+      link: "/brands/nike"
+    },
+    {
+      id: "fb-2",
+      name: "Adidas",
+      logo: "https://images.unsplash.com/photo-1544966503-7cc5ac882d5f?w=100",
+      discount: "Up to 40% OFF",
+      link: "/brands/adidas"
+    },
+    {
+      id: "fb-3",
+      name: "Puma",
+      logo: "https://images.unsplash.com/photo-1571945153237-4929e783af4a?w=100",
+      discount: "Up to 60% OFF",
+      link: "/brands/puma"
+    },
+    {
+      id: "fb-4",
+      name: "Levi's",
+      logo: "https://images.unsplash.com/photo-1542272604-787c3835535d?w=100",
+      discount: "Up to 45% OFF",
+      link: "/brands/levis"
+    },
+    {
+      id: "fb-5",
+      name: "Ray-Ban",
+      logo: "https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=100",
+      discount: "Up to 35% OFF",
+      link: "/brands/rayban"
+    }
+  ];
+
+  // Top rated brands data
+  const topRatedBrands = [
+    {
+      id: "tr-1",
+      name: "Apple",
+      logo: "https://images.unsplash.com/photo-1611472173362-3f53dbd65d80?w=100",
+      discount: "Up to 15% OFF",
+      link: "/brands/apple"
+    },
+    {
+      id: "tr-2",
+      name: "Samsung",
+      logo: "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=100",
+      discount: "Up to 25% OFF",
+      link: "/brands/samsung"
+    },
+    {
+      id: "tr-3",
+      name: "Sony",
+      logo: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=100",
+      discount: "Up to 30% OFF",
+      link: "/brands/sony"
+    },
+    {
+      id: "tr-4",
+      name: "Canon",
+      logo: "https://images.unsplash.com/photo-1606983340126-99ab4feaa64a?w=100",
+      discount: "Up to 20% OFF",
+      link: "/brands/canon"
+    }
+  ];
+
+  // Narrow promo carousel data
+  const narrowPromos = [
+    {
+      id: "np-1",
+      text: "🎉 Free Shipping on Orders Above ₹999",
+      link: "/free-shipping",
+      bgColor: "#FF6B9D"
+    },
+    {
+      id: "np-2",
+      text: "⚡ Lightning Deal: 70% OFF Electronics",
+      link: "/electronics-deal",
+      bgColor: "#4A90E2"
+    },
+    {
+      id: "np-3",
+      text: "🔥 Hot Sale: Buy 2 Get 1 Free on Fashion",
+      link: "/fashion-sale",
+      bgColor: "#FF9A6B"
+    }
+  ];
+
+  // Price dropped products
+  const priceDroppedProducts = [
+    {
+      id: "pd-1",
+      name: "Wireless Headphones",
+      price: 1999,
+      originalPrice: 4999,
+      rating: 4.5,
+      reviews: 245,
+      image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400",
+      brand: "AudioTech",
+      priceDropPercent: 60
+    },
+    {
+      id: "pd-2",
+      name: "Smart Watch",
+      price: 2999,
+      originalPrice: 7999,
+      rating: 4.3,
+      reviews: 189,
+      image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400",
+      brand: "TechWear",
+      priceDropPercent: 62
+    },
+    {
+      id: "pd-3",
+      name: "Running Shoes",
+      price: 1599,
+      originalPrice: 3999,
+      rating: 4.6,
+      reviews: 567,
+      image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400",
+      brand: "SportFit",
+      priceDropPercent: 60
+    },
+    {
+      id: "pd-4",
+      name: "Bluetooth Speaker",
+      price: 899,
+      originalPrice: 2499,
+      rating: 4.2,
+      reviews: 123,
+      image: "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400",
+      brand: "SoundMax",
+      priceDropPercent: 64
+    }
+  ];
+
   return (
     <Layout>
       <div className="space-y-4 bg-gray-50">
@@ -499,6 +642,27 @@ const Index = () => {
         <section className="px-4">
           <SectionHeader title="💰 Pocket Friendly" viewAllLink="/pocket-friendly" />
           <PocketFriendlySection products={pocketFriendlyProducts} />
+        </section>
+
+        {/* Featured Brands */}
+        <section className="px-4">
+          <SectionHeader title="⭐ Featured Brands" viewAllLink="/featured-brands" />
+          <FeaturedBrands brands={featuredBrands} />
+        </section>
+
+        {/* Narrow Promo Carousel */}
+        <NarrowPromoCarousel promos={narrowPromos} />
+
+        {/* Top Rated Brands */}
+        <section className="px-4">
+          <SectionHeader title="🏆 Top Rated Brands" viewAllLink="/top-rated-brands" />
+          <FeaturedBrands brands={topRatedBrands} />
+        </section>
+
+        {/* Price Dropped */}
+        <section className="px-4">
+          <SectionHeader title="📉 Price Dropped" viewAllLink="/price-dropped" />
+          <PriceDroppedSection products={priceDroppedProducts} />
         </section>
 
         {/* Promo Banner 1 */}
