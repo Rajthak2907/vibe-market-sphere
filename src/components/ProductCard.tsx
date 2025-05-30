@@ -1,7 +1,8 @@
 
 import { Link } from "react-router-dom";
-import { Heart, Star } from "lucide-react";
+import { Heart, Star, ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
 
 interface ProductCardProps {
@@ -17,6 +18,8 @@ interface ProductCardProps {
     brand: string;
     isNew?: boolean;
     isTrending?: boolean;
+    isFlashSale?: boolean;
+    isTopRated?: boolean;
   };
   className?: string;
 }
@@ -28,33 +31,66 @@ const ProductCard = ({ product, className = "" }: ProductCardProps) => {
     ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
     : 0;
 
+  const handleWishlistToggle = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsWishlisted(!isWishlisted);
+    
+    // Save to localStorage for guest users
+    const wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+    if (isWishlisted) {
+      const filteredWishlist = wishlist.filter((id: string) => id !== product.id);
+      localStorage.setItem('wishlist', JSON.stringify(filteredWishlist));
+    } else {
+      wishlist.push(product.id);
+      localStorage.setItem('wishlist', JSON.stringify(wishlist));
+    }
+  };
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    // Add to cart logic
+  };
+
   return (
-    <div className={`bg-white rounded-lg sm:rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden group ${className}`}>
-      <div className="relative">
+    <div className={`bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden group relative ${className}`}>
+      {/* Image Container */}
+      <div className="relative overflow-hidden">
         <Link to={`/product/${product.id}`}>
           <img
             src={product.image}
             alt={product.name}
-            className="w-full h-40 sm:h-48 lg:h-56 object-cover group-hover:scale-105 transition-transform duration-300"
+            className="w-full h-48 sm:h-52 object-cover group-hover:scale-110 transition-transform duration-500"
           />
         </Link>
         
         {/* Badges */}
-        <div className="absolute top-2 left-2 flex flex-col gap-1">
-          {product.isNew && (
-            <span className="bg-brand-green text-white text-xs px-2 py-1 rounded-full font-medium">
-              NEW
-            </span>
-          )}
+        <div className="absolute top-3 left-3 flex flex-col gap-2">
           {product.isTrending && (
-            <span className="bg-brand-orange text-white text-xs px-2 py-1 rounded-full font-medium">
-              TRENDING
-            </span>
+            <Badge className="bg-gradient-to-r from-orange-400 to-red-500 text-white text-xs px-2 py-1 rounded-full font-semibold shadow-lg">
+              🔥 Trending
+            </Badge>
+          )}
+          {product.isFlashSale && (
+            <Badge className="bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xs px-2 py-1 rounded-full font-semibold shadow-lg animate-pulse">
+              ⏰ Flash Sale
+            </Badge>
+          )}
+          {product.isNew && (
+            <Badge className="bg-gradient-to-r from-green-400 to-blue-500 text-white text-xs px-2 py-1 rounded-full font-semibold shadow-lg">
+              🌟 New
+            </Badge>
+          )}
+          {product.isTopRated && (
+            <Badge className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-xs px-2 py-1 rounded-full font-semibold shadow-lg">
+              🏆 Top Rated
+            </Badge>
           )}
           {discountPercent > 0 && (
-            <span className="bg-brand-pink text-white text-xs px-2 py-1 rounded-full font-medium">
+            <Badge className="bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs px-2 py-1 rounded-full font-semibold shadow-lg">
               {discountPercent}% OFF
-            </span>
+            </Badge>
           )}
         </div>
 
@@ -62,39 +98,52 @@ const ProductCard = ({ product, className = "" }: ProductCardProps) => {
         <Button
           variant="ghost"
           size="sm"
-          className="absolute top-2 right-2 p-1.5 sm:p-2 rounded-full bg-white/80 hover:bg-white"
-          onClick={() => setIsWishlisted(!isWishlisted)}
+          className="absolute top-3 right-3 p-2 rounded-full bg-white/90 backdrop-blur-sm hover:bg-white shadow-lg"
+          onClick={handleWishlistToggle}
         >
-          <Heart className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${isWishlisted ? 'fill-red-500 text-red-500' : 'text-gray-600'}`} />
+          <Heart 
+            className={`w-4 h-4 transition-colors ${
+              isWishlisted ? 'fill-red-500 text-red-500' : 'text-gray-600'
+            }`} 
+          />
+        </Button>
+
+        {/* Quick Add to Cart - Shows on Hover */}
+        <Button
+          onClick={handleAddToCart}
+          className="absolute bottom-3 left-3 right-3 bg-gradient-to-r from-[#FF6B9D] to-[#4A90E2] text-white rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0"
+        >
+          <ShoppingCart className="w-4 h-4 mr-2" />
+          Add to Cart
         </Button>
       </div>
 
-      <div className="p-3 sm:p-4 space-y-2">
-        <div className="flex items-center justify-between gap-2">
-          <span className="text-xs text-gray-500 uppercase tracking-wide truncate">{product.brand}</span>
-          <div className="flex items-center gap-1 flex-shrink-0">
+      {/* Content */}
+      <div className="p-4 space-y-2">
+        {/* Brand & Rating */}
+        <div className="flex items-center justify-between">
+          <span className="text-xs text-gray-500 uppercase tracking-wide font-medium">{product.brand}</span>
+          <div className="flex items-center gap-1">
             <Star className="w-3 h-3 fill-yellow-400 text-yellow-400" />
-            <span className="text-xs text-gray-600">{product.rating}</span>
+            <span className="text-xs text-gray-600 font-medium">{product.rating}</span>
             <span className="text-xs text-gray-400">({product.reviews})</span>
           </div>
         </div>
 
+        {/* Product Name */}
         <Link to={`/product/${product.id}`}>
-          <h3 className="font-medium text-sm sm:text-base text-gray-800 line-clamp-2 hover:text-primary transition-colors leading-tight">
+          <h3 className="font-semibold text-sm text-gray-800 line-clamp-2 hover:text-[#FF6B9D] transition-colors leading-tight">
             {product.name}
           </h3>
         </Link>
 
+        {/* Pricing */}
         <div className="flex items-center gap-2">
-          <span className="font-bold text-base sm:text-lg text-gray-900">₹{product.price}</span>
+          <span className="font-bold text-lg text-gray-900">₹{product.price.toLocaleString()}</span>
           {product.originalPrice && (
-            <span className="text-xs sm:text-sm text-gray-500 line-through">₹{product.originalPrice}</span>
+            <span className="text-sm text-gray-500 line-through">₹{product.originalPrice.toLocaleString()}</span>
           )}
         </div>
-
-        <Button className="w-full bg-gradient-brand hover:opacity-90 text-white border-0 h-8 sm:h-9 text-xs sm:text-sm">
-          Add to Cart
-        </Button>
       </div>
     </div>
   );

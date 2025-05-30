@@ -1,22 +1,35 @@
+
 import Layout from "@/components/Layout";
 import ImageCarousel from "@/components/ImageCarousel";
-import TabSection from "@/components/TabSection";
-import RoundCategorySection from "@/components/RoundCategorySection";
-import FeaturesBanner from "@/components/FeaturesBanner";
-import TopCategoriesOffer from "@/components/TopCategoriesOffer";
-import PocketFriendlySection from "@/components/PocketFriendlySection";
-import DealOfTheDay from "@/components/DealOfTheDay";
-import PromoBanner from "@/components/PromoBanner";
-import ProductSlider from "@/components/ProductSlider";
-import Footer from "@/components/Footer";
-import NarrowPromoBanner from "@/components/NarrowPromoBanner";
-import SectionHeader from "@/components/SectionHeader";
+import ProductCard from "@/components/ProductCard";
 import FeaturedBrands from "@/components/FeaturedBrands";
 import NarrowPromoCarousel from "@/components/NarrowPromoCarousel";
 import PriceDroppedSection from "@/components/PriceDroppedSection";
+import SkeletonLoader from "@/components/SkeletonLoader";
+import { ChevronRight, Clock, Fire, Star, Zap } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Link } from "react-router-dom";
+import { useRef, useState, useEffect } from "react";
 
 const Index = () => {
-  // Mock data
+  const [isLoading, setIsLoading] = useState(true);
+  const sliderRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // Simulate loading
+    const timer = setTimeout(() => setIsLoading(false), 1500);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const scroll = (direction: 'left' | 'right', ref: React.RefObject<HTMLDivElement>) => {
+    if (ref.current) {
+      const scrollAmount = direction === 'left' ? -280 : 280;
+      ref.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
+  };
+
+  // Mock data with modern product attributes
   const carouselImages = [
     {
       id: "1",
@@ -29,135 +42,12 @@ const Index = () => {
       url: "https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=800",
       title: "Fashion Week Special",
       subtitle: "Exclusive Designer Wear"
-    },
-    {
-      id: "3",
-      url: "https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=800",
-      title: "Flash Sale",
-      subtitle: "Limited Time Offer - Don't Miss Out!"
     }
   ];
 
-  const categories = [
-    { id: "1", name: "T-Shirts", image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=300", itemCount: 1200, link: "/men" },
-    { id: "2", name: "Kurtas", image: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=300", itemCount: 800, link: "/women" },
-    { id: "3", name: "Jeans", image: "https://images.unsplash.com/photo-1542272604-787c3835535d?w=300", itemCount: 950, link: "/men" },
-    { id: "4", name: "Shoes", image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=300", itemCount: 600, link: "/accessories" },
-    { id: "5", name: "Bags", image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=300", itemCount: 450, link: "/accessories" },
-    { id: "6", name: "Watches", image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=300", itemCount: 320, link: "/accessories" },
-    { id: "7", name: "Sarees", image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=300", itemCount: 750, link: "/women" },
-    { id: "8", name: "Sports", image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=300", itemCount: 540, link: "/men" }
-  ];
-
-  const dealProduct = {
-    id: "deal-1",
-    name: "Premium Wireless Headphones with Noise Cancellation",
-    price: 1999,
-    originalPrice: 4999,
-    rating: 4.9,
-    reviews: 342,
-    image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400",
-    brand: "AudioMax",
-    isNew: true
-  };
-
-  const tabData = [
+  const trendingProducts = [
     {
-      name: "All",
-      value: "all",
-      products: []
-    },
-    {
-      name: "Men", 
-      value: "men",
-      products: []
-    },
-    {
-      name: "Women",
-      value: "women", 
-      products: []
-    },
-    {
-      name: "Kids",
-      value: "kids",
-      products: []
-    }
-  ];
-
-  const topOfferCategories = [
-    { id: "1", name: "Casual Shirts", image: "https://images.unsplash.com/photo-1434389677669-e08b4cac3105?w=300", discount: "Up to 70% OFF", link: "/men" },
-    { id: "2", name: "Designer Dresses", image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=300", discount: "Up to 50% OFF", link: "/women" },
-    { id: "3", name: "Accessories", image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=300", discount: "Up to 60% OFF", link: "/accessories" },
-    { id: "4", name: "Luxury Watches", image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=300", discount: "Up to 40% OFF", link: "/accessories" }
-  ];
-
-  // Pocket friendly products
-  const pocketFriendlyProducts = [
-    {
-      id: "pf-1",
-      name: "Casual Cotton Tee",
-      price: 299,
-      originalPrice: 599,
-      rating: 4.2,
-      reviews: 89,
-      image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400",
-      brand: "BasicWear"
-    },
-    {
-      id: "pf-2",
-      name: "Slim Fit Jeans",
-      price: 799,
-      originalPrice: 1599,
-      rating: 4.0,
-      reviews: 156,
-      image: "https://images.unsplash.com/photo-1542272604-787c3835535d?w=400",
-      brand: "DenimCo"
-    },
-    {
-      id: "pf-3",
-      name: "Canvas Backpack",
-      price: 599,
-      originalPrice: 999,
-      rating: 4.3,
-      reviews: 67,
-      image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400",
-      brand: "EverydayBags"
-    },
-    {
-      id: "pf-4",
-      name: "Sports Sneakers",
-      price: 699,
-      originalPrice: 1299,
-      rating: 4.1,
-      reviews: 123,
-      image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=400",
-      brand: "SportFit"
-    },
-    {
-      id: "pf-5",
-      name: "Cotton Kurta",
-      price: 449,
-      originalPrice: 899,
-      rating: 4.4,
-      reviews: 78,
-      image: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=400",
-      brand: "EthnicWear"
-    },
-    {
-      id: "pf-6",
-      name: "Casual Shirt",
-      price: 599,
-      originalPrice: 1199,
-      rating: 4.2,
-      reviews: 134,
-      image: "https://images.unsplash.com/photo-1434389677669-e08b4cac3105?w=400",
-      brand: "StyleCo"
-    }
-  ];
-
-  const genzPicksProducts = [
-    {
-      id: "gz-1",
+      id: "t-1",
       name: "Oversized Graphic Hoodie",
       price: 1299,
       originalPrice: 2499,
@@ -168,302 +58,127 @@ const Index = () => {
       isTrending: true
     },
     {
-      id: "gz-2",
+      id: "t-2",
       name: "Cropped Denim Jacket",
       price: 1599,
       originalPrice: 2999,
       rating: 4.6,
       reviews: 189,
       image: "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400",
-      brand: "RebelWear"
+      brand: "RebelWear",
+      isTrending: true
     },
     {
-      id: "gz-3",
+      id: "t-3",
       name: "Aesthetic Phone Case",
       price: 399,
       originalPrice: 799,
       rating: 4.5,
       reviews: 567,
       image: "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400",
-      brand: "TechStyle"
+      brand: "TechStyle",
+      isTrending: true
     }
   ];
 
-  const topBrandsProducts = [
+  const flashSaleProducts = [
     {
-      id: "tb-1",
+      id: "fs-1",
+      name: "Premium Wireless Headphones",
+      price: 1999,
+      originalPrice: 4999,
+      rating: 4.9,
+      reviews: 342,
+      image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400",
+      brand: "AudioMax",
+      isFlashSale: true
+    },
+    {
+      id: "fs-2",
+      name: "Smart Fitness Tracker",
+      price: 2499,
+      originalPrice: 5999,
+      rating: 4.7,
+      reviews: 189,
+      image: "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=400",
+      brand: "FitTech",
+      isFlashSale: true
+    }
+  ];
+
+  const newArrivals = [
+    {
+      id: "na-1",
+      name: "Designer Midi Dress",
+      price: 2299,
+      originalPrice: 3999,
+      rating: 4.8,
+      reviews: 156,
+      image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=400",
+      brand: "ElegantWear",
+      isNew: true
+    },
+    {
+      id: "na-2",
+      name: "Casual Cotton Tee",
+      price: 599,
+      originalPrice: 999,
+      rating: 4.4,
+      reviews: 234,
+      image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400",
+      brand: "BasicWear",
+      isNew: true
+    }
+  ];
+
+  const topPicks = [
+    {
+      id: "tp-1",
       name: "Nike Air Max Sneakers",
       price: 8999,
       originalPrice: 12999,
       rating: 4.9,
       reviews: 892,
       image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400",
-      brand: "Nike"
+      brand: "Nike",
+      isTopRated: true
     },
     {
-      id: "tb-2",
-      name: "Adidas Track Jacket",
-      price: 3999,
-      originalPrice: 5999,
-      rating: 4.7,
-      reviews: 445,
-      image: "https://images.unsplash.com/photo-1544966503-7cc5ac882d5f?w=400",
-      brand: "Adidas"
-    },
-    {
-      id: "tb-3",
-      name: "Levi's Classic Jeans",
-      price: 2999,
-      originalPrice: 4999,
-      rating: 4.6,
-      reviews: 723,
-      image: "https://images.unsplash.com/photo-1542272604-787c3835535d?w=400",
-      brand: "Levi's"
-    }
-  ];
-
-  // GenZ brands products
-  const genzBrandsProducts = [
-    {
-      id: "gb-1",
-      name: "Aesthetic Crop Top",
-      price: 899,
-      originalPrice: 1599,
-      rating: 4.4,
-      reviews: 234,
-      image: "https://images.unsplash.com/photo-1571945153237-4929e783af4a?w=400",
-      brand: "VibeCheck"
-    },
-    {
-      id: "gb-2",
-      name: "Y2K Style Sunglasses",
-      price: 699,
-      originalPrice: 1299,
-      rating: 4.3,
-      reviews: 189,
-      image: "https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=400",
-      brand: "RetroFuture"
-    },
-    {
-      id: "gb-3",
-      name: "Baggy Cargo Pants",
-      price: 1799,
-      originalPrice: 2999,
-      rating: 4.5,
+      id: "tp-2",
+      name: "Premium Watch",
+      price: 15999,
+      originalPrice: 24999,
+      rating: 4.8,
       reviews: 345,
-      image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=400",
-      brand: "StreetCore"
+      image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400",
+      brand: "TimeMaster",
+      isTopRated: true
     }
   ];
 
-  const mensWardrobeProducts = [
+  const recommendedProducts = [
     {
-      id: "mw-1",
-      name: "Formal White Shirt",
+      id: "r-1",
+      name: "Slim Fit Jeans",
       price: 1299,
       originalPrice: 2499,
       rating: 4.6,
       reviews: 456,
-      image: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=400",
-      brand: "ClassicMen"
+      image: "https://images.unsplash.com/photo-1542272604-787c3835535d?w=400",
+      brand: "DenimCo"
     },
     {
-      id: "mw-2",
-      name: "Casual Chinos",
-      price: 1599,
-      originalPrice: 2999,
-      rating: 4.4,
-      reviews: 234,
-      image: "https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=400",
-      brand: "SmartCasual"
-    },
-    {
-      id: "mw-3",
-      name: "Leather Belt",
-      price: 799,
-      originalPrice: 1499,
-      rating: 4.7,
-      reviews: 189,
-      image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400",
-      brand: "LeatherCraft"
-    }
-  ];
-
-  const womensWardrobeProducts = [
-    {
-      id: "ww-1",
-      name: "Elegant Midi Dress",
-      price: 2299,
-      originalPrice: 3999,
-      rating: 4.8,
-      reviews: 567,
-      image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=400",
-      brand: "ElegantWear"
-    },
-    {
-      id: "ww-2",
-      name: "Designer Handbag",
-      price: 3999,
-      originalPrice: 6999,
-      rating: 4.6,
-      reviews: 234,
-      image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400",
-      brand: "LuxeBags"
-    },
-    {
-      id: "ww-3",
-      name: "Silk Scarf",
+      id: "r-2",
+      name: "Canvas Backpack",
       price: 899,
       originalPrice: 1599,
       rating: 4.5,
-      reviews: 123,
-      image: "https://images.unsplash.com/photo-1590736969955-71cc94901144?w=400",
-      brand: "SilkTouch"
-    }
-  ];
-
-  const featuredBrandsProducts = [
-    {
-      id: "fb-1",
-      name: "Premium Watch",
-      price: 15999,
-      originalPrice: 24999,
-      rating: 4.9,
-      reviews: 345,
-      image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400",
-      brand: "TimeMaster"
-    },
-    {
-      id: "fb-2",
-      name: "Designer Perfume",
-      price: 4999,
-      originalPrice: 7999,
-      rating: 4.7,
-      reviews: 456,
-      image: "https://images.unsplash.com/photo-1541643600914-78b084683601?w=400",
-      brand: "FragrancePro"
-    },
-    {
-      id: "fb-3",
-      name: "Luxury Wallet",
-      price: 2999,
-      originalPrice: 4999,
-      rating: 4.8,
       reviews: 234,
       image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400",
-      brand: "LeatherLux"
+      brand: "EverydayBags"
     }
   ];
 
-  const bestBrandsProducts = [
-    {
-      id: "bb-1",
-      name: "Smart Fitness Tracker",
-      price: 8999,
-      originalPrice: 12999,
-      rating: 4.6,
-      reviews: 789,
-      image: "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=400",
-      brand: "FitTech"
-    },
-    {
-      id: "bb-2",
-      name: "Wireless Earbuds",
-      price: 3999,
-      originalPrice: 6999,
-      rating: 4.5,
-      reviews: 567,
-      image: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=400",
-      brand: "AudioPro"
-    },
-    {
-      id: "bb-3",
-      name: "Gaming Mouse",
-      price: 2499,
-      originalPrice: 3999,
-      rating: 4.7,
-      reviews: 234,
-      image: "https://images.unsplash.com/photo-1527814050087-3793815479db?w=400",
-      brand: "GameGear"
-    }
-  ];
-
-  const brandsDealsProducts = [
-    {
-      id: "bd-1",
-      name: "Ray-Ban Sunglasses",
-      price: 7999,
-      originalPrice: 12999,
-      rating: 4.8,
-      reviews: 456,
-      image: "https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=400",
-      brand: "Ray-Ban"
-    },
-    {
-      id: "bd-2",
-      name: "Calvin Klein Perfume",
-      price: 3499,
-      originalPrice: 5999,
-      rating: 4.6,
-      reviews: 234,
-      image: "https://images.unsplash.com/photo-1541643600914-78b084683601?w=400",
-      brand: "Calvin Klein"
-    },
-    {
-      id: "bd-3",
-      name: "Tommy Hilfiger Shirt",
-      price: 2999,
-      originalPrice: 4999,
-      rating: 4.5,
-      reviews: 345,
-      image: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=400",
-      brand: "Tommy Hilfiger"
-    }
-  ];
-
-  const promoBanners = [
-    {
-      id: "promo-1",
-      title: "Summer Sale",
-      subtitle: "Up to 70% off on all categories",
-      buttonText: "Shop Now",
-      buttonLink: "/sale",
-      image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800",
-      backgroundColor: "#FF6B9D"
-    },
-    {
-      id: "promo-2",
-      title: "New Arrivals",
-      subtitle: "Fresh styles just dropped",
-      buttonText: "Explore",
-      buttonLink: "/new",
-      image: "https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=800",
-      backgroundColor: "#FF9A6B"
-    },
-    {
-      id: "promo-3",
-      title: "Brand Festival",
-      subtitle: "Biggest brands, best prices",
-      buttonText: "Shop Brands",
-      buttonLink: "/brands",
-      image: "https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=800",
-      backgroundColor: "#4A90E2"
-    },
-    {
-      id: "promo-4",
-      title: "Final Sale",
-      subtitle: "Last chance to save big",
-      buttonText: "Grab Deals",
-      buttonLink: "/final-sale",
-      image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800",
-      backgroundColor: "#FF6B9D"
-    }
-  ];
-
-  const dealEndTime = new Date();
-  dealEndTime.setHours(dealEndTime.getHours() + 8);
-
-  // Featured brands data
   const featuredBrands = [
     {
       id: "fb-1",
@@ -485,56 +200,9 @@ const Index = () => {
       logo: "https://images.unsplash.com/photo-1571945153237-4929e783af4a?w=100",
       discount: "Up to 60% OFF",
       link: "/brands/puma"
-    },
-    {
-      id: "fb-4",
-      name: "Levi's",
-      logo: "https://images.unsplash.com/photo-1542272604-787c3835535d?w=100",
-      discount: "Up to 45% OFF",
-      link: "/brands/levis"
-    },
-    {
-      id: "fb-5",
-      name: "Ray-Ban",
-      logo: "https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=100",
-      discount: "Up to 35% OFF",
-      link: "/brands/rayban"
     }
   ];
 
-  // Top rated brands data
-  const topRatedBrands = [
-    {
-      id: "tr-1",
-      name: "Apple",
-      logo: "https://images.unsplash.com/photo-1611472173362-3f53dbd65d80?w=100",
-      discount: "Up to 15% OFF",
-      link: "/brands/apple"
-    },
-    {
-      id: "tr-2",
-      name: "Samsung",
-      logo: "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=100",
-      discount: "Up to 25% OFF",
-      link: "/brands/samsung"
-    },
-    {
-      id: "tr-3",
-      name: "Sony",
-      logo: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=100",
-      discount: "Up to 30% OFF",
-      link: "/brands/sony"
-    },
-    {
-      id: "tr-4",
-      name: "Canon",
-      logo: "https://images.unsplash.com/photo-1606983340126-99ab4feaa64a?w=100",
-      discount: "Up to 20% OFF",
-      link: "/brands/canon"
-    }
-  ];
-
-  // Narrow promo carousel data
   const narrowPromos = [
     {
       id: "np-1",
@@ -547,16 +215,9 @@ const Index = () => {
       text: "⚡ Lightning Deal: 70% OFF Electronics",
       link: "/electronics-deal",
       bgColor: "#4A90E2"
-    },
-    {
-      id: "np-3",
-      text: "🔥 Hot Sale: Buy 2 Get 1 Free on Fashion",
-      link: "/fashion-sale",
-      bgColor: "#FF9A6B"
     }
   ];
 
-  // Price dropped products
   const priceDroppedProducts = [
     {
       id: "pd-1",
@@ -579,162 +240,227 @@ const Index = () => {
       image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400",
       brand: "TechWear",
       priceDropPercent: 62
-    },
-    {
-      id: "pd-3",
-      name: "Running Shoes",
-      price: 1599,
-      originalPrice: 3999,
-      rating: 4.6,
-      reviews: 567,
-      image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400",
-      brand: "SportFit",
-      priceDropPercent: 60
-    },
-    {
-      id: "pd-4",
-      name: "Bluetooth Speaker",
-      price: 899,
-      originalPrice: 2499,
-      rating: 4.2,
-      reviews: 123,
-      image: "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400",
-      brand: "SoundMax",
-      priceDropPercent: 64
     }
   ];
 
+  const SectionHeader = ({ 
+    title, 
+    icon, 
+    viewAllLink, 
+    gradient = "from-[#FF6B9D] to-[#4A90E2]" 
+  }: { 
+    title: string; 
+    icon?: React.ReactNode; 
+    viewAllLink?: string;
+    gradient?: string;
+  }) => (
+    <div className="flex items-center justify-between mb-4 px-4">
+      <div className="flex items-center gap-2">
+        {icon}
+        <h2 className={`text-lg font-bold bg-gradient-to-r ${gradient} bg-clip-text text-transparent`}>
+          {title}
+        </h2>
+      </div>
+      {viewAllLink && (
+        <Link to={viewAllLink} className="text-sm text-gray-600 hover:text-[#FF6B9D] flex items-center gap-1">
+          View All <ChevronRight className="w-4 h-4" />
+        </Link>
+      )}
+    </div>
+  );
+
+  const ProductSlider = ({ 
+    products, 
+    showSkeleton = false 
+  }: { 
+    products: any[];
+    showSkeleton?: boolean;
+  }) => {
+    const sliderRef = useRef<HTMLDivElement>(null);
+
+    return (
+      <div 
+        ref={sliderRef}
+        className="flex overflow-x-auto space-x-4 pb-2 scrollbar-hide scroll-smooth px-4"
+        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}
+      >
+        {showSkeleton ? (
+          Array.from({ length: 4 }).map((_, i) => (
+            <div key={i} className="flex-shrink-0 w-48">
+              <SkeletonLoader type="product" />
+            </div>
+          ))
+        ) : (
+          products.map((product) => (
+            <div key={product.id} className="flex-shrink-0 w-48">
+              <ProductCard product={product} />
+            </div>
+          ))
+        )}
+      </div>
+    );
+  };
+
+  const FlashSaleTimer = () => {
+    const [timeLeft, setTimeLeft] = useState({
+      hours: 8,
+      minutes: 45,
+      seconds: 23
+    });
+
+    useEffect(() => {
+      const timer = setInterval(() => {
+        setTimeLeft(prev => {
+          if (prev.seconds > 0) {
+            return { ...prev, seconds: prev.seconds - 1 };
+          } else if (prev.minutes > 0) {
+            return { ...prev, minutes: prev.minutes - 1, seconds: 59 };
+          } else if (prev.hours > 0) {
+            return { hours: prev.hours - 1, minutes: 59, seconds: 59 };
+          }
+          return prev;
+        });
+      }, 1000);
+
+      return () => clearInterval(timer);
+    }, []);
+
+    return (
+      <div className="flex items-center gap-2 text-white">
+        <Clock className="w-4 h-4" />
+        <span className="text-sm font-semibold">
+          {String(timeLeft.hours).padStart(2, '0')}:
+          {String(timeLeft.minutes).padStart(2, '0')}:
+          {String(timeLeft.seconds).padStart(2, '0')}
+        </span>
+      </div>
+    );
+  };
+
   return (
     <Layout>
-      <div className="space-y-4 bg-gray-50">
-        {/* Category Tab Section */}
-        <TabSection tabs={tabData} />
+      <div className="space-y-6 bg-gray-50">
+        {/* Personalized Greeting */}
+        <div className="px-4 pt-4">
+          <h1 className="text-xl font-bold text-gray-800">
+            Hi there! 👋
+          </h1>
+          <p className="text-sm text-gray-600 mt-1">Discover amazing deals just for you</p>
+        </div>
 
-        {/* Round Product Category Component */}
-        <RoundCategorySection categories={categories} />
-
-        {/* Narrow Promo Banner */}
-        <NarrowPromoBanner />
-
-        {/* Hero Carousel - Full Width and Increased Height */}
-        <div className="px-0">
-          <div className="relative w-full h-80 md:h-96 lg:h-[500px] overflow-hidden">
-            <ImageCarousel images={carouselImages} />
+        {/* Hero Carousel */}
+        <div className="px-4">
+          <div className="relative w-full h-48 rounded-2xl overflow-hidden">
+            {isLoading ? (
+              <SkeletonLoader type="banner" />
+            ) : (
+              <ImageCarousel images={carouselImages} />
+            )}
           </div>
         </div>
 
-        {/* Features Banner - Compact */}
-        <FeaturesBanner />
+        {/* Quick Actions */}
+        <div className="px-4">
+          <div className="grid grid-cols-4 gap-3">
+            {[
+              { icon: "🔥", label: "Flash Sale", link: "/flash-sale" },
+              { icon: "🌟", label: "New Arrivals", link: "/new-arrivals" },
+              { icon: "🏆", label: "Top Brands", link: "/top-brands" },
+              { icon: "💰", label: "Budget Picks", link: "/budget" }
+            ].map((action) => (
+              <Link
+                key={action.label}
+                to={action.link}
+                className="bg-white rounded-2xl p-4 text-center shadow-sm hover:shadow-md transition-all"
+              >
+                <div className="text-2xl mb-2">{action.icon}</div>
+                <span className="text-xs font-medium text-gray-700">{action.label}</span>
+              </Link>
+            ))}
+          </div>
+        </div>
 
-        {/* Top Categories on Offer */}
-        <section className="px-4">
-          <SectionHeader title="🔥 Top Categories on Offer" viewAllLink="/categories" />
-          <TopCategoriesOffer categories={topOfferCategories} />
+        {/* Flash Sale with Timer */}
+        <section className="bg-gradient-to-r from-purple-500 to-pink-500 mx-4 rounded-2xl p-4">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-2">
+              <Zap className="w-5 h-5 text-white" />
+              <h2 className="text-lg font-bold text-white">Flash Sale</h2>
+            </div>
+            <FlashSaleTimer />
+          </div>
+          <ProductSlider products={flashSaleProducts} showSkeleton={isLoading} />
         </section>
 
-        {/* Deal of the Day */}
-        <section className="px-4">
-          <SectionHeader title="⚡ Deal of the Day" viewAllLink="/deals" />
-          <DealOfTheDay product={dealProduct} endTime={dealEndTime} />
-        </section>
-
-        {/* Pocket Friendly Section */}
-        <section className="px-4">
-          <SectionHeader title="💰 Pocket Friendly" viewAllLink="/pocket-friendly" />
-          <PocketFriendlySection products={pocketFriendlyProducts} />
-        </section>
-
-        {/* Featured Brands */}
-        <section className="px-4">
-          <SectionHeader title="⭐ Featured Brands" viewAllLink="/featured-brands" />
-          <FeaturedBrands brands={featuredBrands} />
+        {/* Trending Now */}
+        <section>
+          <SectionHeader 
+            title="Trending Now" 
+            icon={<Fire className="w-5 h-5 text-orange-500" />}
+            viewAllLink="/trending"
+            gradient="from-orange-500 to-red-500"
+          />
+          <ProductSlider products={trendingProducts} showSkeleton={isLoading} />
         </section>
 
         {/* Narrow Promo Carousel */}
         <NarrowPromoCarousel promos={narrowPromos} />
 
-        {/* Top Rated Brands */}
-        <section className="px-4">
-          <SectionHeader title="🏆 Top Rated Brands" viewAllLink="/top-rated-brands" />
-          <FeaturedBrands brands={topRatedBrands} />
+        {/* Popular Brands */}
+        <section>
+          <SectionHeader 
+            title="Popular Brands" 
+            icon={<Star className="w-5 h-5 text-yellow-500" />}
+            viewAllLink="/brands"
+          />
+          {isLoading ? (
+            <div className="flex gap-4 px-4 overflow-x-auto">
+              {Array.from({ length: 4 }).map((_, i) => (
+                <div key={i} className="flex-shrink-0 w-32">
+                  <SkeletonLoader type="brand" />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <FeaturedBrands brands={featuredBrands} />
+          )}
+        </section>
+
+        {/* Recommended for You */}
+        <section>
+          <SectionHeader 
+            title="Recommended for You" 
+            icon={<span className="text-lg">🧠</span>}
+            viewAllLink="/recommended"
+            gradient="from-blue-500 to-purple-500"
+          />
+          <ProductSlider products={recommendedProducts} showSkeleton={isLoading} />
         </section>
 
         {/* Price Dropped */}
-        <section className="px-4">
-          <SectionHeader title="📉 Price Dropped" viewAllLink="/price-dropped" />
-          <PriceDroppedSection products={priceDroppedProducts} />
+        <PriceDroppedSection products={priceDroppedProducts} />
+
+        {/* New Arrivals */}
+        <section>
+          <SectionHeader 
+            title="New Arrivals" 
+            icon={<span className="text-lg">🌟</span>}
+            viewAllLink="/new-arrivals"
+            gradient="from-green-500 to-blue-500"
+          />
+          <ProductSlider products={newArrivals} showSkeleton={isLoading} />
         </section>
 
-        {/* Promo Banner 1 */}
-        <section className="px-4">
-          <PromoBanner banner={promoBanners[0]} />
+        {/* Top Picks */}
+        <section className="pb-6">
+          <SectionHeader 
+            title="Top Picks" 
+            icon={<span className="text-lg">🏆</span>}
+            viewAllLink="/top-picks"
+            gradient="from-yellow-500 to-orange-500"
+          />
+          <ProductSlider products={topPicks} showSkeleton={isLoading} />
         </section>
-
-        {/* GenZ Picks */}
-        <section className="px-4">
-          <SectionHeader title="🔥 GenZ Picks" viewAllLink="/genz-picks" />
-          <ProductSlider title="" products={genzPicksProducts} />
-        </section>
-
-        {/* Top Brands on Offer */}
-        <section className="px-4">
-          <SectionHeader title="🏆 Top Brands on Offer" viewAllLink="/top-brands" />
-          <ProductSlider title="" products={topBrandsProducts} />
-        </section>
-
-        {/* Promo Banner 2 */}
-        <section className="px-4">
-          <PromoBanner banner={promoBanners[1]} />
-        </section>
-
-        {/* GenZ Brands on Offer */}
-        <section className="px-4">
-          <SectionHeader title="✨ GenZ Brands on Offer" viewAllLink="/genz-brands" />
-          <ProductSlider title="" products={genzBrandsProducts} />
-        </section>
-
-        {/* Deals on Men's Wardrobe */}
-        <section className="px-4">
-          <SectionHeader title="👔 Deals on Men's Wardrobe" viewAllLink="/mens-deals" />
-          <ProductSlider title="" products={mensWardrobeProducts} />
-        </section>
-
-        {/* Promo Banner 3 */}
-        <section className="px-4">
-          <PromoBanner banner={promoBanners[2]} />
-        </section>
-
-        {/* Brands Deal You Can't Miss */}
-        <section className="px-4">
-          <SectionHeader title="💎 Brands Deal You Can't Miss" viewAllLink="/brand-deals" />
-          <ProductSlider title="" products={brandsDealsProducts} />
-        </section>
-
-        {/* Deals on Women's Wardrobe */}
-        <section className="px-4">
-          <SectionHeader title="👗 Deals on Women's Wardrobe" viewAllLink="/womens-deals" />
-          <ProductSlider title="" products={womensWardrobeProducts} />
-        </section>
-
-        {/* Featured Brands */}
-        <section className="px-4">
-          <SectionHeader title="⭐ Featured Brands" viewAllLink="/featured-brands" />
-          <ProductSlider title="" products={featuredBrandsProducts} />
-        </section>
-
-        {/* Best Brands */}
-        <section className="px-4">
-          <SectionHeader title="🎯 Best Brands" viewAllLink="/best-brands" />
-          <ProductSlider title="" products={bestBrandsProducts} />
-        </section>
-
-        {/* Final Promo Banner */}
-        <section className="px-4">
-          <PromoBanner banner={promoBanners[3]} />
-        </section>
-
-        {/* Footer */}
-        <Footer />
       </div>
     </Layout>
   );
