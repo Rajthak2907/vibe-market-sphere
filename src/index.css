@@ -39,10 +39,12 @@
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 10.6% 64.9%;
     
-    /* Brand Colors */
-    --brand-pink: #FF6B9D;
-    --brand-orange: #FF9A6B;
-    --brand-blue: #4A90E2;
+    /* Obeyyo Brand Colors */
+    --obeyyo-pink: #fc2682;
+    --obeyyo-red: #fc334d;
+    --obeyyo-orange: #fb8619;
+    --obeyyo-yellow: #f9b704;
+    --obeyyo-blue: #08a0ef;
   }
 
   .dark {
@@ -87,6 +89,7 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-family: 'Poppins', sans-serif;
   }
 }
 
@@ -100,49 +103,77 @@
   }
   
   .gradient-text {
-    background: linear-gradient(135deg, var(--brand-pink) 0%, var(--brand-blue) 100%);
+    background: linear-gradient(135deg, var(--obeyyo-pink) 0%, var(--obeyyo-blue) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
   
-  .bg-gradient-brand {
-    background: linear-gradient(135deg, var(--brand-pink) 0%, var(--brand-orange) 100%);
+  .bg-gradient-obeyyo {
+    background: linear-gradient(135deg, var(--obeyyo-pink) 0%, var(--obeyyo-orange) 100%);
   }
   
-  .text-brand-pink {
-    color: var(--brand-pink);
+  .bg-gradient-obeyyo-flash {
+    background: linear-gradient(135deg, var(--obeyyo-red) 0%, var(--obeyyo-pink) 100%);
   }
   
-  .text-brand-orange {
-    color: var(--brand-orange);
+  .text-obeyyo-pink {
+    color: var(--obeyyo-pink);
   }
   
-  .text-brand-blue {
-    color: var(--brand-blue);
+  .text-obeyyo-red {
+    color: var(--obeyyo-red);
   }
   
-  .bg-brand-pink {
-    background-color: var(--brand-pink);
+  .text-obeyyo-orange {
+    color: var(--obeyyo-orange);
   }
   
-  .bg-brand-orange {
-    background-color: var(--brand-orange);
+  .text-obeyyo-yellow {
+    color: var(--obeyyo-yellow);
   }
   
-  .bg-brand-blue {
-    background-color: var(--brand-blue);
+  .text-obeyyo-blue {
+    color: var(--obeyyo-blue);
   }
   
-  .border-brand-pink {
-    border-color: var(--brand-pink);
+  .bg-obeyyo-pink {
+    background-color: var(--obeyyo-pink);
   }
   
-  .border-brand-orange {
-    border-color: var(--brand-orange);
+  .bg-obeyyo-red {
+    background-color: var(--obeyyo-red);
   }
   
-  .border-brand-blue {
-    border-color: var(--brand-blue);
+  .bg-obeyyo-orange {
+    background-color: var(--obeyyo-orange);
+  }
+  
+  .bg-obeyyo-yellow {
+    background-color: var(--obeyyo-yellow);
+  }
+  
+  .bg-obeyyo-blue {
+    background-color: var(--obeyyo-blue);
+  }
+  
+  .border-obeyyo-pink {
+    border-color: var(--obeyyo-pink);
+  }
+  
+  .border-obeyyo-red {
+    border-color: var(--obeyyo-red);
+  }
+  
+  .border-obeyyo-orange {
+    border-color: var(--obeyyo-orange);
+  }
+  
+  .border-obeyyo-yellow {
+    border-color: var(--obeyyo-yellow);
+  }
+  
+  .border-obeyyo-blue {
+    border-color: var(--obeyyo-blue);
   }
 }

@@ -6,7 +6,7 @@ import FeaturedBrands from "@/components/FeaturedBrands";
 import NarrowPromoCarousel from "@/components/NarrowPromoCarousel";
 import PriceDroppedSection from "@/components/PriceDroppedSection";
 import SkeletonLoader from "@/components/SkeletonLoader";
-import { ChevronRight, Clock, Fire, Star, Zap } from "lucide-react";
+import { ChevronRight, Clock, TrendingUp, Star, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
@@ -208,13 +208,13 @@ const Index = () => {
       id: "np-1",
       text: "🎉 Free Shipping on Orders Above ₹999",
       link: "/free-shipping",
-      bgColor: "#FF6B9D"
+      bgColor: "#fc2682"
     },
     {
       id: "np-2",
       text: "⚡ Lightning Deal: 70% OFF Electronics",
       link: "/electronics-deal",
-      bgColor: "#4A90E2"
+      bgColor: "#08a0ef"
     }
   ];
 
@@ -247,7 +247,7 @@ const Index = () => {
     title, 
     icon, 
     viewAllLink, 
-    gradient = "from-[#FF6B9D] to-[#4A90E2]" 
+    gradient = "from-[#fc2682] to-[#08a0ef]" 
   }: { 
     title: string; 
     icon?: React.ReactNode; 
@@ -262,7 +262,7 @@ const Index = () => {
         </h2>
       </div>
       {viewAllLink && (
-        <Link to={viewAllLink} className="text-sm text-gray-600 hover:text-[#FF6B9D] flex items-center gap-1">
+        <Link to={viewAllLink} className="text-sm text-gray-600 hover:text-[#fc2682] flex items-center gap-1">
           View All <ChevronRight className="w-4 h-4" />
         </Link>
       )}
@@ -363,15 +363,16 @@ const Index = () => {
         <div className="px-4">
           <div className="grid grid-cols-4 gap-3">
             {[
-              { icon: "🔥", label: "Flash Sale", link: "/flash-sale" },
-              { icon: "🌟", label: "New Arrivals", link: "/new-arrivals" },
-              { icon: "🏆", label: "Top Brands", link: "/top-brands" },
-              { icon: "💰", label: "Budget Picks", link: "/budget" }
+              { icon: "🔥", label: "Flash Sale", link: "/flash-sale", color: "#fc334d" },
+              { icon: "🌟", label: "New Arrivals", link: "/new-arrivals", color: "#f9b704" },
+              { icon: "🏆", label: "Top Brands", link: "/top-brands", color: "#08a0ef" },
+              { icon: "💰", label: "Budget Picks", link: "/budget", color: "#fb8619" }
             ].map((action) => (
               <Link
                 key={action.label}
                 to={action.link}
                 className="bg-white rounded-2xl p-4 text-center shadow-sm hover:shadow-md transition-all"
+                style={{ borderTop: `3px solid ${action.color}` }}
               >
                 <div className="text-2xl mb-2">{action.icon}</div>
                 <span className="text-xs font-medium text-gray-700">{action.label}</span>
@@ -381,7 +382,7 @@ const Index = () => {
         </div>
 
         {/* Flash Sale with Timer */}
-        <section className="bg-gradient-to-r from-purple-500 to-pink-500 mx-4 rounded-2xl p-4">
+        <section className="bg-gradient-to-r from-[#fc334d] to-[#fc2682] mx-4 rounded-2xl p-4">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
               <Zap className="w-5 h-5 text-white" />
@@ -396,9 +397,9 @@ const Index = () => {
         <section>
           <SectionHeader 
             title="Trending Now" 
-            icon={<Fire className="w-5 h-5 text-orange-500" />}
+            icon={<TrendingUp className="w-5 h-5 text-[#fc334d]" />}
             viewAllLink="/trending"
-            gradient="from-orange-500 to-red-500"
+            gradient="from-[#fc334d] to-[#fb8619]"
           />
           <ProductSlider products={trendingProducts} showSkeleton={isLoading} />
         </section>
@@ -410,8 +411,9 @@ const Index = () => {
         <section>
           <SectionHeader 
             title="Popular Brands" 
-            icon={<Star className="w-5 h-5 text-yellow-500" />}
+            icon={<Star className="w-5 h-5 text-[#f9b704]" />}
             viewAllLink="/brands"
+            gradient="from-[#f9b704] to-[#fb8619]"
           />
           {isLoading ? (
             <div className="flex gap-4 px-4 overflow-x-auto">
@@ -432,7 +434,7 @@ const Index = () => {
             title="Recommended for You" 
             icon={<span className="text-lg">🧠</span>}
             viewAllLink="/recommended"
-            gradient="from-blue-500 to-purple-500"
+            gradient="from-[#08a0ef] to-[#fc2682]"
           />
           <ProductSlider products={recommendedProducts} showSkeleton={isLoading} />
         </section>
@@ -446,7 +448,7 @@ const Index = () => {
             title="New Arrivals" 
             icon={<span className="text-lg">🌟</span>}
             viewAllLink="/new-arrivals"
-            gradient="from-green-500 to-blue-500"
+            gradient="from-[#f9b704] to-[#08a0ef]"
           />
           <ProductSlider products={newArrivals} showSkeleton={isLoading} />
         </section>
@@ -457,7 +459,7 @@ const Index = () => {
             title="Top Picks" 
             icon={<span className="text-lg">🏆</span>}
             viewAllLink="/top-picks"
-            gradient="from-yellow-500 to-orange-500"
+            gradient="from-[#fb8619] to-[#fc334d]"
           />
           <ProductSlider products={topPicks} showSkeleton={isLoading} />
         </section>

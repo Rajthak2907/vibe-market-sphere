@@ -68,27 +68,27 @@ const ProductCard = ({ product, className = "" }: ProductCardProps) => {
         {/* Badges */}
         <div className="absolute top-3 left-3 flex flex-col gap-2">
           {product.isTrending && (
-            <Badge className="bg-gradient-to-r from-orange-400 to-red-500 text-white text-xs px-2 py-1 rounded-full font-semibold shadow-lg">
+            <Badge className="text-white text-xs px-2 py-1 rounded-full font-semibold shadow-lg" style={{ backgroundColor: "#fc334d" }}>
               🔥 Trending
             </Badge>
           )}
           {product.isFlashSale && (
-            <Badge className="bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xs px-2 py-1 rounded-full font-semibold shadow-lg animate-pulse">
-              ⏰ Flash Sale
+            <Badge className="text-white text-xs px-2 py-1 rounded-full font-semibold shadow-lg animate-pulse" style={{ backgroundColor: "#fc2682" }}>
+              ⚡ Flash Sale
             </Badge>
           )}
           {product.isNew && (
-            <Badge className="bg-gradient-to-r from-green-400 to-blue-500 text-white text-xs px-2 py-1 rounded-full font-semibold shadow-lg">
+            <Badge className="text-white text-xs px-2 py-1 rounded-full font-semibold shadow-lg" style={{ backgroundColor: "#f9b704" }}>
               🌟 New
             </Badge>
           )}
           {product.isTopRated && (
-            <Badge className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-xs px-2 py-1 rounded-full font-semibold shadow-lg">
+            <Badge className="text-white text-xs px-2 py-1 rounded-full font-semibold shadow-lg" style={{ backgroundColor: "#fb8619" }}>
               🏆 Top Rated
             </Badge>
           )}
           {discountPercent > 0 && (
-            <Badge className="bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs px-2 py-1 rounded-full font-semibold shadow-lg">
+            <Badge className="text-white text-xs px-2 py-1 rounded-full font-semibold shadow-lg" style={{ backgroundColor: "#fc334d" }}>
               {discountPercent}% OFF
             </Badge>
           )}
@@ -103,15 +103,17 @@ const ProductCard = ({ product, className = "" }: ProductCardProps) => {
         >
           <Heart 
             className={`w-4 h-4 transition-colors ${
-              isWishlisted ? 'fill-red-500 text-red-500' : 'text-gray-600'
+              isWishlisted ? 'text-white' : 'text-gray-600'
             }`} 
+            style={{ fill: isWishlisted ? "#fc2682" : "none", color: isWishlisted ? "#fc2682" : undefined }}
           />
         </Button>
 
         {/* Quick Add to Cart - Shows on Hover */}
         <Button
           onClick={handleAddToCart}
-          className="absolute bottom-3 left-3 right-3 bg-gradient-to-r from-[#FF6B9D] to-[#4A90E2] text-white rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0"
+          className="absolute bottom-3 left-3 right-3 text-white rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0"
+          style={{ background: "linear-gradient(135deg, #fc2682, #08a0ef)" }}
         >
           <ShoppingCart className="w-4 h-4 mr-2" />
           Add to Cart
@@ -124,7 +126,7 @@ const ProductCard = ({ product, className = "" }: ProductCardProps) => {
         <div className="flex items-center justify-between">
           <span className="text-xs text-gray-500 uppercase tracking-wide font-medium">{product.brand}</span>
           <div className="flex items-center gap-1">
-            <Star className="w-3 h-3 fill-yellow-400 text-yellow-400" />
+            <Star className="w-3 h-3 text-[#f9b704]" style={{ fill: "#f9b704" }} />
             <span className="text-xs text-gray-600 font-medium">{product.rating}</span>
             <span className="text-xs text-gray-400">({product.reviews})</span>
           </div>
@@ -132,7 +134,7 @@ const ProductCard = ({ product, className = "" }: ProductCardProps) => {
 
         {/* Product Name */}
         <Link to={`/product/${product.id}`}>
-          <h3 className="font-semibold text-sm text-gray-800 line-clamp-2 hover:text-[#FF6B9D] transition-colors leading-tight">
+          <h3 className="font-semibold text-sm text-gray-800 line-clamp-2 hover:text-[#fc2682] transition-colors leading-tight">
             {product.name}
           </h3>
         </Link>

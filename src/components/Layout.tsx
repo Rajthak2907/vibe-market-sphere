@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Home, Search, ShoppingCart, Heart, User, Menu, X, Bell } from "lucide-react";
+import { Home, Search, ShoppingCart, Heart, User, Menu, X, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -25,10 +25,10 @@ const Layout = ({ children }: LayoutProps) => {
   ];
 
   const quickCategories = [
-    { name: "Men", path: "/men" },
-    { name: "Women", path: "/women" },
-    { name: "Kids", path: "/kids" },
-    { name: "Accessories", path: "/accessories" },
+    { name: "Men", path: "/men", color: "#fc2682" },
+    { name: "Women", path: "/women", color: "#fc334d" },
+    { name: "Kids", path: "/kids", color: "#f9b704" },
+    { name: "Accessories", path: "/accessories", color: "#08a0ef" },
   ];
 
   return (
@@ -40,11 +40,11 @@ const Layout = ({ children }: LayoutProps) => {
             {/* Logo */}
             <Link to="/" className="flex items-center space-x-2">
               <img 
-                src="/lovable-uploads/164ea4a6-a57e-4afe-9e7a-0190149b95b6.png" 
+                src="/lovable-uploads/fcde6e4f-7f0d-4250-9eac-15f1c0e84293.png" 
                 alt="Obeyyo" 
-                className="h-7 w-auto object-contain"
+                className="h-8 w-auto object-contain"
               />
-              <span className="text-lg font-bold bg-gradient-to-r from-[#FF6B9D] to-[#4A90E2] bg-clip-text text-transparent">
+              <span className="text-xl font-black bg-gradient-to-r from-[#fc2682] via-[#fc334d] to-[#08a0ef] bg-clip-text text-transparent">
                 obeyyo
               </span>
             </Link>
@@ -52,8 +52,8 @@ const Layout = ({ children }: LayoutProps) => {
             {/* Right Actions */}
             <div className="flex items-center space-x-3">
               <Button variant="ghost" size="sm" className="p-2 relative">
-                <Bell className="h-5 w-5 text-gray-600" />
-                <Badge className="absolute -top-1 -right-1 h-4 w-4 p-0 flex items-center justify-center bg-[#FF6B9D] text-white text-xs">
+                <TrendingUp className="h-5 w-5 text-gray-600" />
+                <Badge className="absolute -top-1 -right-1 h-4 w-4 p-0 flex items-center justify-center text-white text-xs" style={{ backgroundColor: "#fc2682" }}>
                   2
                 </Badge>
               </Button>
@@ -75,7 +75,11 @@ const Layout = ({ children }: LayoutProps) => {
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
               <Input
                 placeholder="Search for brands, products..."
-                className="pl-10 bg-gray-50 border-gray-200 focus:border-[#FF6B9D] rounded-xl h-10"
+                className="pl-10 bg-gray-50 border-gray-200 rounded-xl h-10"
+                style={{ 
+                  focusBorderColor: "#fc2682",
+                  '&:focus': { borderColor: "#fc2682" }
+                }}
               />
             </div>
           </div>
@@ -86,7 +90,10 @@ const Layout = ({ children }: LayoutProps) => {
               <Link
                 key={category.path}
                 to={category.path}
-                className="flex-shrink-0 px-4 py-2 bg-gradient-to-r from-[#FF6B9D] to-[#4A90E2] text-white text-sm font-medium rounded-full hover:shadow-lg transition-all"
+                className="flex-shrink-0 px-4 py-2 text-white text-sm font-semibold rounded-full hover:shadow-lg transition-all"
+                style={{ 
+                  background: `linear-gradient(135deg, ${category.color}, ${category.color}dd)`
+                }}
               >
                 {category.name}
               </Link>
@@ -121,7 +128,8 @@ const Layout = ({ children }: LayoutProps) => {
             <div className="p-4 space-y-2">
               <Link
                 to="/login"
-                className="block px-4 py-3 text-base font-medium text-[#FF6B9D] hover:bg-pink-50 rounded-lg transition-colors"
+                className="block px-4 py-3 text-base font-medium hover:bg-pink-50 rounded-lg transition-colors"
+                style={{ color: "#fc2682" }}
                 onClick={() => setMenuOpen(false)}
               >
                 Login / Sign Up
@@ -158,21 +166,22 @@ const Layout = ({ children }: LayoutProps) => {
                 to={item.path}
                 className={`flex flex-col items-center justify-center space-y-1 relative transition-all ${
                   isActive 
-                    ? "text-[#FF6B9D] transform scale-105" 
-                    : "text-gray-500 hover:text-[#FF6B9D]"
+                    ? "transform scale-105" 
+                    : "text-gray-500"
                 }`}
+                style={{ color: isActive ? "#fc2682" : undefined }}
               >
                 <div className="relative">
                   <Icon className="w-5 h-5" />
                   {item.badge && item.badge > 0 && (
-                    <Badge className="absolute -top-2 -right-2 h-4 w-4 p-0 flex items-center justify-center bg-[#FF6B9D] text-white text-xs">
+                    <Badge className="absolute -top-2 -right-2 h-4 w-4 p-0 flex items-center justify-center text-white text-xs" style={{ backgroundColor: "#fc2682" }}>
                       {item.badge}
                     </Badge>
                   )}
                 </div>
                 <span className="text-xs font-medium">{item.label}</span>
                 {isActive && (
-                  <div className="absolute bottom-0 w-6 h-0.5 bg-gradient-to-r from-[#FF6B9D] to-[#4A90E2] rounded-full" />
+                  <div className="absolute bottom-0 w-6 h-0.5 rounded-full" style={{ background: "linear-gradient(90deg, #fc2682, #08a0ef)" }} />
                 )}
               </Link>
             );
