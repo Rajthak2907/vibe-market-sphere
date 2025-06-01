@@ -15,6 +15,8 @@ import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import Admin from "./pages/Admin";
 import BrandPage from "./pages/BrandPage";
+import Cart from "./pages/Cart";
+import Wishlist from "./pages/Wishlist";
 
 const queryClient = new QueryClient();
 
@@ -32,6 +34,8 @@ const App = () => (
           <Route path="/accessories" element={<Accessories />} />
           <Route path="/product/:id" element={<ProductDetail />} />
           <Route path="/brands/:brandName" element={<BrandPage />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/login" element={<Login />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/admin" element={<Admin />} />

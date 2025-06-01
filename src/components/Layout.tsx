@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Home, Search, ShoppingCart, Heart, User, Menu, X, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -12,9 +12,40 @@ interface LayoutProps {
 
 const Layout = ({ children }: LayoutProps) => {
   const location = useLocation();
-  const [cartCount] = useState(3);
-  const [wishlistCount] = useState(2);
   const [menuOpen, setMenuOpen] = useState(false);
+  
+  // Functional cart and wishlist with localStorage
+  const [cartCount, setCartCount] = useState(0);
+  const [wishlistCount, setWishlistCount] = useState(0);
+
+  // Update counts when component mounts or storage changes
+  useEffect(() => {
+    const updateCounts = () => {
+      const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+      const wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+      setCartCount(cart.length);
+      setWishlistCount(wishlist.length);
+    };
+
+    updateCounts();
+    
+    // Listen for storage changes
+    window.addEventListener('storage', updateCounts);
+    // Listen for custom events from ProductCard
+    window.addEventListener('cartUpdated', updateCounts);
+    window.addEventListener('wishlistUpdated', updateCounts);
+    
+    return () => {
+      window.removeEventListener('storage', updateCounts);
+      window.removeEventListener('cartUpdated', updateCounts);
+      window.removeEventListener('wishlistUpdated', updateCounts);
+    };
+  }, []);
+
+  // Scroll to top when route changes
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
 
   const bottomNavItems = [
     { label: "Home", path: "/", icon: Home },
@@ -52,7 +83,7 @@ const Layout = ({ children }: LayoutProps) => {
             {/* Right Actions */}
             <div className="flex items-center space-x-3">
               <Button variant="ghost" size="sm" className="p-2 relative">
-                <TrendingUp className="h-5 w-5 text-gray-600" />
+                <TrendingUp className="h-5 w-5 text-obeyyo-orange" />
                 <Badge className="absolute -top-1 -right-1 h-4 w-4 p-0 flex items-center justify-center text-white text-xs bg-obeyyo-pink">
                   2
                 </Badge>
@@ -64,7 +95,7 @@ const Layout = ({ children }: LayoutProps) => {
                 className="p-2"
                 onClick={() => setMenuOpen(true)}
               >
-                <Menu className="h-5 w-5" />
+                <Menu className="h-5 w-5 text-obeyyo-blue" />
               </Button>
             </div>
           </div>
@@ -72,7 +103,7 @@ const Layout = ({ children }: LayoutProps) => {
           {/* Search Bar */}
           <div className="mt-3">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-obeyyo-blue w-4 h-4" />
               <Input
                 placeholder="Search for brands, products..."
                 className="pl-10 bg-gray-50 border-gray-200 rounded-xl h-10 focus:border-obeyyo-pink"
@@ -112,12 +143,12 @@ const Layout = ({ children }: LayoutProps) => {
           />
           <div className="fixed inset-y-0 right-0 z-50 w-[85%] max-w-sm h-full bg-white shadow-2xl">
             <div className="flex items-center justify-between p-4 border-b">
-              <span className="text-lg font-semibold">Menu</span>
+              <span className="text-lg font-semibold bg-gradient-to-r from-obeyyo-pink to-obeyyo-blue bg-clip-text text-transparent">Menu</span>
               <button 
                 onClick={() => setMenuOpen(false)}
                 className="p-2 hover:bg-gray-100 rounded-full"
               >
-                <X className="h-5 w-5" />
+                <X className="h-5 w-5 text-obeyyo-red" />
               </button>
             </div>
             
@@ -175,7 +206,7 @@ const Layout = ({ children }: LayoutProps) => {
                 </div>
                 <span className="text-xs font-medium">{item.label}</span>
                 {isActive && (
-                  <div className="absolute bottom-0 w-6 h-0.5 rounded-full bg-gradient-obeyyo" />
+                  <div className="absolute bottom-0 w-6 h-0.5 rounded-full bg-gradient-to-r from-obeyyo-pink to-obeyyo-blue" />
                 )}
               </Link>
             );

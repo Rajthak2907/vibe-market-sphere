@@ -18,6 +18,9 @@ const Index = () => {
   const sliderRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // Scroll to top when component mounts
+    window.scrollTo(0, 0);
+    
     // Simulate loading
     const timer = setTimeout(() => setIsLoading(false), 1500);
     return () => clearTimeout(timer);
@@ -390,7 +393,7 @@ const Index = () => {
         </h2>
       </div>
       {viewAllLink && (
-        <Link to={viewAllLink} className="text-sm text-gray-600 hover:text-obeyyo-pink flex items-center gap-1">
+        <Link to={viewAllLink} className="text-sm text-obeyyo-blue hover:text-obeyyo-pink flex items-center gap-1 font-medium">
           View All <ChevronRight className="w-4 h-4" />
         </Link>
       )}
@@ -547,7 +550,7 @@ const Index = () => {
       <div className="space-y-6 bg-gray-50">
         {/* Personalized Greeting */}
         <div className="px-4 pt-4">
-          <h1 className="text-xl font-bold text-gray-800">
+          <h1 className="text-xl font-bold bg-gradient-to-r from-obeyyo-pink to-obeyyo-blue bg-clip-text text-transparent">
             Hi there! 👋
           </h1>
           <p className="text-sm text-gray-600 mt-1">Discover amazing deals just for you</p>

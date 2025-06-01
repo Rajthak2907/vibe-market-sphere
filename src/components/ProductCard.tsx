@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Heart, Star, ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface ProductCardProps {
   product: {
@@ -26,6 +26,17 @@ interface ProductCardProps {
 
 const ProductCard = ({ product, className = "" }: ProductCardProps) => {
   const [isWishlisted, setIsWishlisted] = useState(false);
+  const [isInCart, setIsInCart] = useState(false);
+
+  useEffect(() => {
+    // Check if product is in wishlist
+    const wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+    setIsWishlisted(wishlist.includes(product.id));
+
+    // Check if product is in cart
+    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    setIsInCart(cart.some((item: any) => item.id === product.id));
+  }, [product.id]);
 
   const discountPercent = product.originalPrice 
     ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
@@ -34,23 +45,48 @@ const ProductCard = ({ product, className = "" }: ProductCardProps) => {
   const handleWishlistToggle = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    setIsWishlisted(!isWishlisted);
     
-    // Save to localStorage for guest users
     const wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+    let updatedWishlist;
+    
     if (isWishlisted) {
-      const filteredWishlist = wishlist.filter((id: string) => id !== product.id);
-      localStorage.setItem('wishlist', JSON.stringify(filteredWishlist));
+      updatedWishlist = wishlist.filter((id: string) => id !== product.id);
+      setIsWishlisted(false);
     } else {
-      wishlist.push(product.id);
-      localStorage.setItem('wishlist', JSON.stringify(wishlist));
+      updatedWishlist = [...wishlist, product.id];
+      setIsWishlisted(true);
     }
+    
+    localStorage.setItem('wishlist', JSON.stringify(updatedWishlist));
+    
+    // Dispatch custom event to update counts in Layout
+    window.dispatchEvent(new CustomEvent('wishlistUpdated'));
   };
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    // Add to cart logic
+    
+    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    
+    if (!isInCart) {
+      const cartItem = {
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        originalPrice: product.originalPrice,
+        image: product.image,
+        brand: product.brand,
+        quantity: 1
+      };
+      
+      const updatedCart = [...cart, cartItem];
+      localStorage.setItem('cart', JSON.stringify(updatedCart));
+      setIsInCart(true);
+      
+      // Dispatch custom event to update counts in Layout
+      window.dispatchEvent(new CustomEvent('cartUpdated'));
+    }
   };
 
   return (
@@ -68,27 +104,27 @@ const ProductCard = ({ product, className = "" }: ProductCardProps) => {
         {/* Badges */}
         <div className="absolute top-3 left-3 flex flex-col gap-2">
           {product.isTrending && (
-            <Badge className="text-white text-xs px-2 py-1 rounded-full font-semibold shadow-lg" style={{ backgroundColor: "#fc334d" }}>
+            <Badge className="text-white text-xs px-2 py-1 rounded-full font-semibold shadow-lg bg-obeyyo-red">
               🔥 Trending
             </Badge>
           )}
           {product.isFlashSale && (
-            <Badge className="text-white text-xs px-2 py-1 rounded-full font-semibold shadow-lg animate-pulse" style={{ backgroundColor: "#fc2682" }}>
+            <Badge className="text-white text-xs px-2 py-1 rounded-full font-semibold shadow-lg animate-pulse bg-obeyyo-pink">
               ⚡ Flash Sale
             </Badge>
           )}
           {product.isNew && (
-            <Badge className="text-white text-xs px-2 py-1 rounded-full font-semibold shadow-lg" style={{ backgroundColor: "#f9b704" }}>
+            <Badge className="text-white text-xs px-2 py-1 rounded-full font-semibold shadow-lg bg-obeyyo-yellow">
               🌟 New
             </Badge>
           )}
           {product.isTopRated && (
-            <Badge className="text-white text-xs px-2 py-1 rounded-full font-semibold shadow-lg" style={{ backgroundColor: "#fb8619" }}>
+            <Badge className="text-white text-xs px-2 py-1 rounded-full font-semibold shadow-lg bg-obeyyo-orange">
               🏆 Top Rated
             </Badge>
           )}
           {discountPercent > 0 && (
-            <Badge className="text-white text-xs px-2 py-1 rounded-full font-semibold shadow-lg" style={{ backgroundColor: "#fc334d" }}>
+            <Badge className="text-white text-xs px-2 py-1 rounded-full font-semibold shadow-lg bg-obeyyo-red">
               {discountPercent}% OFF
             </Badge>
           )}
@@ -103,20 +139,22 @@ const ProductCard = ({ product, className = "" }: ProductCardProps) => {
         >
           <Heart 
             className={`w-4 h-4 transition-colors ${
-              isWishlisted ? 'text-white' : 'text-gray-600'
+              isWishlisted ? 'text-obeyyo-pink' : 'text-gray-600'
             }`} 
-            style={{ fill: isWishlisted ? "#fc2682" : "none", color: isWishlisted ? "#fc2682" : undefined }}
+            style={{ fill: isWishlisted ? "#fc2682" : "none" }}
           />
         </Button>
 
         {/* Quick Add to Cart - Shows on Hover */}
         <Button
           onClick={handleAddToCart}
-          className="absolute bottom-3 left-3 right-3 text-white rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0"
-          style={{ background: "linear-gradient(135deg, #fc2682, #08a0ef)" }}
+          disabled={isInCart}
+          className={`absolute bottom-3 left-3 right-3 text-white rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 ${
+            isInCart ? 'bg-green-500 hover:bg-green-600' : 'bg-gradient-to-r from-obeyyo-pink to-obeyyo-blue'
+          }`}
         >
           <ShoppingCart className="w-4 h-4 mr-2" />
-          Add to Cart
+          {isInCart ? 'Added to Cart' : 'Add to Cart'}
         </Button>
       </div>
 
@@ -124,9 +162,9 @@ const ProductCard = ({ product, className = "" }: ProductCardProps) => {
       <div className="p-4 space-y-2">
         {/* Brand & Rating */}
         <div className="flex items-center justify-between">
-          <span className="text-xs text-gray-500 uppercase tracking-wide font-medium">{product.brand}</span>
+          <span className="text-xs text-obeyyo-blue uppercase tracking-wide font-medium">{product.brand}</span>
           <div className="flex items-center gap-1">
-            <Star className="w-3 h-3 text-[#f9b704]" style={{ fill: "#f9b704" }} />
+            <Star className="w-3 h-3 text-obeyyo-yellow" style={{ fill: "#f9b704" }} />
             <span className="text-xs text-gray-600 font-medium">{product.rating}</span>
             <span className="text-xs text-gray-400">({product.reviews})</span>
           </div>
@@ -134,14 +172,14 @@ const ProductCard = ({ product, className = "" }: ProductCardProps) => {
 
         {/* Product Name */}
         <Link to={`/product/${product.id}`}>
-          <h3 className="font-semibold text-sm text-gray-800 line-clamp-2 hover:text-[#fc2682] transition-colors leading-tight">
+          <h3 className="font-semibold text-sm text-gray-800 line-clamp-2 hover:text-obeyyo-pink transition-colors leading-tight">
             {product.name}
           </h3>
         </Link>
 
         {/* Pricing */}
         <div className="flex items-center gap-2">
-          <span className="font-bold text-lg text-gray-900">₹{product.price.toLocaleString()}</span>
+          <span className="font-bold text-lg text-obeyyo-red">₹{product.price.toLocaleString()}</span>
           {product.originalPrice && (
             <span className="text-sm text-gray-500 line-through">₹{product.originalPrice.toLocaleString()}</span>
           )}
