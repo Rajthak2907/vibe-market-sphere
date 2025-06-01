@@ -199,7 +199,7 @@ const Layout = ({ children }: LayoutProps) => {
                 <div className="relative">
                   <Icon className="w-5 h-5" />
                   {item.badge && item.badge > 0 && (
-                    <Badge className="absolute -top-2 -right-2 h-4 w-4 p-0 flex items-center justify-center text-white text-xs bg-obeyyo-pink">
+                    <Badge className="absolute -top-2 -right-2 h-5 w-5 p-0 flex items-center justify-center text-white text-xs bg-obeyyo-pink border-2 border-white">
                       {item.badge}
                     </Badge>
                   )}

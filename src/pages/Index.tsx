@@ -478,7 +478,7 @@ const Index = () => {
     ];
 
     return (
-      <section className="bg-gradient-to-r from-obeyyo-red to-obeyyo-pink mx-4 rounded-2xl p-4">
+      <section className="bg-gradient-to-r from-obeyyo-orange to-obeyyo-red mx-4 rounded-2xl p-4">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
             <Zap className="w-5 h-5 text-white" />
@@ -513,20 +513,23 @@ const Index = () => {
     const sliderRef = useRef<HTMLDivElement>(null);
 
     return (
-      <section>
-        <SectionHeader 
-          title="Bank Offers" 
-          icon={<CreditCard className="w-5 h-5 text-obeyyo-yellow" />}
-          viewAllLink="/bank-offers"
-          gradient="from-obeyyo-yellow to-obeyyo-orange"
-        />
+      <section className="bg-gradient-to-r from-obeyyo-blue to-obeyyo-pink mx-4 rounded-2xl p-4">
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-2">
+            <CreditCard className="w-5 h-5 text-white" />
+            <h2 className="text-lg font-bold text-white">Bank Offers</h2>
+          </div>
+          <Link to="/bank-offers" className="text-sm text-white/80 hover:text-white flex items-center gap-1 font-medium">
+            View All <ChevronRight className="w-4 h-4" />
+          </Link>
+        </div>
         <div 
           ref={sliderRef}
-          className="flex overflow-x-auto space-x-4 pb-2 scrollbar-hide scroll-smooth px-4"
+          className="flex overflow-x-auto space-x-4 pb-2 scrollbar-hide scroll-smooth"
         >
           {bankOffers.map((offer) => (
             <div key={offer.id} className="flex-shrink-0 w-72">
-              <div className="bg-gradient-to-r from-obeyyo-blue to-obeyyo-pink rounded-2xl p-4 text-white">
+              <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-4 text-white border border-white/30">
                 <div className="flex items-center gap-3 mb-3">
                   <CreditCard className="w-8 h-8" />
                   <div>
@@ -615,24 +618,30 @@ const Index = () => {
         </div>
 
         {/* Trending Now */}
-        <section>
-          <SectionHeader 
-            title="Trending Now" 
-            icon={<TrendingUp className="w-5 h-5 text-obeyyo-red" />}
-            viewAllLink="/trending"
-            gradient="from-obeyyo-red to-obeyyo-orange"
-          />
+        <section className="bg-gradient-to-r from-obeyyo-yellow to-obeyyo-orange mx-4 rounded-2xl p-4">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-2">
+              <TrendingUp className="w-5 h-5 text-white" />
+              <h2 className="text-lg font-bold text-white">Trending Now</h2>
+            </div>
+            <Link to="/trending" className="text-sm text-white/80 hover:text-white flex items-center gap-1 font-medium">
+              View All <ChevronRight className="w-4 h-4" />
+            </Link>
+          </div>
           <ProductSlider products={trendingProducts} showSkeleton={isLoading} />
         </section>
 
         {/* New Arrivals */}
-        <section>
-          <SectionHeader 
-            title="New Arrivals" 
-            icon={<span className="text-lg">🌟</span>}
-            viewAllLink="/new-arrivals"
-            gradient="from-obeyyo-yellow to-obeyyo-blue"
-          />
+        <section className="bg-gradient-to-r from-obeyyo-blue to-obeyyo-pink mx-4 rounded-2xl p-4">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-2">
+              <span className="text-lg">🌟</span>
+              <h2 className="text-lg font-bold text-white">New Arrivals</h2>
+            </div>
+            <Link to="/new-arrivals" className="text-sm text-white/80 hover:text-white flex items-center gap-1 font-medium">
+              View All <ChevronRight className="w-4 h-4" />
+            </Link>
+          </div>
           <ProductSlider products={newArrivals} showSkeleton={isLoading} />
         </section>
 
@@ -642,26 +651,32 @@ const Index = () => {
         </div>
 
         {/* Recommended for You */}
-        <section>
-          <SectionHeader 
-            title="Recommended for You" 
-            icon={<span className="text-lg">🧠</span>}
-            viewAllLink="/recommended"
-            gradient="from-obeyyo-blue to-obeyyo-pink"
-          />
+        <section className="bg-gradient-to-r from-obeyyo-pink to-obeyyo-red mx-4 rounded-2xl p-4">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-2">
+              <span className="text-lg">🧠</span>
+              <h2 className="text-lg font-bold text-white">Recommended for You</h2>
+            </div>
+            <Link to="/recommended" className="text-sm text-white/80 hover:text-white flex items-center gap-1 font-medium">
+              View All <ChevronRight className="w-4 h-4" />
+            </Link>
+          </div>
           <ProductSlider products={recommendedProducts} showSkeleton={isLoading} />
         </section>
 
         {/* Shop by Brands */}
-        <section>
-          <SectionHeader 
-            title="Shop by Brands" 
-            icon={<Star className="w-5 h-5 text-obeyyo-yellow" />}
-            viewAllLink="/brands"
-            gradient="from-obeyyo-yellow to-obeyyo-orange"
-          />
+        <section className="bg-gradient-to-r from-obeyyo-orange to-obeyyo-yellow mx-4 rounded-2xl p-4">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-2">
+              <Star className="w-5 h-5 text-white" />
+              <h2 className="text-lg font-bold text-white">Shop by Brands</h2>
+            </div>
+            <Link to="/brands" className="text-sm text-white/80 hover:text-white flex items-center gap-1 font-medium">
+              View All <ChevronRight className="w-4 h-4" />
+            </Link>
+          </div>
           {isLoading ? (
-            <div className="flex gap-4 px-4 overflow-x-auto">
+            <div className="flex gap-4 overflow-x-auto">
               {Array.from({ length: 4 }).map((_, i) => (
                 <div key={i} className="flex-shrink-0 w-32">
                   <SkeletonLoader type="brand" />
@@ -677,13 +692,16 @@ const Index = () => {
         <BankOffersSection />
 
         {/* Top Picks */}
-        <section className="pb-6">
-          <SectionHeader 
-            title="Top Picks" 
-            icon={<span className="text-lg">🏆</span>}
-            viewAllLink="/top-picks"
-            gradient="from-obeyyo-orange to-obeyyo-red"
-          />
+        <section className="bg-gradient-to-r from-obeyyo-blue to-obeyyo-orange mx-4 rounded-2xl p-4 pb-6">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-2">
+              <span className="text-lg">🏆</span>
+              <h2 className="text-lg font-bold text-white">Top Picks</h2>
+            </div>
+            <Link to="/top-picks" className="text-sm text-white/80 hover:text-white flex items-center gap-1 font-medium">
+              View All <ChevronRight className="w-4 h-4" />
+            </Link>
+          </div>
           <ProductSlider products={topPicks} showSkeleton={isLoading} />
         </section>
 
