@@ -6,13 +6,16 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { Star, Heart, Share2, ChevronLeft, Plus, Minus, Ruler, MapPin, Truck, Shield, RotateCcw, Upload, CheckCircle, Clock, Zap } from "lucide-react";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { Star, Heart, Share2, ChevronLeft, Plus, Minus, Ruler, MapPin, Truck, Shield, RotateCcw, Upload, CheckCircle, Clock, Zap, ChevronDown, Search, Gift, Copy, RotateCw } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 import SizeGuide from "@/components/SizeGuide";
 import ProductSlider from "@/components/ProductSlider";
 import PromoBanner from "@/components/PromoBanner";
 
 const ProductDetail = () => {
   const { id } = useParams();
+  const { toast } = useToast();
   const [selectedSize, setSelectedSize] = useState("M");
   const [selectedColor, setSelectedColor] = useState("Black");
   const [quantity, setQuantity] = useState(1);
@@ -26,6 +29,11 @@ const ProductDetail = () => {
   const [selectedImage, setSelectedImage] = useState(0);
   const [showStickyBar, setShowStickyBar] = useState(false);
   const [timeLeft, setTimeLeft] = useState({ hours: 5, minutes: 23 });
+  const [isZoomed, setIsZoomed] = useState(false);
+  const [show360View, setShow360View] = useState(false);
+  const [isRotating, setIsRotating] = useState(false);
+  const [copiedCoupon, setCopiedCoupon] = useState(false);
+  const [seoExpanded, setSeoExpanded] = useState(false);
 
   // Mock product data with enhanced features
   const product = {
@@ -67,6 +75,43 @@ const ProductDetail = () => {
     modelInfo: "Model is 6'1\", wearing size L"
   };
 
+  // Customer reviews data
+  const customerReviews = [
+    {
+      id: "1",
+      name: "Rahul Sharma",
+      rating: 5,
+      review: "Amazing quality! The fabric is so soft and comfortable. Perfect fit and great value for money.",
+      date: "2 days ago",
+      verified: true,
+      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=50"
+    },
+    {
+      id: "2", 
+      name: "Priya Singh",
+      rating: 4,
+      review: "Love the design and color. Good quality material. Delivery was fast too!",
+      date: "1 week ago",
+      verified: true,
+      image: "https://images.unsplash.com/photo-1494790108755-2616b612b494?w=50"
+    },
+    {
+      id: "3",
+      name: "Amit Kumar",
+      rating: 5,
+      review: "Excellent product! Fits perfectly and the fabric quality is outstanding.",
+      date: "2 weeks ago",
+      verified: true,
+      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=50"
+    }
+  ];
+
+  // Check if product is already in wishlist/cart
+  useEffect(() => {
+    const wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+    setIsWishlisted(wishlist.includes(product.id));
+  }, [product.id]);
+
   // Handle scroll for sticky bar
   useEffect(() => {
     const handleScroll = () => {
@@ -93,6 +138,81 @@ const ProductDetail = () => {
 
   const discountPercent = Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100);
   const savings = product.originalPrice - product.price;
+
+  // Wishlist toggle with animation
+  const handleWishlistToggle = () => {
+    const wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+    let updatedWishlist;
+    
+    if (isWishlisted) {
+      updatedWishlist = wishlist.filter((id: string) => id !== product.id);
+      setIsWishlisted(false);
+      toast({
+        title: "Removed from Wishlist",
+        description: "Product removed from your wishlist",
+      });
+    } else {
+      updatedWishlist = [...wishlist, product.id];
+      setIsWishlisted(true);
+      toast({
+        title: "❤️ Added to Wishlist!",
+        description: "Product saved to your wishlist",
+        className: "bg-pink-50 border-pink-200 text-pink-800",
+      });
+    }
+    
+    localStorage.setItem('wishlist', JSON.stringify(updatedWishlist));
+    window.dispatchEvent(new CustomEvent('wishlistUpdated'));
+  };
+
+  // Add to cart functionality
+  const handleAddToCart = () => {
+    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    
+    const existingItem = cart.find((item: any) => item.id === product.id);
+    let updatedCart;
+    
+    if (existingItem) {
+      updatedCart = cart.map((item: any) => 
+        item.id === product.id 
+          ? { ...item, quantity: item.quantity + quantity }
+          : item
+      );
+    } else {
+      const cartItem = {
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        originalPrice: product.originalPrice,
+        image: product.images[0],
+        brand: product.brand,
+        quantity: quantity,
+        size: selectedSize,
+        color: selectedColor
+      };
+      updatedCart = [...cart, cartItem];
+    }
+    
+    localStorage.setItem('cart', JSON.stringify(updatedCart));
+    window.dispatchEvent(new CustomEvent('cartUpdated'));
+    
+    toast({
+      title: "🛒 Added to Cart!",
+      description: `${quantity} item(s) added to your cart`,
+      className: "bg-green-50 border-green-200 text-green-800",
+    });
+  };
+
+  // Copy coupon code
+  const copyCouponCode = () => {
+    navigator.clipboard.writeText("OBEYYO10");
+    setCopiedCoupon(true);
+    toast({
+      title: "Coupon Copied!",
+      description: "OBEYYO10 copied to clipboard",
+    });
+    setTimeout(() => setCopiedCoupon(false), 3000);
+  };
 
   // Mock delivery data
   const checkDelivery = () => {
@@ -181,16 +301,72 @@ const ProductDetail = () => {
             Back to Products
           </Link>
 
+          {/* First Order Offer Banner */}
+          <div className="bg-gradient-to-r from-yellow-400 to-orange-500 rounded-xl p-4 mb-6 text-white">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-2">
+                <Gift className="w-5 h-5" />
+                <span className="font-semibold">🎁 First Order Offer: Get a Free Gift on Orders Above ₹999!</span>
+              </div>
+              <Button size="sm" className="bg-white text-orange-600 hover:bg-white/90">
+                Claim Now
+              </Button>
+            </div>
+          </div>
+
+          {/* Coupon Code Reveal */}
+          <div className="bg-purple-50 border border-purple-200 rounded-lg p-4 mb-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-2">
+                <span className="text-purple-800 font-medium">🔖 Special Discount Code:</span>
+                <code className="bg-purple-100 text-purple-900 px-2 py-1 rounded font-mono">OBEYYO10</code>
+              </div>
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={copyCouponCode}
+                className="border-purple-300 text-purple-700 hover:bg-purple-100"
+              >
+                {copiedCoupon ? <CheckCircle className="w-4 h-4 mr-1" /> : <Copy className="w-4 h-4 mr-1" />}
+                {copiedCoupon ? "Copied!" : "Copy Code"}
+              </Button>
+            </div>
+            <p className="text-purple-600 text-sm mt-1">Get 10% OFF on your order!</p>
+          </div>
+
           <div className="grid lg:grid-cols-2 gap-6 lg:gap-8">
             {/* Product Images */}
             <div className="space-y-3 sm:space-y-4">
-              <div className="aspect-square rounded-lg sm:rounded-xl overflow-hidden bg-gray-100">
+              <div className="relative aspect-square rounded-lg sm:rounded-xl overflow-hidden bg-gray-100">
                 <img
                   src={product.images[selectedImage]}
                   alt={product.name}
-                  className="w-full h-full object-cover"
+                  className={`w-full h-full object-cover cursor-pointer transition-transform duration-300 ${
+                    isZoomed ? 'scale-150' : 'scale-100'
+                  } ${isRotating ? 'animate-spin' : ''}`}
+                  onClick={() => setIsZoomed(!isZoomed)}
                 />
+                
+                {/* 360° View Button */}
+                <Button
+                  className="absolute top-3 left-3 bg-white/90 text-gray-700 hover:bg-white"
+                  size="sm"
+                  onClick={() => {
+                    setIsRotating(true);
+                    setTimeout(() => setIsRotating(false), 2000);
+                  }}
+                >
+                  <RotateCw className="w-4 h-4 mr-1" />
+                  360°
+                </Button>
+
+                {/* Zoom Indicator */}
+                <div className="absolute bottom-3 right-3 bg-black/70 text-white px-2 py-1 rounded text-xs">
+                  <Search className="w-3 h-3 inline mr-1" />
+                  {isZoomed ? 'Click to zoom out' : 'Click to zoom in'}
+                </div>
               </div>
+              
               <div className="flex space-x-2 overflow-x-auto pb-2">
                 {product.images.map((image, index) => (
                   <button
@@ -235,6 +411,47 @@ const ProductDetail = () => {
                 </div>
               </div>
 
+              {/* Customer Reviews Section */}
+              <div className="bg-blue-50 rounded-lg p-4">
+                <h3 className="font-medium text-gray-800 mb-3">Customer Reviews</h3>
+                <div className="space-y-3">
+                  {customerReviews.slice(0, 2).map((review) => (
+                    <div key={review.id} className="bg-white rounded-lg p-3">
+                      <div className="flex items-start space-x-3">
+                        <img 
+                          src={review.image} 
+                          alt={review.name} 
+                          className="w-8 h-8 rounded-full object-cover"
+                        />
+                        <div className="flex-1">
+                          <div className="flex items-center justify-between mb-1">
+                            <div className="flex items-center space-x-2">
+                              <span className="font-medium text-sm">{review.name}</span>
+                              {review.verified && (
+                                <Badge className="text-xs bg-green-100 text-green-800">Verified</Badge>
+                              )}
+                            </div>
+                            <span className="text-xs text-gray-500">{review.date}</span>
+                          </div>
+                          <div className="flex items-center mb-2">
+                            {Array.from({ length: 5 }).map((_, i) => (
+                              <Star 
+                                key={i} 
+                                className={`w-3 h-3 ${i < review.rating ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'}`}
+                              />
+                            ))}
+                          </div>
+                          <p className="text-sm text-gray-600">{review.review}</p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                  <Button variant="ghost" size="sm" className="w-full text-blue-600">
+                    View All {product.reviews} Reviews
+                  </Button>
+                </div>
+              </div>
+
               {/* Color Selection with Tooltips */}
               <div>
                 <h3 className="font-medium text-gray-800 mb-3">Select Color</h3>
@@ -244,9 +461,9 @@ const ProductDetail = () => {
                       <TooltipTrigger asChild>
                         <button
                           onClick={() => setSelectedColor(color.name)}
-                          className={`w-10 h-10 sm:w-12 sm:h-12 rounded-lg border-2 relative ${
+                          className={`w-10 h-10 sm:w-12 sm:h-12 rounded-lg border-2 relative transition-all duration-200 ${
                             selectedColor === color.name
-                              ? "border-primary shadow-lg shadow-primary/50"
+                              ? "border-primary shadow-lg shadow-primary/50 scale-110"
                               : "border-gray-300 hover:border-gray-400"
                           }`}
                           style={{ backgroundColor: color.code }}
@@ -352,16 +569,23 @@ const ProductDetail = () => {
 
               {/* Action Buttons */}
               <div className="flex gap-3 sm:gap-4">
-                <Button className="flex-1 bg-gradient-to-r from-obeyyo-pink to-obeyyo-blue hover:opacity-90 text-white h-11 sm:h-12 text-sm sm:text-base">
+                <Button 
+                  onClick={handleAddToCart}
+                  className="flex-1 bg-gradient-to-r from-obeyyo-pink to-obeyyo-blue hover:opacity-90 text-white h-11 sm:h-12 text-sm sm:text-base"
+                >
                   Add to Cart
                 </Button>
                 <Button 
                   variant="outline" 
                   size="lg"
-                  onClick={() => setIsWishlisted(!isWishlisted)}
-                  className="h-11 sm:h-12 px-3 sm:px-4"
+                  onClick={handleWishlistToggle}
+                  className={`h-11 sm:h-12 px-3 sm:px-4 transition-all duration-200 ${
+                    isWishlisted ? 'animate-bounce' : ''
+                  }`}
                 >
-                  <Heart className={`w-4 h-4 sm:w-5 sm:h-5 ${isWishlisted ? 'fill-red-500 text-red-500' : ''}`} />
+                  <Heart className={`w-4 h-4 sm:w-5 sm:h-5 transition-colors ${
+                    isWishlisted ? 'fill-red-500 text-red-500' : ''
+                  }`} />
                 </Button>
                 <Button variant="outline" size="lg" className="h-11 sm:h-12 px-3 sm:px-4">
                   <Share2 className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -468,6 +692,31 @@ const ProductDetail = () => {
             </div>
           </div>
 
+          {/* SEO Content Section */}
+          <div className="mt-12 bg-white rounded-xl border">
+            <Collapsible open={seoExpanded} onOpenChange={setSeoExpanded}>
+              <CollapsibleTrigger asChild>
+                <Button variant="ghost" className="w-full justify-between p-6 text-left">
+                  <h2 className="text-xl font-bold text-gray-800">More About This Product</h2>
+                  <ChevronDown className={`w-5 h-5 transition-transform ${seoExpanded ? 'rotate-180' : ''}`} />
+                </Button>
+              </CollapsibleTrigger>
+              <CollapsibleContent className="px-6 pb-6">
+                <div className="space-y-4 text-gray-600">
+                  <p>
+                    Discover the perfect blend of style and comfort with our Premium Cotton T-Shirt. Crafted from 100% organic cotton, this modern design piece represents the epitome of sustainable fashion. Whether you're looking for casual wear, streetwear, or premium basics, this t-shirt delivers exceptional quality that lasts.
+                  </p>
+                  <p>
+                    Our premium cotton fabric undergoes specialized pre-shrinking treatment, ensuring your t-shirt maintains its perfect fit wash after wash. The breathable material makes it ideal for all seasons, while the modern cut flatters every body type. Perfect for layering or wearing solo, this versatile piece belongs in every fashion-conscious individual's wardrobe.
+                  </p>
+                  <p>
+                    Made with ethical manufacturing practices and sustainable materials, this t-shirt not only looks good but also feels good to wear. The superior craftsmanship ensures durability, making it a smart investment for your clothing collection. Available in multiple colors and sizes to suit every preference and style.
+                  </p>
+                </div>
+              </CollapsibleContent>
+            </Collapsible>
+          </div>
+
           {/* Photo Review Carousel */}
           <div className="mt-12">
             <h2 className="text-xl font-bold text-gray-800 mb-6">Customer Photos</h2>
@@ -550,7 +799,10 @@ const ProductDetail = () => {
                 </button>
               </div>
 
-              <Button className="flex-1 bg-gradient-to-r from-obeyyo-pink to-obeyyo-blue text-white">
+              <Button 
+                onClick={handleAddToCart}
+                className="flex-1 bg-gradient-to-r from-obeyyo-pink to-obeyyo-blue text-white"
+              >
                 Add to Cart
               </Button>
             </div>
