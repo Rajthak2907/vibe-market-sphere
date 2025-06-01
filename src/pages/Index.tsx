@@ -595,12 +595,12 @@ const Index = () => {
 
         {/* Shop by Brands */}
         <section className="bg-gradient-to-r from-obeyyo-orange to-obeyyo-yellow mx-4 rounded-2xl p-4 bg-white">
-          <div className="flex items-center justify-between mb-4 bg-slate-800 rounded-sm">
+          <div className="flex items-center justify-between mb-4 rounded-sm bg-white">
             <div className="flex items-center gap-2 bg-white">
               <Star className="w-5 h-5 text-white bg-slate-950" />
               <h2 className="text-lg font-bold text-black">Shop by Brands</h2>
             </div>
-            <Link to="/brands" className="text-sm text-white/80 hover:text-white flex items-center gap-1 font-medium">
+            <Link to="/brands" className="text-sm text-black/80 hover:text-blackflex items-center gap-1 font-medium">
               View All <ChevronRight className="w-4 h-4" />
             </Link>
           </div>
