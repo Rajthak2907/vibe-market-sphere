@@ -62,21 +62,21 @@ const FeaturedBrands = ({ brands }: FeaturedBrandsProps) => {
           <Link 
             key={brand.id} 
             to={brand.link}
-            className="flex-shrink-0 w-40 sm:w-44"
+            className="flex-shrink-0 w-32 sm:w-36"
           >
-            <div className="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+            <div className="bg-white border-2 border-gray-100 rounded-2xl p-6 hover:shadow-lg transition-all hover:border-obeyyo-pink/30 group">
               <div className="flex flex-col items-center text-center">
-                <div className="w-16 h-16 mb-3 flex items-center justify-center bg-gray-50 rounded-full">
+                <div className="w-20 h-20 mb-4 flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl group-hover:shadow-md transition-all">
                   <img
                     src={brand.logo}
                     alt={brand.name}
-                    className="w-12 h-12 object-contain"
+                    className="w-16 h-16 object-contain"
                   />
                 </div>
-                <h3 className="font-semibold text-sm mb-1 text-gray-800">
+                <h3 className="font-bold text-sm mb-2 text-gray-800">
                   {brand.name}
                 </h3>
-                <p className="text-xs text-[#FF6B9D] font-medium">
+                <p className="text-xs text-obeyyo-pink font-semibold bg-pink-50 px-3 py-1 rounded-full">
                   {brand.discount}
                 </p>
               </div>

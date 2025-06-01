@@ -1,4 +1,3 @@
-
 import Layout from "@/components/Layout";
 import ImageCarousel from "@/components/ImageCarousel";
 import ProductCard from "@/components/ProductCard";
@@ -6,7 +5,9 @@ import FeaturedBrands from "@/components/FeaturedBrands";
 import NarrowPromoCarousel from "@/components/NarrowPromoCarousel";
 import PriceDroppedSection from "@/components/PriceDroppedSection";
 import SkeletonLoader from "@/components/SkeletonLoader";
-import { ChevronRight, Clock, TrendingUp, Star, Zap } from "lucide-react";
+import PromoBanner from "@/components/PromoBanner";
+import Footer from "@/components/Footer";
+import { ChevronRight, Clock, TrendingUp, Star, Zap, Gift, CreditCard } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
@@ -22,14 +23,6 @@ const Index = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  const scroll = (direction: 'left' | 'right', ref: React.RefObject<HTMLDivElement>) => {
-    if (ref.current) {
-      const scrollAmount = direction === 'left' ? -280 : 280;
-      ref.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-    }
-  };
-
-  // Mock data with modern product attributes
   const carouselImages = [
     {
       id: "1",
@@ -106,6 +99,84 @@ const Index = () => {
     }
   ];
 
+  // New data for additional sections
+  const categoryFlashSaleProducts = {
+    men: [
+      {
+        id: "men-fs-1",
+        name: "Classic Polo Shirt",
+        price: 899,
+        originalPrice: 1799,
+        rating: 4.5,
+        reviews: 234,
+        image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400",
+        brand: "MenStyle",
+        isFlashSale: true
+      },
+      {
+        id: "men-fs-2",
+        name: "Cargo Pants",
+        price: 1299,
+        originalPrice: 2499,
+        rating: 4.3,
+        reviews: 156,
+        image: "https://images.unsplash.com/photo-1542272604-787c3835535d?w=400",
+        brand: "UrbanMen",
+        isFlashSale: true
+      }
+    ],
+    women: [
+      {
+        id: "women-fs-1",
+        name: "Floral Summer Dress",
+        price: 1599,
+        originalPrice: 2999,
+        rating: 4.7,
+        reviews: 189,
+        image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=400",
+        brand: "FloralWear",
+        isFlashSale: true
+      },
+      {
+        id: "women-fs-2",
+        name: "Denim Jacket",
+        price: 1199,
+        originalPrice: 2299,
+        rating: 4.4,
+        reviews: 267,
+        image: "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400",
+        brand: "DenimCo",
+        isFlashSale: true
+      }
+    ],
+    sports: [
+      {
+        id: "sports-fs-1",
+        name: "Running Shoes",
+        price: 2999,
+        originalPrice: 5999,
+        rating: 4.8,
+        reviews: 445,
+        image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400",
+        brand: "SportMax",
+        isFlashSale: true
+      }
+    ],
+    accessories: [
+      {
+        id: "acc-fs-1",
+        name: "Smart Watch",
+        price: 3999,
+        originalPrice: 7999,
+        rating: 4.6,
+        reviews: 234,
+        image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400",
+        brand: "TechWear",
+        isFlashSale: true
+      }
+    ]
+  };
+
   const newArrivals = [
     {
       id: "na-1",
@@ -127,6 +198,17 @@ const Index = () => {
       reviews: 234,
       image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400",
       brand: "BasicWear",
+      isNew: true
+    },
+    {
+      id: "na-3",
+      name: "Trendy Sneakers",
+      price: 3499,
+      originalPrice: 5999,
+      rating: 4.7,
+      reviews: 189,
+      image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400",
+      brand: "StreetWear",
       isNew: true
     }
   ];
@@ -176,6 +258,16 @@ const Index = () => {
       reviews: 234,
       image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400",
       brand: "EverydayBags"
+    },
+    {
+      id: "r-3",
+      name: "Wireless Earbuds",
+      price: 1999,
+      originalPrice: 3999,
+      rating: 4.7,
+      reviews: 567,
+      image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400",
+      brand: "AudioTech"
     }
   ];
 
@@ -200,48 +292,84 @@ const Index = () => {
       logo: "https://images.unsplash.com/photo-1571945153237-4929e783af4a?w=100",
       discount: "Up to 60% OFF",
       link: "/brands/puma"
+    },
+    {
+      id: "fb-4",
+      name: "Zara",
+      logo: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=100",
+      discount: "Up to 30% OFF",
+      link: "/brands/zara"
+    },
+    {
+      id: "fb-5",
+      name: "H&M",
+      logo: "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=100",
+      discount: "Up to 45% OFF",
+      link: "/brands/hm"
     }
   ];
 
-  const narrowPromos = [
+  // Promotional banners data
+  const promoBanners = [
     {
-      id: "np-1",
-      text: "🎉 Free Shipping on Orders Above ₹999",
-      link: "/free-shipping",
-      bgColor: "#fc2682"
+      id: "pb-1",
+      title: "Mega Sale Weekend",
+      subtitle: "Up to 70% off on everything",
+      buttonText: "Shop Now",
+      buttonLink: "/sale",
+      image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800",
+      backgroundColor: "#fc2682"
     },
     {
-      id: "np-2",
-      text: "⚡ Lightning Deal: 70% OFF Electronics",
-      link: "/electronics-deal",
-      bgColor: "#08a0ef"
+      id: "pb-2",
+      title: "New Collection Drop",
+      subtitle: "Fresh styles for the season",
+      buttonText: "Explore",
+      buttonLink: "/new-arrivals",
+      image: "https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=800",
+      backgroundColor: "#08a0ef"
+    },
+    {
+      id: "pb-3",
+      title: "Bank Offers",
+      subtitle: "Extra 15% off with HDFC cards",
+      buttonText: "Check Offers",
+      buttonLink: "/bank-offers",
+      image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800",
+      backgroundColor: "#f9b704"
     }
   ];
 
-  const priceDroppedProducts = [
+  const bankOffers = [
     {
-      id: "pd-1",
-      name: "Wireless Headphones",
-      price: 1999,
-      originalPrice: 4999,
-      rating: 4.5,
-      reviews: 245,
-      image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400",
-      brand: "AudioTech",
-      priceDropPercent: 60
+      id: "bo-1",
+      bank: "HDFC Bank",
+      offer: "15% off up to ₹3000",
+      code: "HDFC15",
+      image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400"
     },
     {
-      id: "pd-2",
-      name: "Smart Watch",
-      price: 2999,
-      originalPrice: 7999,
-      rating: 4.3,
-      reviews: 189,
-      image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400",
-      brand: "TechWear",
-      priceDropPercent: 62
+      id: "bo-2",
+      bank: "SBI Cards",
+      offer: "10% off up to ₹2000",
+      code: "SBI10",
+      image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400"
+    },
+    {
+      id: "bo-3",
+      bank: "ICICI Bank",
+      offer: "12% off up to ₹2500",
+      code: "ICICI12",
+      image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400"
     }
   ];
+
+  const scroll = (direction: 'left' | 'right', ref: React.RefObject<HTMLDivElement>) => {
+    if (ref.current) {
+      const scrollAmount = direction === 'left' ? -280 : 280;
+      ref.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
+  };
 
   const SectionHeader = ({ 
     title, 
@@ -262,7 +390,7 @@ const Index = () => {
         </h2>
       </div>
       {viewAllLink && (
-        <Link to={viewAllLink} className="text-sm text-gray-600 hover:text-[#fc2682] flex items-center gap-1">
+        <Link to={viewAllLink} className="text-sm text-gray-600 hover:text-obeyyo-pink flex items-center gap-1">
           View All <ChevronRight className="w-4 h-4" />
         </Link>
       )}
@@ -337,6 +465,83 @@ const Index = () => {
     );
   };
 
+  const CategoryFlashSale = () => {
+    const [activeCategory, setActiveCategory] = useState('men');
+    const categories = [
+      { id: 'men', name: "Men's", color: "#fc2682" },
+      { id: 'women', name: "Women's", color: "#fc334d" },
+      { id: 'sports', name: "Sports", color: "#08a0ef" },
+      { id: 'accessories', name: "Accessories", color: "#f9b704" }
+    ];
+
+    return (
+      <section className="bg-gradient-to-r from-obeyyo-red to-obeyyo-pink mx-4 rounded-2xl p-4">
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-2">
+            <Zap className="w-5 h-5 text-white" />
+            <h2 className="text-lg font-bold text-white">Category Flash Sale</h2>
+          </div>
+          <FlashSaleTimer />
+        </div>
+        
+        {/* Category Tabs */}
+        <div className="flex gap-2 mb-4 overflow-x-auto scrollbar-hide">
+          {categories.map((category) => (
+            <button
+              key={category.id}
+              onClick={() => setActiveCategory(category.id)}
+              className={`flex-shrink-0 px-4 py-2 text-sm font-semibold rounded-full transition-all ${
+                activeCategory === category.id 
+                  ? 'bg-white text-gray-800' 
+                  : 'bg-white/20 text-white hover:bg-white/30'
+              }`}
+            >
+              {category.name}
+            </button>
+          ))}
+        </div>
+        
+        <ProductSlider products={categoryFlashSaleProducts[activeCategory as keyof typeof categoryFlashSaleProducts]} showSkeleton={isLoading} />
+      </section>
+    );
+  };
+
+  const BankOffersSection = () => {
+    const sliderRef = useRef<HTMLDivElement>(null);
+
+    return (
+      <section>
+        <SectionHeader 
+          title="Bank Offers" 
+          icon={<CreditCard className="w-5 h-5 text-obeyyo-yellow" />}
+          viewAllLink="/bank-offers"
+          gradient="from-obeyyo-yellow to-obeyyo-orange"
+        />
+        <div 
+          ref={sliderRef}
+          className="flex overflow-x-auto space-x-4 pb-2 scrollbar-hide scroll-smooth px-4"
+        >
+          {bankOffers.map((offer) => (
+            <div key={offer.id} className="flex-shrink-0 w-72">
+              <div className="bg-gradient-to-r from-obeyyo-blue to-obeyyo-pink rounded-2xl p-4 text-white">
+                <div className="flex items-center gap-3 mb-3">
+                  <CreditCard className="w-8 h-8" />
+                  <div>
+                    <h3 className="font-bold text-lg">{offer.bank}</h3>
+                    <p className="text-sm opacity-90">{offer.offer}</p>
+                  </div>
+                </div>
+                <div className="bg-white/20 rounded-lg p-2 text-center">
+                  <span className="font-bold">Code: {offer.code}</span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    );
+  };
+
   return (
     <Layout>
       <div className="space-y-6 bg-gray-50">
@@ -382,7 +587,7 @@ const Index = () => {
         </div>
 
         {/* Flash Sale with Timer */}
-        <section className="bg-gradient-to-r from-[#fc334d] to-[#fc2682] mx-4 rounded-2xl p-4">
+        <section className="bg-gradient-to-r from-obeyyo-red to-obeyyo-pink mx-4 rounded-2xl p-4">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
               <Zap className="w-5 h-5 text-white" />
@@ -393,27 +598,64 @@ const Index = () => {
           <ProductSlider products={flashSaleProducts} showSkeleton={isLoading} />
         </section>
 
+        {/* Large Promotional Banner */}
+        <div className="px-4">
+          <PromoBanner banner={promoBanners[0]} />
+        </div>
+
+        {/* Category Flash Sale */}
+        <CategoryFlashSale />
+
+        {/* Promotional Banner */}
+        <div className="px-4">
+          <PromoBanner banner={promoBanners[1]} />
+        </div>
+
         {/* Trending Now */}
         <section>
           <SectionHeader 
             title="Trending Now" 
-            icon={<TrendingUp className="w-5 h-5 text-[#fc334d]" />}
+            icon={<TrendingUp className="w-5 h-5 text-obeyyo-red" />}
             viewAllLink="/trending"
-            gradient="from-[#fc334d] to-[#fb8619]"
+            gradient="from-obeyyo-red to-obeyyo-orange"
           />
           <ProductSlider products={trendingProducts} showSkeleton={isLoading} />
         </section>
 
-        {/* Narrow Promo Carousel */}
-        <NarrowPromoCarousel promos={narrowPromos} />
-
-        {/* Popular Brands */}
+        {/* New Arrivals */}
         <section>
           <SectionHeader 
-            title="Popular Brands" 
-            icon={<Star className="w-5 h-5 text-[#f9b704]" />}
+            title="New Arrivals" 
+            icon={<span className="text-lg">🌟</span>}
+            viewAllLink="/new-arrivals"
+            gradient="from-obeyyo-yellow to-obeyyo-blue"
+          />
+          <ProductSlider products={newArrivals} showSkeleton={isLoading} />
+        </section>
+
+        {/* Bank Offers Banner */}
+        <div className="px-4">
+          <PromoBanner banner={promoBanners[2]} />
+        </div>
+
+        {/* Recommended for You */}
+        <section>
+          <SectionHeader 
+            title="Recommended for You" 
+            icon={<span className="text-lg">🧠</span>}
+            viewAllLink="/recommended"
+            gradient="from-obeyyo-blue to-obeyyo-pink"
+          />
+          <ProductSlider products={recommendedProducts} showSkeleton={isLoading} />
+        </section>
+
+        {/* Shop by Brands */}
+        <section>
+          <SectionHeader 
+            title="Shop by Brands" 
+            icon={<Star className="w-5 h-5 text-obeyyo-yellow" />}
             viewAllLink="/brands"
-            gradient="from-[#f9b704] to-[#fb8619]"
+            gradient="from-obeyyo-yellow to-obeyyo-orange"
           />
           {isLoading ? (
             <div className="flex gap-4 px-4 overflow-x-auto">
@@ -428,30 +670,8 @@ const Index = () => {
           )}
         </section>
 
-        {/* Recommended for You */}
-        <section>
-          <SectionHeader 
-            title="Recommended for You" 
-            icon={<span className="text-lg">🧠</span>}
-            viewAllLink="/recommended"
-            gradient="from-[#08a0ef] to-[#fc2682]"
-          />
-          <ProductSlider products={recommendedProducts} showSkeleton={isLoading} />
-        </section>
-
-        {/* Price Dropped */}
-        <PriceDroppedSection products={priceDroppedProducts} />
-
-        {/* New Arrivals */}
-        <section>
-          <SectionHeader 
-            title="New Arrivals" 
-            icon={<span className="text-lg">🌟</span>}
-            viewAllLink="/new-arrivals"
-            gradient="from-[#f9b704] to-[#08a0ef]"
-          />
-          <ProductSlider products={newArrivals} showSkeleton={isLoading} />
-        </section>
+        {/* Bank Offers Section */}
+        <BankOffersSection />
 
         {/* Top Picks */}
         <section className="pb-6">
@@ -459,10 +679,13 @@ const Index = () => {
             title="Top Picks" 
             icon={<span className="text-lg">🏆</span>}
             viewAllLink="/top-picks"
-            gradient="from-[#fb8619] to-[#fc334d]"
+            gradient="from-obeyyo-orange to-obeyyo-red"
           />
           <ProductSlider products={topPicks} showSkeleton={isLoading} />
         </section>
+
+        {/* Footer */}
+        <Footer />
       </div>
     </Layout>
   );

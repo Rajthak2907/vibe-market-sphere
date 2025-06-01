@@ -53,7 +53,7 @@ const Layout = ({ children }: LayoutProps) => {
             <div className="flex items-center space-x-3">
               <Button variant="ghost" size="sm" className="p-2 relative">
                 <TrendingUp className="h-5 w-5 text-gray-600" />
-                <Badge className="absolute -top-1 -right-1 h-4 w-4 p-0 flex items-center justify-center text-white text-xs" style={{ backgroundColor: "#fc2682" }}>
+                <Badge className="absolute -top-1 -right-1 h-4 w-4 p-0 flex items-center justify-center text-white text-xs bg-obeyyo-pink">
                   2
                 </Badge>
               </Button>
@@ -75,11 +75,7 @@ const Layout = ({ children }: LayoutProps) => {
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
               <Input
                 placeholder="Search for brands, products..."
-                className="pl-10 bg-gray-50 border-gray-200 rounded-xl h-10"
-                style={{ 
-                  focusBorderColor: "#fc2682",
-                  '&:focus': { borderColor: "#fc2682" }
-                }}
+                className="pl-10 bg-gray-50 border-gray-200 rounded-xl h-10 focus:border-obeyyo-pink"
               />
             </div>
           </div>
@@ -128,8 +124,7 @@ const Layout = ({ children }: LayoutProps) => {
             <div className="p-4 space-y-2">
               <Link
                 to="/login"
-                className="block px-4 py-3 text-base font-medium hover:bg-pink-50 rounded-lg transition-colors"
-                style={{ color: "#fc2682" }}
+                className="block px-4 py-3 text-base font-medium hover:bg-pink-50 rounded-lg transition-colors text-obeyyo-pink"
                 onClick={() => setMenuOpen(false)}
               >
                 Login / Sign Up
@@ -166,22 +161,21 @@ const Layout = ({ children }: LayoutProps) => {
                 to={item.path}
                 className={`flex flex-col items-center justify-center space-y-1 relative transition-all ${
                   isActive 
-                    ? "transform scale-105" 
+                    ? "transform scale-105 text-obeyyo-pink" 
                     : "text-gray-500"
                 }`}
-                style={{ color: isActive ? "#fc2682" : undefined }}
               >
                 <div className="relative">
                   <Icon className="w-5 h-5" />
                   {item.badge && item.badge > 0 && (
-                    <Badge className="absolute -top-2 -right-2 h-4 w-4 p-0 flex items-center justify-center text-white text-xs" style={{ backgroundColor: "#fc2682" }}>
+                    <Badge className="absolute -top-2 -right-2 h-4 w-4 p-0 flex items-center justify-center text-white text-xs bg-obeyyo-pink">
                       {item.badge}
                     </Badge>
                   )}
                 </div>
                 <span className="text-xs font-medium">{item.label}</span>
                 {isActive && (
-                  <div className="absolute bottom-0 w-6 h-0.5 rounded-full" style={{ background: "linear-gradient(90deg, #fc2682, #08a0ef)" }} />
+                  <div className="absolute bottom-0 w-6 h-0.5 rounded-full bg-gradient-obeyyo" />
                 )}
               </Link>
             );
