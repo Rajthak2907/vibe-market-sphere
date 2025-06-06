@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
 import { useRef, useState, useEffect } from "react";
+
 const Index = () => {
   const [isLoading, setIsLoading] = useState(true);
   const sliderRef = useRef<HTMLDivElement>(null);
@@ -341,27 +342,33 @@ const Index = () => {
           View All <ChevronRight className="w-4 h-4" />
         </Link>}
     </div>;
-  const ProductSlider = ({
+  const ProductGrid = ({
     products,
-    showSkeleton = false
+    showSkeleton = false,
+    maxProducts = 4
   }: {
     products: any[];
     showSkeleton?: boolean;
+    maxProducts?: number;
   }) => {
-    const sliderRef = useRef<HTMLDivElement>(null);
-    return <div ref={sliderRef} className="flex overflow-x-auto space-x-4 pb-2 scrollbar-hide scroll-smooth px-4" style={{
-      scrollbarWidth: 'none',
-      msOverflowStyle: 'none',
-      WebkitOverflowScrolling: 'touch'
-    }}>
-        {showSkeleton ? Array.from({
-        length: 4
-      }).map((_, i) => <div key={i} className="flex-shrink-0 w-48">
+    const displayProducts = products.slice(0, maxProducts);
+    
+    return (
+      <div className="grid grid-cols-2 gap-3 px-4">
+        {showSkeleton ? 
+          Array.from({ length: maxProducts }).map((_, i) => (
+            <div key={i}>
               <SkeletonLoader type="product" />
-            </div>) : products.map(product => <div key={product.id} className="flex-shrink-0 w-48">
+            </div>
+          )) : 
+          displayProducts.map(product => (
+            <div key={product.id}>
               <ProductCard product={product} />
-            </div>)}
-      </div>;
+            </div>
+          ))
+        }
+      </div>
+    );
   };
   const FlashSaleTimer = () => {
     const [timeLeft, setTimeLeft] = useState({
@@ -423,7 +430,9 @@ const Index = () => {
       name: "Accessories",
       color: "#f9b704"
     }];
-    return <section className="bg-gradient-to-r from-obeyyo-orange to-obeyyo-red mx-4 rounded-2xl p-4 bg-yellow-400">
+    
+    return (
+      <section className="bg-gradient-to-r from-obeyyo-orange to-obeyyo-red mx-4 rounded-2xl p-4 bg-yellow-400">
         <div className="flex items-center justify-between mb-4 bg-yellow-400">
           <div className="flex items-center gap-2">
             <Zap className="w-5 h-5 text-white" />
@@ -434,13 +443,39 @@ const Index = () => {
         
         {/* Category Tabs */}
         <div className="flex gap-2 mb-4 overflow-x-auto scrollbar-hide">
-          {categories.map(category => <button key={category.id} onClick={() => setActiveCategory(category.id)} className={`flex-shrink-0 px-4 py-2 text-sm font-semibold rounded-full transition-all ${activeCategory === category.id ? 'bg-white text-gray-800' : 'bg-white/20 text-white hover:bg-white/30'}`}>
+          {categories.map(category => (
+            <button 
+              key={category.id} 
+              onClick={() => setActiveCategory(category.id)} 
+              className={`flex-shrink-0 px-4 py-2 text-sm font-semibold rounded-full transition-all ${
+                activeCategory === category.id 
+                  ? 'bg-white text-gray-800' 
+                  : 'bg-white/20 text-white hover:bg-white/30'
+              }`}
+            >
               {category.name}
-            </button>)}
+            </button>
+          ))}
         </div>
         
-        <ProductSlider products={categoryFlashSaleProducts[activeCategory as keyof typeof categoryFlashSaleProducts]} showSkeleton={isLoading} />
-      </section>;
+        <ProductGrid 
+          products={categoryFlashSaleProducts[activeCategory as keyof typeof categoryFlashSaleProducts]} 
+          showSkeleton={isLoading} 
+        />
+        
+        <div className="mt-4 text-center">
+          <Button 
+            variant="outline" 
+            className="bg-white/20 border-white/30 text-white hover:bg-white/30 rounded-xl"
+            asChild
+          >
+            <Link to="/flash-sale">
+              View All <ChevronRight className="w-4 h-4 ml-1" />
+            </Link>
+          </Button>
+        </div>
+      </section>
+    );
   };
   const BankOffersSection = () => {
     const sliderRef = useRef<HTMLDivElement>(null);
@@ -548,7 +583,20 @@ const Index = () => {
             </div>
             <FlashSaleTimer />
           </div>
-          <ProductSlider products={flashSaleProducts} showSkeleton={isLoading} />
+          
+          <ProductGrid products={flashSaleProducts} showSkeleton={isLoading} />
+          
+          <div className="mt-4 text-center">
+            <Button 
+              variant="outline" 
+              className="bg-white/20 border-white/30 text-white hover:bg-white/30 rounded-xl"
+              asChild
+            >
+              <Link to="/flash-sale">
+                View All <ChevronRight className="w-4 h-4 ml-1" />
+              </Link>
+            </Button>
+          </div>
         </section>
 
         {/* Large Promotional Banner */}
