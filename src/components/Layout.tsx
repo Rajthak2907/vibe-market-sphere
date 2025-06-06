@@ -1,17 +1,20 @@
+
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Home, Grid3X3, ShoppingCart, Heart, User, Menu, X, TrendingUp, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import Sidebar from "./Sidebar";
+
 interface LayoutProps {
   children: React.ReactNode;
 }
-const Layout = ({
-  children
-}: LayoutProps) => {
+
+const Layout = ({ children }: LayoutProps) => {
   const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   // Functional cart and wishlist with localStorage
   const [cartCount, setCartCount] = useState(0);
@@ -43,6 +46,7 @@ const Layout = ({
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location.pathname]);
+
   const bottomNavItems = [{
     label: "Home",
     path: "/",
@@ -66,6 +70,7 @@ const Layout = ({
     path: "/profile",
     icon: User
   }];
+
   const quickCategories = [{
     name: "Men",
     path: "/men",
@@ -87,18 +92,34 @@ const Layout = ({
     color: "#08a0ef",
     icon: "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?w=100&h=100&fit=crop&crop=center"
   }];
-  return <div className="min-h-screen bg-gray-50 font-['Poppins',sans-serif]">
+
+  return (
+    <div className="min-h-screen bg-gray-50 font-['Poppins',sans-serif]">
+      {/* Sidebar */}
+      <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+
       {/* Header - Mobile Optimized */}
       <header className="bg-white shadow-sm border-b sticky top-0 z-40">
         <div className="px-4 py-[10px] bg-gray-800">
           <div className="flex items-center justify-between">
-            {/* Logo */}
-            <Link to="/" className="flex items-center space-x-2">
-              <img src="/lovable-uploads/fcde6e4f-7f0d-4250-9eac-15f1c0e84293.png" alt="Obeyyo" className="h-8 w-auto object-contain" />
-              <span className="text-xl font-black bg-gradient-to-r from-[#fc2682] via-[#fc334d] to-[#08a0ef] bg-clip-text text-transparent">
-                obeyyo
-              </span>
-            </Link>
+            {/* Logo with Sidebar Toggle */}
+            <div className="flex items-center space-x-3">
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                className="p-2" 
+                onClick={() => setSidebarOpen(true)}
+              >
+                <Menu className="h-5 w-5 text-white" />
+              </Button>
+              
+              <Link to="/" className="flex items-center space-x-2">
+                <img src="/lovable-uploads/fcde6e4f-7f0d-4250-9eac-15f1c0e84293.png" alt="Obeyyo" className="h-8 w-auto object-contain" />
+                <span className="text-xl font-black bg-gradient-to-r from-[#fc2682] via-[#fc334d] to-[#08a0ef] bg-clip-text text-transparent">
+                  obeyyo
+                </span>
+              </Link>
+            </div>
 
             {/* Right Actions */}
             <div className="flex items-center space-x-3">
@@ -125,12 +146,19 @@ const Layout = ({
 
           {/* Quick Categories with Icons */}
           <div className="flex gap-2 mt-3 overflow-x-auto scrollbar-hide py-0">
-            {quickCategories.map(category => <Link key={category.path} to={category.path} style={{
-            background: `linear-gradient(135deg, ${category.color}, ${category.color}dd)`
-          }} className="flex-shrink-0 flex items-center gap-2 text-white text-sm font-semibold rounded-full hover:shadow-lg transition-all px-[8px] mx-[2px] py-[3px]">
+            {quickCategories.map(category => (
+              <Link 
+                key={category.path} 
+                to={category.path} 
+                style={{
+                  background: `linear-gradient(135deg, ${category.color}, ${category.color}dd)`
+                }} 
+                className="flex-shrink-0 flex items-center gap-2 text-white text-sm font-semibold rounded-full hover:shadow-lg transition-all px-[8px] mx-[2px] py-[3px]"
+              >
                 <img src={category.icon} alt={category.name} className="w-6 h-6 rounded-full object-cover border-2 border-white/30" />
                 {category.name}
-              </Link>)}
+              </Link>
+            ))}
           </div>
         </div>
       </header>
@@ -141,7 +169,8 @@ const Layout = ({
       </main>
 
       {/* Mobile Menu Overlay */}
-      {menuOpen && <>
+      {menuOpen && (
+        <>
           <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm" onClick={() => setMenuOpen(false)} />
           <div className="fixed inset-y-0 right-0 z-50 w-[85%] max-w-sm h-full bg-white shadow-2xl">
             <div className="flex items-center justify-between p-4 border-b">
@@ -163,27 +192,40 @@ const Layout = ({
               </Link>
             </div>
           </div>
-        </>}
+        </>
+      )}
 
       {/* Bottom Navigation - Mobile */}
       <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-40">
         <div className="grid grid-cols-5 h-16">
           {bottomNavItems.map(item => {
-          const Icon = item.icon;
-          const isActive = location.pathname === item.path;
-          return <Link key={item.path} to={item.path} className={`flex flex-col items-center justify-center space-y-1 relative transition-all ${isActive ? "transform scale-105 text-obeyyo-pink" : "text-gray-500"}`}>
+            const Icon = item.icon;
+            const isActive = location.pathname === item.path;
+            return (
+              <Link 
+                key={item.path} 
+                to={item.path} 
+                className={`flex flex-col items-center justify-center space-y-1 relative transition-all ${
+                  isActive ? "transform scale-105 text-obeyyo-pink" : "text-gray-500"
+                }`}
+              >
                 <div className="relative bg-transparent py-0 my-0 px-0">
                   <Icon className="w-5 h-5" />
-                  {item.badge && item.badge > 0 && <Badge className="absolute -top-2 -right-2 h-5 w-5 p-0 flex items-center justify-center text-white text-xs bg-obeyyo-pink border-2 border-white">
+                  {item.badge && item.badge > 0 && (
+                    <Badge className="absolute -top-2 -right-2 h-5 w-5 p-0 flex items-center justify-center text-white text-xs bg-obeyyo-pink border-2 border-white">
                       {item.badge}
-                    </Badge>}
+                    </Badge>
+                  )}
                 </div>
                 <span className="text-xs font-medium">{item.label}</span>
                 {isActive && <div className="absolute bottom-0 w-6 h-0.5 rounded-full bg-gradient-to-r from-obeyyo-pink to-obeyyo-blue" />}
-              </Link>;
-        })}
+              </Link>
+            );
+          })}
         </div>
       </nav>
-    </div>;
+    </div>
+  );
 };
+
 export default Layout;
