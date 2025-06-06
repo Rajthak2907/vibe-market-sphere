@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Home, Search, ShoppingCart, Heart, User, Menu, X, TrendingUp } from "lucide-react";
+import { Home, Grid3X3, ShoppingCart, Heart, User, Menu, X, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -43,29 +43,35 @@ const Layout = ({
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location.pathname]);
-  const bottomNavItems = [{
-    label: "Home",
-    path: "/",
-    icon: Home
-  }, {
-    label: "Search",
-    path: "/search",
-    icon: Search
-  }, {
-    label: "Cart",
-    path: "/cart",
-    icon: ShoppingCart,
-    badge: cartCount
-  }, {
-    label: "Wishlist",
-    path: "/wishlist",
-    icon: Heart,
-    badge: wishlistCount
-  }, {
-    label: "Profile",
-    path: "/profile",
-    icon: User
-  }];
+  const bottomNavItems = [
+    {
+      label: "Home",
+      path: "/",
+      icon: Home
+    },
+    {
+      label: "Categories",
+      path: "/categories",
+      icon: Grid3X3
+    },
+    {
+      label: "Cart",
+      path: "/cart",
+      icon: ShoppingCart,
+      badge: cartCount
+    },
+    {
+      label: "Wishlist",
+      path: "/wishlist",
+      icon: Heart,
+      badge: wishlistCount
+    },
+    {
+      label: "Profile",
+      path: "/profile",
+      icon: User
+    }
+  ];
   const quickCategories = [{
     name: "Men",
     path: "/men",
@@ -164,19 +170,31 @@ const Layout = ({
       <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-40">
         <div className="grid grid-cols-5 h-16">
           {bottomNavItems.map(item => {
-          const Icon = item.icon;
-          const isActive = location.pathname === item.path;
-          return <Link key={item.path} to={item.path} className={`flex flex-col items-center justify-center space-y-1 relative transition-all ${isActive ? "transform scale-105 text-obeyyo-pink" : "text-gray-500"}`}>
+            const Icon = item.icon;
+            const isActive = location.pathname === item.path;
+            return (
+              <Link
+                key={item.path}
+                to={item.path}
+                className={`flex flex-col items-center justify-center space-y-1 relative transition-all ${
+                  isActive ? "transform scale-105 text-obeyyo-pink" : "text-gray-500"
+                }`}
+              >
                 <div className="relative bg-transparent py-0 my-0 px-0">
                   <Icon className="w-5 h-5" />
-                  {item.badge && item.badge > 0 && <Badge className="absolute -top-2 -right-2 h-5 w-5 p-0 flex items-center justify-center text-white text-xs bg-obeyyo-pink border-2 border-white">
+                  {item.badge && item.badge > 0 && (
+                    <Badge className="absolute -top-2 -right-2 h-5 w-5 p-0 flex items-center justify-center text-white text-xs bg-obeyyo-pink border-2 border-white">
                       {item.badge}
-                    </Badge>}
+                    </Badge>
+                  )}
                 </div>
                 <span className="text-xs font-medium">{item.label}</span>
-                {isActive && <div className="absolute bottom-0 w-6 h-0.5 rounded-full bg-gradient-to-r from-obeyyo-pink to-obeyyo-blue" />}
-              </Link>;
-        })}
+                {isActive && (
+                  <div className="absolute bottom-0 w-6 h-0.5 rounded-full bg-gradient-to-r from-obeyyo-pink to-obeyyo-blue" />
+                )}
+              </Link>
+            );
+          })}
         </div>
       </nav>
     </div>;

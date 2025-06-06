@@ -17,6 +17,7 @@ import Admin from "./pages/Admin";
 import BrandPage from "./pages/BrandPage";
 import Cart from "./pages/Cart";
 import Wishlist from "./pages/Wishlist";
+import Categories from "./pages/Categories";
 
 const queryClient = new QueryClient();
 
@@ -32,6 +33,7 @@ const App = () => (
           <Route path="/women" element={<Women />} />
           <Route path="/kids" element={<Kids />} />
           <Route path="/accessories" element={<Accessories />} />
+          <Route path="/categories" element={<Categories />} />
           <Route path="/product/:id" element={<ProductDetail />} />
           <Route path="/brands/:brandName" element={<BrandPage />} />
           <Route path="/cart" element={<Cart />} />
