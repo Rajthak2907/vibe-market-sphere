@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import Layout from "@/components/Layout";
 import { Minus, Plus, Trash2, ShoppingBag } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 interface CartItem {
   id: string;
@@ -17,6 +17,7 @@ interface CartItem {
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -56,6 +57,11 @@ const Cart = () => {
       }
       return total;
     }, 0);
+  };
+
+  const handleProceedToCheckout = () => {
+    const total = getTotalPrice();
+    navigate('/payment', { state: { total, cartItems } });
   };
 
   if (cartItems.length === 0) {
@@ -175,7 +181,10 @@ const Cart = () => {
             </div>
           </div>
           
-          <Button className="w-full mt-6 bg-gradient-to-r from-obeyyo-pink to-obeyyo-blue text-white">
+          <Button 
+            onClick={handleProceedToCheckout}
+            className="w-full mt-6 bg-gradient-to-r from-obeyyo-pink to-obeyyo-blue text-white"
+          >
             Proceed to Checkout
           </Button>
         </div>

@@ -18,6 +18,8 @@ import BrandPage from "./pages/BrandPage";
 import Cart from "./pages/Cart";
 import Wishlist from "./pages/Wishlist";
 import Categories from "./pages/Categories";
+import Payment from "./pages/Payment";
+import PaymentSuccess from "./pages/PaymentSuccess";
 
 const queryClient = new QueryClient();
 
@@ -38,6 +40,8 @@ const App = () => (
           <Route path="/brands/:brandName" element={<BrandPage />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/wishlist" element={<Wishlist />} />
+          <Route path="/payment" element={<Payment />} />
+          <Route path="/payment-success" element={<PaymentSuccess />} />
           <Route path="/login" element={<Login />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/admin" element={<Admin />} />
