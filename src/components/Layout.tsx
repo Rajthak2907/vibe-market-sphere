@@ -124,10 +124,10 @@ const Layout = ({
           </div>
 
           {/* Quick Categories with Icons */}
-          <div className="flex gap-2 mt-3 overflow-x-auto scrollbar-hide">
+          <div className="flex gap-2 mt-3 overflow-x-auto scrollbar-hide py-0">
             {quickCategories.map(category => <Link key={category.path} to={category.path} style={{
             background: `linear-gradient(135deg, ${category.color}, ${category.color}dd)`
-          }} className="flex-shrink-0 flex items-center gap-2 text-white text-sm font-semibold rounded-full hover:shadow-lg transition-all px-[12px] py-0">
+          }} className="flex-shrink-0 flex items-center gap-2 text-white text-sm font-semibold rounded-full hover:shadow-lg transition-all px-[8px] mx-[2px] py-[3px]">
                 <img src={category.icon} alt={category.name} className="w-6 h-6 rounded-full object-cover border-2 border-white/30" />
                 {category.name}
               </Link>)}
