@@ -72,23 +72,32 @@ const Layout = ({
       icon: User
     }
   ];
-  const quickCategories = [{
-    name: "Men",
-    path: "/men",
-    color: "#fc2682"
-  }, {
-    name: "Women",
-    path: "/women",
-    color: "#fc334d"
-  }, {
-    name: "Kids",
-    path: "/kids",
-    color: "#f9b704"
-  }, {
-    name: "Accessories",
-    path: "/accessories",
-    color: "#08a0ef"
-  }];
+  const quickCategories = [
+    {
+      name: "Men",
+      path: "/men",
+      color: "#fc2682",
+      icon: "https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?w=100&h=100&fit=crop&crop=face"
+    }, 
+    {
+      name: "Women",
+      path: "/women",
+      color: "#fc334d",
+      icon: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=100&h=100&fit=crop&crop=face"
+    }, 
+    {
+      name: "Kids",
+      path: "/kids",
+      color: "#f9b704",
+      icon: "https://images.unsplash.com/photo-1535268647677-300dbf3d78d1?w=100&h=100&fit=crop&crop=face"
+    }, 
+    {
+      name: "Accessories",
+      path: "/accessories",
+      color: "#08a0ef",
+      icon: "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?w=100&h=100&fit=crop&crop=center"
+    }
+  ];
   return <div className="min-h-screen bg-gray-50 font-['Poppins',sans-serif]">
       {/* Header - Mobile Optimized */}
       <header className="bg-white shadow-sm border-b sticky top-0 z-40">
@@ -125,13 +134,23 @@ const Layout = ({
             </div>
           </div>
 
-          {/* Quick Categories */}
+          {/* Quick Categories with Icons */}
           <div className="flex gap-2 mt-3 overflow-x-auto scrollbar-hide">
-            {quickCategories.map(category => <Link key={category.path} to={category.path} className="flex-shrink-0 px-4 py-2 text-white text-sm font-semibold rounded-full hover:shadow-lg transition-all" style={{
-            background: `linear-gradient(135deg, ${category.color}, ${category.color}dd)`
-          }}>
+            {quickCategories.map(category => 
+              <Link 
+                key={category.path} 
+                to={category.path} 
+                className="flex-shrink-0 flex items-center gap-2 px-4 py-2 text-white text-sm font-semibold rounded-full hover:shadow-lg transition-all" 
+                style={{ background: `linear-gradient(135deg, ${category.color}, ${category.color}dd)` }}
+              >
+                <img 
+                  src={category.icon} 
+                  alt={category.name} 
+                  className="w-6 h-6 rounded-full object-cover border-2 border-white/30"
+                />
                 {category.name}
-              </Link>)}
+              </Link>
+            )}
           </div>
         </div>
       </header>
