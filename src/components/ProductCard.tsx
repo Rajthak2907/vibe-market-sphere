@@ -1,191 +1,223 @@
 
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Heart, Star, ShoppingCart } from "lucide-react";
+import { Heart, ShoppingCart, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { useState, useEffect } from "react";
+import { toast } from "sonner";
 
-interface ProductCardProps {
-  product: {
-    id: string;
-    name: string;
-    price: number;
-    originalPrice?: number;
-    discount?: number;
-    rating: number;
-    reviews: number;
-    image: string;
-    brand: string;
-    isNew?: boolean;
-    isTrending?: boolean;
-    isFlashSale?: boolean;
-    isTopRated?: boolean;
-  };
-  className?: string;
+interface Product {
+  id: string;
+  name: string;
+  price: number;
+  originalPrice?: number;
+  rating: number;
+  reviews: number;
+  image: string;
+  brand: string;
+  isNew?: boolean;
+  isTrending?: boolean;
 }
 
-const ProductCard = ({ product, className = "" }: ProductCardProps) => {
-  const [isWishlisted, setIsWishlisted] = useState(false);
+interface ProductCardProps {
+  product: Product;
+}
+
+const ProductCard = ({ product }: ProductCardProps) => {
+  const [isInWishlist, setIsInWishlist] = useState(false);
   const [isInCart, setIsInCart] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+  const [isAddingToCart, setIsAddingToCart] = useState(false);
+  const [isAddingToWishlist, setIsAddingToWishlist] = useState(false);
 
-  useEffect(() => {
-    // Check if product is in wishlist
-    const wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
-    setIsWishlisted(wishlist.includes(product.id));
-
-    // Check if product is in cart
-    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-    setIsInCart(cart.some((item: any) => item.id === product.id));
-  }, [product.id]);
-
-  const discountPercent = product.originalPrice 
+  const discountPercentage = product.originalPrice 
     ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
     : 0;
 
-  const handleWishlistToggle = (e: React.MouseEvent) => {
+  const handleAddToCart = async (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
     
-    const wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
-    let updatedWishlist;
+    setIsAddingToCart(true);
     
-    if (isWishlisted) {
-      updatedWishlist = wishlist.filter((id: string) => id !== product.id);
-      setIsWishlisted(false);
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 600));
+    
+    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    const existingItem = cart.find((item: any) => item.id === product.id);
+    
+    if (existingItem) {
+      existingItem.quantity += 1;
     } else {
-      updatedWishlist = [...wishlist, product.id];
-      setIsWishlisted(true);
+      cart.push({ ...product, quantity: 1 });
     }
     
-    localStorage.setItem('wishlist', JSON.stringify(updatedWishlist));
+    localStorage.setItem('cart', JSON.stringify(cart));
+    setIsInCart(true);
+    setIsAddingToCart(false);
     
-    // Dispatch custom event to update counts in Layout
+    // Trigger custom event for count update
+    window.dispatchEvent(new CustomEvent('cartUpdated'));
+    
+    toast.success("Added to cart!", {
+      description: `${product.name} has been added to your cart.`,
+      duration: 2000,
+    });
+  };
+
+  const handleToggleWishlist = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    setIsAddingToWishlist(true);
+    
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 400));
+    
+    const wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+    
+    if (isInWishlist) {
+      const updatedWishlist = wishlist.filter((item: any) => item.id !== product.id);
+      localStorage.setItem('wishlist', JSON.stringify(updatedWishlist));
+      setIsInWishlist(false);
+      toast.success("Removed from wishlist");
+    } else {
+      wishlist.push(product);
+      localStorage.setItem('wishlist', JSON.stringify(wishlist));
+      setIsInWishlist(true);
+      toast.success("Added to wishlist!");
+    }
+    
+    setIsAddingToWishlist(false);
+    
+    // Trigger custom event for count update
     window.dispatchEvent(new CustomEvent('wishlistUpdated'));
   };
 
-  const handleAddToCart = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    
-    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-    
-    if (!isInCart) {
-      const cartItem = {
-        id: product.id,
-        name: product.name,
-        price: product.price,
-        originalPrice: product.originalPrice,
-        image: product.image,
-        brand: product.brand,
-        quantity: 1
-      };
-      
-      const updatedCart = [...cart, cartItem];
-      localStorage.setItem('cart', JSON.stringify(updatedCart));
-      setIsInCart(true);
-      
-      // Dispatch custom event to update counts in Layout
-      window.dispatchEvent(new CustomEvent('cartUpdated'));
-    }
-  };
-
   return (
-    <div className={`bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden group relative ${className}`}>
-      {/* Image Container */}
-      <div className="relative overflow-hidden">
-        <Link to={`/product/${product.id}`}>
+    <Link to={`/product/${product.id}`} className="block group">
+      <div 
+        className={`bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden transition-all duration-300 hover:shadow-lg hover:border-gray-200 hover:-translate-y-1 ${isHovered ? 'scale-[1.02]' : ''}`}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        {/* Image Container */}
+        <div className="relative aspect-square overflow-hidden bg-gray-50">
           <img
             src={product.image}
             alt={product.name}
-            className="w-full h-48 sm:h-52 object-cover group-hover:scale-110 transition-transform duration-500"
+            className={`w-full h-full object-cover transition-all duration-500 ${isHovered ? 'scale-110' : 'scale-100'}`}
+            loading="lazy"
           />
-        </Link>
-        
-        {/* Badges */}
-        <div className="absolute top-3 left-3 flex flex-col gap-2">
-          {product.isTrending && (
-            <Badge className="text-white text-xs px-2 py-1 rounded-full font-semibold shadow-lg bg-obeyyo-red">
-              🔥 Trending
-            </Badge>
-          )}
-          {product.isFlashSale && (
-            <Badge className="text-white text-xs px-2 py-1 rounded-full font-semibold shadow-lg animate-pulse bg-obeyyo-pink">
-              ⚡ Flash Sale
-            </Badge>
-          )}
-          {product.isNew && (
-            <Badge className="text-white text-xs px-2 py-1 rounded-full font-semibold shadow-lg bg-obeyyo-yellow">
-              🌟 New
-            </Badge>
-          )}
-          {product.isTopRated && (
-            <Badge className="text-white text-xs px-2 py-1 rounded-full font-semibold shadow-lg bg-obeyyo-orange">
-              🏆 Top Rated
-            </Badge>
-          )}
-          {discountPercent > 0 && (
-            <Badge className="text-white text-xs px-2 py-1 rounded-full font-semibold shadow-lg bg-obeyyo-red">
-              {discountPercent}% OFF
-            </Badge>
-          )}
-        </div>
+          
+          {/* Badges */}
+          <div className="absolute top-2 left-2 flex flex-col gap-1">
+            {product.isNew && (
+              <Badge className="bg-green-500 text-white text-xs px-2 py-1 animate-pulse">
+                NEW
+              </Badge>
+            )}
+            {product.isTrending && (
+              <Badge className="bg-orange-500 text-white text-xs px-2 py-1 animate-bounce">
+                🔥 TRENDING
+              </Badge>
+            )}
+            {discountPercentage > 0 && (
+              <Badge className="bg-red-500 text-white text-xs px-2 py-1 animate-fade-in">
+                -{discountPercentage}%
+              </Badge>
+            )}
+          </div>
 
-        {/* Wishlist Button */}
-        <Button
-          variant="ghost"
-          size="sm"
-          className="absolute top-3 right-3 p-2 rounded-full bg-white/90 backdrop-blur-sm hover:bg-white shadow-lg"
-          onClick={handleWishlistToggle}
-        >
-          <Heart 
-            className={`w-4 h-4 transition-colors ${
-              isWishlisted ? 'text-obeyyo-pink' : 'text-gray-600'
-            }`} 
-            style={{ fill: isWishlisted ? "#fc2682" : "none" }}
-          />
-        </Button>
+          {/* Wishlist Button */}
+          <Button
+            variant="ghost"
+            size="sm"
+            className={`absolute top-2 right-2 p-2 rounded-full bg-white/90 backdrop-blur-sm transition-all duration-300 hover:bg-white hover:scale-110 active:scale-95 ${isHovered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'} ${isAddingToWishlist ? 'animate-spin' : ''}`}
+            onClick={handleToggleWishlist}
+            disabled={isAddingToWishlist}
+          >
+            <Heart 
+              className={`w-4 h-4 transition-all duration-200 ${
+                isInWishlist ? 'fill-red-500 text-red-500 animate-pulse' : 'text-gray-600'
+              }`} 
+            />
+          </Button>
 
-        {/* Quick Add to Cart - Shows on Hover */}
-        <Button
-          onClick={handleAddToCart}
-          disabled={isInCart}
-          className={`absolute bottom-3 left-3 right-3 text-white rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 ${
-            isInCart ? 'bg-green-500 hover:bg-green-600' : 'bg-gradient-to-r from-obeyyo-pink to-obeyyo-blue'
-          }`}
-        >
-          <ShoppingCart className="w-4 h-4 mr-2" />
-          {isInCart ? 'Added to Cart' : 'Add to Cart'}
-        </Button>
-      </div>
-
-      {/* Content */}
-      <div className="p-4 space-y-2">
-        {/* Brand & Rating */}
-        <div className="flex items-center justify-between">
-          <span className="text-xs text-obeyyo-blue uppercase tracking-wide font-medium">{product.brand}</span>
-          <div className="flex items-center gap-1">
-            <Star className="w-3 h-3 text-obeyyo-yellow" style={{ fill: "#f9b704" }} />
-            <span className="text-xs text-gray-600 font-medium">{product.rating}</span>
-            <span className="text-xs text-gray-400">({product.reviews})</span>
+          {/* Quick Add to Cart */}
+          <div className={`absolute bottom-2 left-2 right-2 transition-all duration-300 ${isHovered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+            <Button
+              onClick={handleAddToCart}
+              disabled={isAddingToCart || isInCart}
+              className={`w-full bg-gradient-to-r from-obeyyo-pink to-obeyyo-blue text-white rounded-lg py-2 text-sm font-medium transition-all duration-300 hover:shadow-lg active:scale-95 ${
+                isAddingToCart ? 'animate-pulse' : ''
+              } ${isInCart ? 'bg-green-500 hover:bg-green-600' : ''}`}
+            >
+              {isAddingToCart ? (
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                  Adding...
+                </div>
+              ) : isInCart ? (
+                <div className="flex items-center gap-2">
+                  <ShoppingCart className="w-4 h-4" />
+                  Added to Cart
+                </div>
+              ) : (
+                <div className="flex items-center gap-2">
+                  <ShoppingCart className="w-4 h-4" />
+                  Add to Cart
+                </div>
+              )}
+            </Button>
           </div>
         </div>
 
-        {/* Product Name */}
-        <Link to={`/product/${product.id}`}>
-          <h3 className="font-semibold text-sm text-gray-800 line-clamp-2 hover:text-obeyyo-pink transition-colors leading-tight">
+        {/* Product Info */}
+        <div className="p-3 space-y-2">
+          {/* Brand */}
+          <p className="text-xs text-gray-500 font-medium uppercase tracking-wide">
+            {product.brand}
+          </p>
+
+          {/* Product Name */}
+          <h3 className="text-sm font-semibold text-gray-900 line-clamp-2 leading-tight group-hover:text-obeyyo-pink transition-colors duration-200">
             {product.name}
           </h3>
-        </Link>
 
-        {/* Pricing */}
-        <div className="flex items-center gap-2">
-          <span className="font-bold text-lg text-obeyyo-red">₹{product.price.toLocaleString()}</span>
-          {product.originalPrice && (
-            <span className="text-sm text-gray-500 line-through">₹{product.originalPrice.toLocaleString()}</span>
-          )}
+          {/* Rating */}
+          <div className="flex items-center gap-1">
+            <div className="flex items-center">
+              {[...Array(5)].map((_, i) => (
+                <Star
+                  key={i}
+                  className={`w-3 h-3 ${
+                    i < Math.floor(product.rating)
+                      ? 'fill-yellow-400 text-yellow-400'
+                      : 'text-gray-200'
+                  }`}
+                />
+              ))}
+            </div>
+            <span className="text-xs text-gray-500">
+              {product.rating} ({product.reviews})
+            </span>
+          </div>
+
+          {/* Price */}
+          <div className="flex items-center gap-2">
+            <span className="text-lg font-bold text-gray-900">
+              ₹{product.price.toLocaleString()}
+            </span>
+            {product.originalPrice && (
+              <span className="text-sm text-gray-500 line-through">
+                ₹{product.originalPrice.toLocaleString()}
+              </span>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
