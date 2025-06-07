@@ -1,11 +1,14 @@
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import Layout from "@/components/Layout";
 import { ChevronRight } from "lucide-react";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const Categories = () => {
   const [selectedCategory, setSelectedCategory] = useState("Brands");
+  const scrollAreaRef = useRef<HTMLDivElement>(null);
+  const categoryRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
 
   const categoryData = {
     Brands: {
@@ -75,15 +78,61 @@ const Categories = () => {
 
   const handleCategorySelect = (categoryId: string) => {
     setSelectedCategory(categoryId);
+    const categoryElement = categoryRefs.current[categoryId];
+    if (categoryElement && scrollAreaRef.current) {
+      categoryElement.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
   };
+
+  // Handle scroll to auto-switch categories
+  const handleScroll = () => {
+    if (!scrollAreaRef.current) return;
+
+    const scrollContainer = scrollAreaRef.current.querySelector('[data-radix-scroll-area-viewport]');
+    if (!scrollContainer) return;
+
+    const scrollTop = scrollContainer.scrollTop;
+    const containerHeight = scrollContainer.clientHeight;
+
+    // Find which category section is currently in view
+    for (const categoryId of categories.map(cat => cat.id)) {
+      const element = categoryRefs.current[categoryId];
+      if (element) {
+        const elementTop = element.offsetTop;
+        const elementBottom = elementTop + element.offsetHeight;
+        
+        // Check if this category section is in the viewport
+        if (scrollTop >= elementTop - 100 && scrollTop < elementBottom - containerHeight + 200) {
+          if (selectedCategory !== categoryId) {
+            setSelectedCategory(categoryId);
+          }
+          break;
+        }
+      }
+    }
+  };
+
+  useEffect(() => {
+    const scrollContainer = scrollAreaRef.current?.querySelector('[data-radix-scroll-area-viewport]');
+    if (scrollContainer) {
+      scrollContainer.addEventListener('scroll', handleScroll);
+      return () => scrollContainer.removeEventListener('scroll', handleScroll);
+    }
+  }, [selectedCategory]);
 
   return (
     <Layout>
       <div className="flex h-screen bg-white">
-        {/* Left Sidebar - Categories */}
-        <div className="w-1/3 bg-gray-50 border-r border-gray-200 overflow-y-auto">
-          <div className="py-4">
-            <h2 className="text-lg font-bold text-gray-800 px-4 mb-4">Collection</h2>
+        {/* Left Sidebar - Fixed Categories */}
+        <div className="w-1/3 bg-gray-50 border-r border-gray-200 flex flex-col">
+          <div className="p-4 border-b border-gray-200">
+            <h2 className="text-lg font-bold text-gray-800">Collection</h2>
+          </div>
+          
+          <div className="flex-1 overflow-y-auto">
             {categories.map((category) => (
               <button
                 key={category.id}
@@ -117,41 +166,51 @@ const Categories = () => {
           </div>
         </div>
 
-        {/* Right Content Area */}
-        <div className="flex-1 overflow-y-auto">
-          <div className="p-4">
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-xl font-bold text-gray-800">
-                {categoryData[selectedCategory as keyof typeof categoryData]?.title}
-              </h3>
-              <ChevronRight className="w-5 h-5 text-gray-400" />
-            </div>
-
-            {/* Grid Layout */}
-            <div className="grid grid-cols-2 gap-4">
-              {categoryData[selectedCategory as keyof typeof categoryData]?.items.map((item) => (
-                <Link
-                  key={item.id}
-                  to={item.link}
-                  className="group block bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 transform hover:scale-105 active:scale-95"
+        {/* Right Content Area - Scrollable */}
+        <div className="flex-1 flex flex-col">
+          <ScrollArea ref={scrollAreaRef} className="flex-1">
+            <div className="p-4">
+              {categories.map((category) => (
+                <div
+                  key={category.id}
+                  ref={(el) => (categoryRefs.current[category.id] = el)}
+                  className="mb-8"
                 >
-                  <div className="aspect-square relative overflow-hidden">
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="flex items-center justify-between mb-6">
+                    <h3 className="text-xl font-bold text-gray-800">
+                      {categoryData[category.id as keyof typeof categoryData]?.title}
+                    </h3>
+                    <ChevronRight className="w-5 h-5 text-gray-400" />
                   </div>
-                  <div className="p-3 text-center">
-                    <h4 className="font-medium text-gray-800 text-sm group-hover:text-obeyyo-pink transition-colors">
-                      {item.name}
-                    </h4>
+
+                  {/* Grid Layout */}
+                  <div className="grid grid-cols-2 gap-4 mb-8">
+                    {categoryData[category.id as keyof typeof categoryData]?.items.map((item) => (
+                      <Link
+                        key={item.id}
+                        to={item.link}
+                        className="group block bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 transform hover:scale-105 active:scale-95"
+                      >
+                        <div className="aspect-square relative overflow-hidden">
+                          <img
+                            src={item.image}
+                            alt={item.name}
+                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                        </div>
+                        <div className="p-3 text-center">
+                          <h4 className="font-medium text-gray-800 text-sm group-hover:text-obeyyo-pink transition-colors">
+                            {item.name}
+                          </h4>
+                        </div>
+                      </Link>
+                    ))}
                   </div>
-                </Link>
+                </div>
               ))}
             </div>
-          </div>
+          </ScrollArea>
         </div>
       </div>
     </Layout>
