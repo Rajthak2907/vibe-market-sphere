@@ -1,14 +1,5 @@
 
 import Layout from "@/components/Layout";
-import ImageCarousel from "@/components/ImageCarousel";
-import ProductCard from "@/components/ProductCard";
-import FeaturedBrands from "@/components/FeaturedBrands";
-import NarrowPromoCarousel from "@/components/NarrowPromoCarousel";
-import PriceDroppedSection from "@/components/PriceDroppedSection";
-import SkeletonLoader from "@/components/SkeletonLoader";
-import PromoBanner from "@/components/PromoBanner";
-import Footer from "@/components/Footer";
-import ProductSlider from "@/components/ProductSlider";
 import HeroSection from "@/components/home/HeroSection";
 import QuickActions from "@/components/home/QuickActions";
 import FlashSaleSection from "@/components/home/FlashSaleSection";
@@ -19,7 +10,8 @@ import RecommendedSection from "@/components/home/RecommendedSection";
 import ShopByBrandsSection from "@/components/home/ShopByBrandsSection";
 import BankOffersSection from "@/components/home/BankOffersSection";
 import TopPicksSection from "@/components/home/TopPicksSection";
-import { useRef, useState, useEffect } from "react";
+import PromoBanner from "@/components/PromoBanner";
+import { useState, useEffect } from "react";
 
 const Index = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -103,9 +95,6 @@ const Index = () => {
         <ShopByBrandsSection isLoading={isLoading} />
         <BankOffersSection />
         <TopPicksSection isLoading={isLoading} />
-
-        {/* Footer */}
-        <Footer />
       </div>
     </Layout>
   );

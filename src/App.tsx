@@ -20,6 +20,15 @@ import Wishlist from "./pages/Wishlist";
 import Categories from "./pages/Categories";
 import Payment from "./pages/Payment";
 import PaymentSuccess from "./pages/PaymentSuccess";
+import GiftCards from "./pages/GiftCards";
+import ContactUs from "./pages/ContactUs";
+import FAQs from "./pages/FAQs";
+import Legal from "./pages/Legal";
+import Orders from "./pages/Orders";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsConditions from "./pages/TermsConditions";
+import ShippingInfo from "./pages/ShippingInfo";
+import Returns from "./pages/Returns";
 
 const queryClient = new QueryClient();
 
@@ -45,6 +54,15 @@ const App = () => (
           <Route path="/login" element={<Login />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path="/gift-cards" element={<GiftCards />} />
+          <Route path="/contact-us" element={<ContactUs />} />
+          <Route path="/faqs" element={<FAQs />} />
+          <Route path="/legal" element={<Legal />} />
+          <Route path="/orders" element={<Orders />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/terms-conditions" element={<TermsConditions />} />
+          <Route path="/shipping-info" element={<ShippingInfo />} />
+          <Route path="/returns" element={<Returns />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
