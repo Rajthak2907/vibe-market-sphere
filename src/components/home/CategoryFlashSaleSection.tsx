@@ -1,23 +1,21 @@
-
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Zap, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ProductCard from "@/components/ProductCard";
 import SkeletonLoader from "@/components/SkeletonLoader";
-
 interface CategoryFlashSaleSectionProps {
   isLoading: boolean;
 }
-
-const CategoryFlashSaleSection = ({ isLoading }: CategoryFlashSaleSectionProps) => {
+const CategoryFlashSaleSection = ({
+  isLoading
+}: CategoryFlashSaleSectionProps) => {
   const [activeCategory, setActiveCategory] = useState('men');
   const [timeLeft, setTimeLeft] = useState({
     hours: 8,
     minutes: 45,
     seconds: 23
   });
-
   const categoryFlashSaleProducts = {
     men: [{
       id: "men-fs-1",
@@ -184,7 +182,6 @@ const CategoryFlashSaleSection = ({ isLoading }: CategoryFlashSaleSectionProps) 
       isFlashSale: true
     }]
   };
-
   const categories = [{
     id: 'men',
     name: "Men's",
@@ -202,57 +199,57 @@ const CategoryFlashSaleSection = ({ isLoading }: CategoryFlashSaleSectionProps) 
     name: "Accessories",
     color: "#f9b704"
   }];
-
   useEffect(() => {
     const timer = setInterval(() => {
       setTimeLeft(prev => {
         if (prev.seconds > 0) {
-          return { ...prev, seconds: prev.seconds - 1 };
+          return {
+            ...prev,
+            seconds: prev.seconds - 1
+          };
         } else if (prev.minutes > 0) {
-          return { ...prev, minutes: prev.minutes - 1, seconds: 59 };
+          return {
+            ...prev,
+            minutes: prev.minutes - 1,
+            seconds: 59
+          };
         } else if (prev.hours > 0) {
-          return { hours: prev.hours - 1, minutes: 59, seconds: 59 };
+          return {
+            hours: prev.hours - 1,
+            minutes: 59,
+            seconds: 59
+          };
         }
         return prev;
       });
     }, 1000);
     return () => clearInterval(timer);
   }, []);
-
-  const FlashSaleTimer = () => (
-    <div className="flex items-center gap-2 text-white">
+  const FlashSaleTimer = () => <div className="flex items-center gap-2 text-white">
       <Clock className="w-4 h-4" />
       <span className="text-sm font-semibold">
         {String(timeLeft.hours).padStart(2, '0')}:
         {String(timeLeft.minutes).padStart(2, '0')}:
         {String(timeLeft.seconds).padStart(2, '0')}
       </span>
-    </div>
-  );
-
-  const ProductGrid = ({ products, showSkeleton = false, maxProducts = 4 }) => {
+    </div>;
+  const ProductGrid = ({
+    products,
+    showSkeleton = false,
+    maxProducts = 4
+  }) => {
     const displayProducts = products.slice(0, maxProducts);
-    
-    return (
-      <div className="grid grid-cols-2 gap-3 px-4">
-        {showSkeleton ? 
-          Array.from({ length: maxProducts }).map((_, i) => (
-            <div key={i}>
+    return <div className="grid grid-cols-2 gap-3 px-4">
+        {showSkeleton ? Array.from({
+        length: maxProducts
+      }).map((_, i) => <div key={i}>
               <SkeletonLoader type="product" />
-            </div>
-          )) : 
-          displayProducts.map(product => (
-            <div key={product.id}>
+            </div>) : displayProducts.map(product => <div key={product.id}>
               <ProductCard product={product} />
-            </div>
-          ))
-        }
-      </div>
-    );
+            </div>)}
+      </div>;
   };
-  
-  return (
-    <section className="bg-gradient-to-r from-obeyyo-orange to-obeyyo-red mx-4 rounded-2xl p-4 bg-yellow-400">
+  return <section className="bg-gradient-to-r from-obeyyo-orange to-obeyyo-red rounded-2xl p-4 bg-yellow-400 mx-[2px] px-px">
       <div className="flex items-center justify-between mb-4 bg-yellow-400">
         <div className="flex items-center gap-2">
           <Zap className="w-5 h-5 text-white" />
@@ -262,40 +259,21 @@ const CategoryFlashSaleSection = ({ isLoading }: CategoryFlashSaleSectionProps) 
       </div>
       
       {/* Category Tabs */}
-      <div className="flex gap-2 mb-4 overflow-x-auto scrollbar-hide">
-        {categories.map(category => (
-          <button 
-            key={category.id} 
-            onClick={() => setActiveCategory(category.id)} 
-            className={`flex-shrink-0 px-4 py-2 text-sm font-semibold rounded-full transition-all ${
-              activeCategory === category.id 
-                ? 'bg-white text-gray-800' 
-                : 'bg-white/20 text-white hover:bg-white/30'
-            }`}
-          >
+      <div className="flex gap-2 mb-4 overflow-x-auto scrollbar-hide px-[5px] bg-transparent">
+        {categories.map(category => <button key={category.id} onClick={() => setActiveCategory(category.id)} className={`flex-shrink-0 px-4 py-2 text-sm font-semibold rounded-full transition-all ${activeCategory === category.id ? 'bg-white text-gray-800' : 'bg-white/20 text-white hover:bg-white/30'}`}>
             {category.name}
-          </button>
-        ))}
+          </button>)}
       </div>
       
-      <ProductGrid 
-        products={categoryFlashSaleProducts[activeCategory as keyof typeof categoryFlashSaleProducts]} 
-        showSkeleton={isLoading} 
-      />
+      <ProductGrid products={categoryFlashSaleProducts[activeCategory as keyof typeof categoryFlashSaleProducts]} showSkeleton={isLoading} />
       
       <div className="mt-4 text-center">
-        <Button 
-          variant="outline" 
-          className="bg-white/20 border-white/30 text-white hover:bg-white/30 rounded-xl"
-          asChild
-        >
+        <Button variant="outline" className="bg-white/20 border-white/30 text-white hover:bg-white/30 rounded-xl" asChild>
           <Link to="/flash-sale">
             View All Category Products
           </Link>
         </Button>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default CategoryFlashSaleSection;

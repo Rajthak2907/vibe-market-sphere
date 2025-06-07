@@ -106,7 +106,7 @@ const FlashSaleSection = ({
             </div>)}
       </div>;
   };
-  return <section className="bg-gradient-to-r from-obeyyo-red to-obeyyo-pink rounded-2xl p-4 bg-red-400 px-0 mx-0">
+  return <section className="bg-gradient-to-r from-obeyyo-red to-obeyyo-pink rounded-2xl p-4 bg-red-400 px-0 mx-[2px]">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
           <Zap className="w-5 h-5 text-white" />
