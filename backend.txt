@@ -1,0 +1,367 @@
+
+# OBEYYO E-COMMERCE BACKEND DOCUMENTATION
+## MERN Stack Implementation Guide
+
+---
+
+## 1. TECHNOLOGY STACK
+
+### Core Technologies:
+- **Node.js** - Runtime environment
+- **Express.js** - Web framework
+- **MongoDB** - NoSQL database
+- **Mongoose** - MongoDB ODM
+- **JWT** - JSON Web Tokens for authentication
+- **Bcrypt** - Password hashing
+- **Multer** - File upload handling
+- **Cloudinary** - Image storage and management
+- **Nodemailer** - Email service
+- **Socket.io** - Real-time notifications
+
+### Additional Dependencies:
+- **dotenv** - Environment variables
+- **cors** - Cross-origin resource sharing
+- **express-rate-limit** - Rate limiting
+- **helmet** - Security headers
+- **morgan** - HTTP request logger
+- **joi** - Data validation
+- **express-validator** - Request validation
+- **compression** - Response compression
+- **express-mongo-sanitize** - NoSQL injection prevention
+
+---
+
+## 2. PROJECT FOLDER STRUCTURE
+
+```
+backend/
+├── src/
+│   ├── config/
+│   │   ├── database.js          # MongoDB connection
+│   │   ├── cloudinary.js        # Cloudinary configuration
+│   │   └── email.js             # Email configuration
+│   ├── controllers/
+│   │   ├── auth.js              # Authentication logic
+│   │   ├── user.js              # User management
+│   │   ├── admin.js             # Admin operations
+│   │   ├── vendor.js            # Vendor/seller operations
+│   │   ├── product.js           # Product management
+│   │   ├── category.js          # Category management
+│   │   ├── brand.js             # Brand management
+│   │   ├── order.js             # Order management
+│   │   ├── banner.js            # Banner management
+│   │   ├── wishlist.js          # Wishlist operations
+│   │   ├── cart.js              # Cart operations
+│   │   ├── review.js            # Product reviews
+│   │   ├── payment.js           # Payment processing
+│   │   ├── shipping.js          # Shipping management
+│   │   └── analytics.js         # Analytics and reports
+│   ├── middleware/
+│   │   ├── auth.js              # Authentication middleware
+│   │   ├── roleCheck.js         # Role-based access control
+│   │   ├── validation.js        # Input validation
+│   │   ├── upload.js            # File upload middleware
+│   │   ├── errorHandler.js      # Global error handling
+│   │   └── rateLimiter.js       # Rate limiting
+│   ├── models/
+│   │   ├── User.js              # User schema
+│   │   ├── Product.js           # Product schema
+│   │   ├── Category.js          # Category schema
+│   │   ├── Brand.js             # Brand schema
+│   │   ├── Order.js             # Order schema
+│   │   ├── Banner.js            # Banner schema
+│   │   ├── Cart.js              # Cart schema
+│   │   ├── Wishlist.js          # Wishlist schema
+│   │   ├── Review.js            # Review schema
+│   │   ├── Address.js           # Address schema
+│   │   ├── Coupon.js            # Coupon schema
+│   │   └── Payment.js           # Payment schema
+│   ├── routes/
+│   │   ├── auth.js              # Authentication routes
+│   │   ├── users.js             # User routes
+│   │   ├── admin.js             # Admin routes
+│   │   ├── vendor.js            # Vendor routes
+│   │   ├── products.js          # Product routes
+│   │   ├── categories.js        # Category routes
+│   │   ├── brands.js            # Brand routes
+│   │   ├── orders.js            # Order routes
+│   │   ├── banners.js           # Banner routes
+│   │   ├── cart.js              # Cart routes
+│   │   ├── wishlist.js          # Wishlist routes
+│   │   ├── reviews.js           # Review routes
+│   │   ├── payment.js           # Payment routes
+│   │   ├── upload.js            # File upload routes
+│   │   └── search.js            # Search routes
+│   ├── utils/
+│   │   ├── generateToken.js     # JWT token generation
+│   │   ├── sendEmail.js         # Email utilities
+│   │   ├── cloudinary.js        # Image upload utilities
+│   │   ├── validation.js        # Validation schemas
+│   │   ├── pagination.js        # Pagination helper
+│   │   └── helpers.js           # General utilities
+│   ├── services/
+│   │   ├── emailService.js      # Email service
+│   │   ├── paymentService.js    # Payment processing
+│   │   ├── shippingService.js   # Shipping calculations
+│   │   └── notificationService.js # Push notifications
+│   └── app.js                   # Express app configuration
+├── uploads/                     # Local file uploads (temporary)
+├── tests/                       # Test files
+├── .env                         # Environment variables
+├── .gitignore                   # Git ignore file
+├── package.json                 # Dependencies
+├── server.js                    # Server entry point
+└── README.md                    # Documentation
+```
+
+---
+
+## 3. CORE FUNCTIONALITY IMPLEMENTATION
+
+### A. AUTHENTICATION SYSTEM
+
+#### Routes:
+```
+POST /api/auth/register           # User registration
+POST /api/auth/login              # User login
+POST /api/auth/refresh            # Refresh JWT token
+POST /api/auth/logout             # User logout
+POST /api/auth/forgot-password    # Password reset request
+POST /api/auth/reset-password     # Password reset
+POST /api/auth/verify-email       # Email verification
+POST /api/auth/resend-verification # Resend verification email
+```
+
+#### Key Features:
+- JWT-based authentication
+- Password hashing with bcrypt
+- Email verification
+- Password reset functionality
+- Refresh token mechanism
+- Account lockout after failed attempts
+
+### B. USER ROLE MANAGEMENT (User, Admin, Vendor)
+
+#### User Roles & Permissions:
+
+**USER Role:**
+- Browse products and categories
+- Add items to cart and wishlist
+- Place orders and track status
+- Write product reviews
+- Manage profile and addresses
+- View order history
+
+**ADMIN Role:**
+- Full system access
+- User management (view, suspend, delete)
+- Product management (CRUD operations)
+- Category and brand management
+- Order management and processing
+- Banner and content management
+- Analytics and reports
+- Vendor approval and management
+
+**VENDOR/SELLER Role:**
+- Product management (own products only)
+- Inventory management
+- Order processing (own products)
+- Sales analytics
+- Customer communication
+- Profile and store management
+
+#### Routes by Role:
+```
+# User Routes
+GET /api/users/profile            # Get user profile
+PUT /api/users/profile            # Update profile
+GET /api/users/orders             # Get user orders
+GET /api/users/wishlist           # Get wishlist
+POST /api/users/address           # Add address
+
+# Admin Routes
+GET /api/admin/users              # Get all users
+PUT /api/admin/users/:id/status   # Update user status
+GET /api/admin/analytics          # Get analytics
+POST /api/admin/banners           # Create banner
+DELETE /api/admin/users/:id       # Delete user
+
+# Vendor Routes
+GET /api/vendor/products          # Get vendor products
+POST /api/vendor/products         # Create product
+PUT /api/vendor/products/:id      # Update product
+GET /api/vendor/orders            # Get vendor orders
+GET /api/vendor/analytics         # Get vendor analytics
+```
+
+### C. WEBSITE MANAGEMENT
+
+#### Banner Management:
+```
+GET /api/banners                  # Get active banners
+POST /api/admin/banners           # Create banner (Admin)
+PUT /api/admin/banners/:id        # Update banner (Admin)
+DELETE /api/admin/banners/:id     # Delete banner (Admin)
+```
+
+#### Content Management:
+```
+GET /api/content/pages            # Get static pages
+PUT /api/admin/content/:page      # Update page content (Admin)
+GET /api/content/faqs             # Get FAQs
+POST /api/admin/faqs              # Create FAQ (Admin)
+```
+
+### D. PRODUCT MANAGEMENT
+
+#### Product Operations:
+```
+GET /api/products                 # Get products with filters
+GET /api/products/:id             # Get single product
+POST /api/products                # Create product (Admin/Vendor)
+PUT /api/products/:id             # Update product (Admin/Vendor)
+DELETE /api/products/:id          # Delete product (Admin/Vendor)
+GET /api/products/featured        # Get featured products
+GET /api/products/trending        # Get trending products
+POST /api/products/:id/images     # Upload product images
+```
+
+#### Category Management:
+```
+GET /api/categories               # Get all categories
+GET /api/categories/:id/products  # Get products by category
+POST /api/admin/categories        # Create category (Admin)
+PUT /api/admin/categories/:id     # Update category (Admin)
+DELETE /api/admin/categories/:id  # Delete category (Admin)
+```
+
+#### Brand Management:
+```
+GET /api/brands                   # Get all brands
+GET /api/brands/:id/products      # Get products by brand
+POST /api/admin/brands            # Create brand (Admin)
+PUT /api/admin/brands/:id         # Update brand (Admin)
+DELETE /api/admin/brands/:id      # Delete brand (Admin)
+```
+
+### E. ORDER SYSTEM
+
+#### Order Management:
+```
+POST /api/orders                  # Create order
+GET /api/orders                   # Get user orders
+GET /api/orders/:id               # Get single order
+PUT /api/orders/:id/status        # Update order status
+POST /api/orders/:id/cancel       # Cancel order
+POST /api/orders/:id/return       # Return order
+GET /api/admin/orders             # Get all orders (Admin)
+PUT /api/admin/orders/:id         # Update order (Admin)
+```
+
+#### Order Status Flow:
+1. **Pending** - Order placed, awaiting payment
+2. **Confirmed** - Payment confirmed
+3. **Processing** - Order being prepared
+4. **Shipped** - Order dispatched
+5. **Delivered** - Order delivered
+6. **Cancelled** - Order cancelled
+7. **Returned** - Order returned
+
+#### Return/Exchange System:
+```
+POST /api/orders/:id/return       # Initiate return
+GET /api/returns                  # Get return requests
+PUT /api/admin/returns/:id        # Process return (Admin)
+POST /api/orders/:id/exchange     # Initiate exchange
+```
+
+### F. FILTERS AND SEARCH
+
+#### Search & Filter Routes:
+```
+GET /api/search                   # Global search
+GET /api/products/filter          # Filter products
+GET /api/search/suggestions       # Search suggestions
+GET /api/products/price-range     # Get price range for filters
+```
+
+#### Filter Parameters:
+- **Price Range**: min_price, max_price
+- **Categories**: category_ids[]
+- **Brands**: brand_ids[]
+- **Size**: sizes[]
+- **Color**: colors[]
+- **Rating**: min_rating
+- **Availability**: in_stock
+- **Sort Options**: price_asc, price_desc, rating, newest, popularity
+
+---
+
+## 4. ADDITIONAL FEATURES
+
+### Cart Management:
+```
+GET /api/cart                     # Get cart items
+POST /api/cart/add                # Add item to cart
+PUT /api/cart/update              # Update cart item
+DELETE /api/cart/remove           # Remove cart item
+DELETE /api/cart/clear            # Clear cart
+```
+
+### Wishlist Management:
+```
+GET /api/wishlist                 # Get wishlist
+POST /api/wishlist/add            # Add to wishlist
+DELETE /api/wishlist/remove       # Remove from wishlist
+```
+
+### Review System:
+```
+GET /api/products/:id/reviews     # Get product reviews
+POST /api/products/:id/reviews    # Add review
+PUT /api/reviews/:id              # Update review
+DELETE /api/reviews/:id           # Delete review
+```
+
+### Payment Integration:
+```
+POST /api/payment/create          # Create payment intent
+POST /api/payment/confirm         # Confirm payment
+GET /api/payment/methods          # Get saved payment methods
+POST /api/payment/methods         # Save payment method
+```
+
+### Analytics & Reports:
+```
+GET /api/admin/analytics/sales    # Sales analytics
+GET /api/admin/analytics/users    # User analytics
+GET /api/admin/analytics/products # Product performance
+GET /api/vendor/analytics/sales   # Vendor sales data
+```
+
+---
+
+## 5. SECURITY IMPLEMENTATION
+
+### Middleware Stack:
+1. **Helmet** - Security headers
+2. **CORS** - Cross-origin resource sharing
+3. **Rate Limiting** - Prevent abuse
+4. **Input Validation** - Sanitize inputs
+5. **Authentication** - JWT verification
+6. **Authorization** - Role-based access
+7. **Error Handling** - Centralized error management
+
+### Security Features:
+- Password encryption with bcrypt
+- JWT token authentication
+- Input validation and sanitization
+- Rate limiting on API endpoints
+- SQL injection prevention
+- XSS protection
+- CSRF protection
+- Secure HTTP headers
+
+---
+
+This comprehensive backend structure will support all the frontend features you've implemented, including the mobile-friendly interface, product management, user roles, order system, and more. Each component is designed to be scalable and maintainable.

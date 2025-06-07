@@ -1,0 +1,929 @@
+
+# MONGODB SCHEMAS FOR OBEYYO E-COMMERCE
+
+---
+
+## 1. USER SCHEMA
+
+```javascript
+const userSchema = new mongoose.Schema({
+  // Basic Information
+  firstName: {
+    type: String,
+    required: true,
+    trim: true,
+    maxlength: 50
+  },
+  lastName: {
+    type: String,
+    required: true,
+    trim: true,
+    maxlength: 50
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    lowercase: true,
+    validate: [validator.isEmail, 'Invalid email']
+  },
+  password: {
+    type: String,
+    required: true,
+    minlength: 8,
+    select: false // Don't return password in queries
+  },
+  
+  // Profile Information
+  phone: {
+    type: String,
+    validate: {
+      validator: function(v) {
+        return /\d{10}/.test(v);
+      },
+      message: 'Phone number must be 10 digits'
+    }
+  },
+  dateOfBirth: {
+    type: Date
+  },
+  gender: {
+    type: String,
+    enum: ['male', 'female', 'other', 'prefer-not-to-say']
+  },
+  profileImage: {
+    type: String, // Cloudinary URL
+    default: null
+  },
+  
+  // Role and Status
+  role: {
+    type: String,
+    enum: ['user', 'admin', 'vendor'],
+    default: 'user'
+  },
+  status: {
+    type: String,
+    enum: ['active', 'suspended', 'deleted'],
+    default: 'active'
+  },
+  
+  // Verification
+  isEmailVerified: {
+    type: Boolean,
+    default: false
+  },
+  emailVerificationToken: String,
+  emailVerificationExpires: Date,
+  
+  // Password Reset
+  passwordResetToken: String,
+  passwordResetExpires: Date,
+  
+  // Account Security
+  loginAttempts: {
+    type: Number,
+    default: 0
+  },
+  lockUntil: Date,
+  
+  // Vendor Specific (if role is vendor)
+  vendorInfo: {
+    storeName: String,
+    storeDescription: String,
+    businessLicense: String,
+    bankDetails: {
+      accountNumber: String,
+      routingNumber: String,
+      accountHolderName: String
+    },
+    isApproved: {
+      type: Boolean,
+      default: false
+    },
+    approvedAt: Date,
+    commission: {
+      type: Number,
+      default: 10 // percentage
+    }
+  },
+  
+  // Preferences
+  preferences: {
+    notifications: {
+      email: {
+        type: Boolean,
+        default: true
+      },
+      sms: {
+        type: Boolean,
+        default: false
+      },
+      push: {
+        type: Boolean,
+        default: true
+      }
+    },
+    newsletter: {
+      type: Boolean,
+      default: false
+    },
+    language: {
+      type: String,
+      default: 'en'
+    }
+  },
+  
+  // Tracking
+  lastLogin: Date,
+  totalOrders: {
+    type: Number,
+    default: 0
+  },
+  totalSpent: {
+    type: Number,
+    default: 0
+  }
+}, {
+  timestamps: true,
+  toJSON: { virtuals: true },
+  toObject: { virtuals: true }
+});
+
+// Indexes
+userSchema.index({ email: 1 });
+userSchema.index({ role: 1 });
+userSchema.index({ 'vendorInfo.isApproved': 1 });
+```
+
+---
+
+## 2. PRODUCT SCHEMA
+
+```javascript
+const productSchema = new mongoose.Schema({
+  // Basic Information
+  name: {
+    type: String,
+    required: true,
+    trim: true,
+    maxlength: 200
+  },
+  description: {
+    type: String,
+    required: true,
+    maxlength: 2000
+  },
+  shortDescription: {
+    type: String,
+    maxlength: 500
+  },
+  
+  // Pricing
+  price: {
+    type: Number,
+    required: true,
+    min: 0
+  },
+  salePrice: {
+    type: Number,
+    min: 0,
+    validate: {
+      validator: function(v) {
+        return !v || v < this.price;
+      },
+      message: 'Sale price must be less than regular price'
+    }
+  },
+  costPrice: {
+    type: Number,
+    min: 0
+  },
+  
+  // Categorization
+  category: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Category',
+    required: true
+  },
+  subCategory: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Category'
+  },
+  brand: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Brand',
+    required: true
+  },
+  
+  // Product Details
+  sku: {
+    type: String,
+    unique: true,
+    required: true
+  },
+  barcode: String,
+  
+  // Inventory
+  stockQuantity: {
+    type: Number,
+    required: true,
+    min: 0,
+    default: 0
+  },
+  minStockLevel: {
+    type: Number,
+    default: 5
+  },
+  stockStatus: {
+    type: String,
+    enum: ['in-stock', 'out-of-stock', 'low-stock'],
+    default: function() {
+      return this.stockQuantity > this.minStockLevel ? 'in-stock' : 
+             this.stockQuantity > 0 ? 'low-stock' : 'out-of-stock';
+    }
+  },
+  
+  // Media
+  images: [{
+    url: String,
+    alt: String,
+    isPrimary: {
+      type: Boolean,
+      default: false
+    }
+  }],
+  videos: [{
+    url: String,
+    thumbnail: String,
+    duration: Number
+  }],
+  
+  // Variations
+  variants: [{
+    name: String, // e.g., "Size", "Color"
+    options: [{
+      value: String, // e.g., "Large", "Red"
+      price: Number, // Additional price
+      sku: String,
+      stock: Number,
+      image: String
+    }]
+  }],
+  
+  // Specifications
+  specifications: [{
+    name: String,
+    value: String
+  }],
+  
+  // Dimensions & Weight
+  dimensions: {
+    length: Number,
+    width: Number,
+    height: Number,
+    unit: {
+      type: String,
+      enum: ['cm', 'inch'],
+      default: 'cm'
+    }
+  },
+  weight: {
+    value: Number,
+    unit: {
+      type: String,
+      enum: ['kg', 'lb'],
+      default: 'kg'
+    }
+  },
+  
+  // SEO
+  slug: {
+    type: String,
+    unique: true,
+    required: true
+  },
+  metaTitle: String,
+  metaDescription: String,
+  metaKeywords: [String],
+  
+  // Tags and Features
+  tags: [String],
+  features: [String],
+  
+  // Status and Flags
+  status: {
+    type: String,
+    enum: ['active', 'inactive', 'draft'],
+    default: 'active'
+  },
+  isFeatured: {
+    type: Boolean,
+    default: false
+  },
+  isDigital: {
+    type: Boolean,
+    default: false
+  },
+  
+  // Vendor Information
+  vendor: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User' // Vendor user
+  },
+  
+  // Reviews and Ratings
+  averageRating: {
+    type: Number,
+    default: 0,
+    min: 0,
+    max: 5
+  },
+  totalReviews: {
+    type: Number,
+    default: 0
+  },
+  ratingDistribution: {
+    1: { type: Number, default: 0 },
+    2: { type: Number, default: 0 },
+    3: { type: Number, default: 0 },
+    4: { type: Number, default: 0 },
+    5: { type: Number, default: 0 }
+  },
+  
+  // Sales Data
+  totalSales: {
+    type: Number,
+    default: 0
+  },
+  viewCount: {
+    type: Number,
+    default: 0
+  },
+  
+  // Shipping
+  shippingInfo: {
+    weight: Number,
+    dimensions: {
+      length: Number,
+      width: Number,
+      height: Number
+    },
+    shippingClass: String,
+    freeShipping: {
+      type: Boolean,
+      default: false
+    }
+  }
+}, {
+  timestamps: true,
+  toJSON: { virtuals: true },
+  toObject: { virtuals: true }
+});
+
+// Indexes
+productSchema.index({ name: 'text', description: 'text', tags: 'text' });
+productSchema.index({ category: 1 });
+productSchema.index({ brand: 1 });
+productSchema.index({ vendor: 1 });
+productSchema.index({ status: 1 });
+productSchema.index({ price: 1 });
+productSchema.index({ averageRating: -1 });
+productSchema.index({ totalSales: -1 });
+productSchema.index({ createdAt: -1 });
+```
+
+---
+
+## 3. CATEGORY SCHEMA
+
+```javascript
+const categorySchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+    trim: true,
+    maxlength: 100
+  },
+  description: {
+    type: String,
+    maxlength: 500
+  },
+  slug: {
+    type: String,
+    unique: true,
+    required: true
+  },
+  
+  // Hierarchy
+  parent: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Category',
+    default: null
+  },
+  level: {
+    type: Number,
+    default: 0
+  },
+  
+  // Media
+  image: {
+    url: String,
+    alt: String
+  },
+  icon: String,
+  
+  // SEO
+  metaTitle: String,
+  metaDescription: String,
+  metaKeywords: [String],
+  
+  // Display
+  sortOrder: {
+    type: Number,
+    default: 0
+  },
+  isActive: {
+    type: Boolean,
+    default: true
+  },
+  isFeatured: {
+    type: Boolean,
+    default: false
+  },
+  showOnHomepage: {
+    type: Boolean,
+    default: false
+  },
+  
+  // Filters
+  availableFilters: [{
+    name: String,
+    type: {
+      type: String,
+      enum: ['range', 'checkbox', 'radio', 'color']
+    },
+    options: [String]
+  }],
+  
+  // Statistics
+  productCount: {
+    type: Number,
+    default: 0
+  }
+}, {
+  timestamps: true,
+  toJSON: { virtuals: true },
+  toObject: { virtuals: true }
+});
+
+// Virtual for subcategories
+categorySchema.virtual('subcategories', {
+  ref: 'Category',
+  localField: '_id',
+  foreignField: 'parent'
+});
+
+// Indexes
+categorySchema.index({ parent: 1 });
+categorySchema.index({ slug: 1 });
+categorySchema.index({ isActive: 1 });
+```
+
+---
+
+## 4. ORDER SCHEMA
+
+```javascript
+const orderSchema = new mongoose.Schema({
+  // Order Information
+  orderNumber: {
+    type: String,
+    unique: true,
+    required: true
+  },
+  
+  // Customer
+  customer: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
+  
+  // Items
+  items: [{
+    product: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Product',
+      required: true
+    },
+    variant: {
+      size: String,
+      color: String,
+      style: String
+    },
+    quantity: {
+      type: Number,
+      required: true,
+      min: 1
+    },
+    price: {
+      type: Number,
+      required: true
+    },
+    salePrice: Number,
+    vendor: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
+    },
+    status: {
+      type: String,
+      enum: ['pending', 'confirmed', 'processing', 'shipped', 'delivered', 'cancelled', 'returned'],
+      default: 'pending'
+    }
+  }],
+  
+  // Pricing
+  subtotal: {
+    type: Number,
+    required: true
+  },
+  tax: {
+    type: Number,
+    default: 0
+  },
+  shippingCost: {
+    type: Number,
+    default: 0
+  },
+  discount: {
+    type: Number,
+    default: 0
+  },
+  total: {
+    type: Number,
+    required: true
+  },
+  
+  // Addresses
+  shippingAddress: {
+    firstName: String,
+    lastName: String,
+    email: String,
+    phone: String,
+    address1: String,
+    address2: String,
+    city: String,
+    state: String,
+    zipCode: String,
+    country: String,
+    coordinates: {
+      lat: Number,
+      lng: Number
+    }
+  },
+  billingAddress: {
+    firstName: String,
+    lastName: String,
+    email: String,
+    phone: String,
+    address1: String,
+    address2: String,
+    city: String,
+    state: String,
+    zipCode: String,
+    country: String
+  },
+  
+  // Payment
+  payment: {
+    method: {
+      type: String,
+      enum: ['credit_card', 'debit_card', 'paypal', 'stripe', 'cash_on_delivery'],
+      required: true
+    },
+    status: {
+      type: String,
+      enum: ['pending', 'processing', 'completed', 'failed', 'cancelled', 'refunded'],
+      default: 'pending'
+    },
+    transactionId: String,
+    paymentIntentId: String,
+    paidAt: Date,
+    refundedAt: Date,
+    refundAmount: Number
+  },
+  
+  // Order Status
+  status: {
+    type: String,
+    enum: ['pending', 'confirmed', 'processing', 'shipped', 'delivered', 'cancelled', 'returned', 'refunded'],
+    default: 'pending'
+  },
+  
+  // Shipping
+  shipping: {
+    method: String,
+    carrier: String,
+    trackingNumber: String,
+    trackingUrl: String,
+    estimatedDelivery: Date,
+    shippedAt: Date,
+    deliveredAt: Date
+  },
+  
+  // Coupon/Discount
+  coupon: {
+    code: String,
+    discountType: {
+      type: String,
+      enum: ['percentage', 'fixed']
+    },
+    discountValue: Number
+  },
+  
+  // Notes and Communication
+  customerNotes: String,
+  adminNotes: String,
+  statusHistory: [{
+    status: String,
+    updatedBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
+    },
+    updatedAt: {
+      type: Date,
+      default: Date.now
+    },
+    note: String
+  }],
+  
+  // Returns and Exchanges
+  returnRequest: {
+    isRequested: {
+      type: Boolean,
+      default: false
+    },
+    requestedAt: Date,
+    reason: String,
+    status: {
+      type: String,
+      enum: ['pending', 'approved', 'rejected', 'processed']
+    },
+    processedAt: Date
+  }
+}, {
+  timestamps: true,
+  toJSON: { virtuals: true },
+  toObject: { virtuals: true }
+});
+
+// Indexes
+orderSchema.index({ customer: 1 });
+orderSchema.index({ orderNumber: 1 });
+orderSchema.index({ status: 1 });
+orderSchema.index({ createdAt: -1 });
+orderSchema.index({ 'payment.status': 1 });
+```
+
+---
+
+## 5. ADDITIONAL SCHEMAS
+
+### CART SCHEMA
+```javascript
+const cartSchema = new mongoose.Schema({
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
+  items: [{
+    product: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Product',
+      required: true
+    },
+    quantity: {
+      type: Number,
+      required: true,
+      min: 1
+    },
+    variant: {
+      size: String,
+      color: String,
+      style: String
+    },
+    price: Number,
+    addedAt: {
+      type: Date,
+      default: Date.now
+    }
+  }],
+  subtotal: {
+    type: Number,
+    default: 0
+  },
+  expiresAt: {
+    type: Date,
+    default: Date.now,
+    expires: 2592000 // 30 days
+  }
+}, {
+  timestamps: true
+});
+```
+
+### WISHLIST SCHEMA
+```javascript
+const wishlistSchema = new mongoose.Schema({
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
+  products: [{
+    product: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Product',
+      required: true
+    },
+    addedAt: {
+      type: Date,
+      default: Date.now
+    }
+  }]
+}, {
+  timestamps: true
+});
+```
+
+### REVIEW SCHEMA
+```javascript
+const reviewSchema = new mongoose.Schema({
+  product: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Product',
+    required: true
+  },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
+  order: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Order'
+  },
+  rating: {
+    type: Number,
+    required: true,
+    min: 1,
+    max: 5
+  },
+  title: {
+    type: String,
+    maxlength: 100
+  },
+  comment: {
+    type: String,
+    maxlength: 1000
+  },
+  images: [String],
+  isVerifiedPurchase: {
+    type: Boolean,
+    default: false
+  },
+  helpfulVotes: {
+    type: Number,
+    default: 0
+  },
+  status: {
+    type: String,
+    enum: ['pending', 'approved', 'rejected'],
+    default: 'pending'
+  }
+}, {
+  timestamps: true
+});
+
+// Ensure one review per user per product
+reviewSchema.index({ product: 1, user: 1 }, { unique: true });
+```
+
+### BRAND SCHEMA
+```javascript
+const brandSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+    unique: true,
+    trim: true
+  },
+  description: String,
+  logo: {
+    url: String,
+    alt: String
+  },
+  website: String,
+  isActive: {
+    type: Boolean,
+    default: true
+  },
+  isFeatured: {
+    type: Boolean,
+    default: false
+  },
+  slug: {
+    type: String,
+    unique: true,
+    required: true
+  },
+  productCount: {
+    type: Number,
+    default: 0
+  }
+}, {
+  timestamps: true
+});
+```
+
+### BANNER SCHEMA
+```javascript
+const bannerSchema = new mongoose.Schema({
+  title: {
+    type: String,
+    required: true
+  },
+  subtitle: String,
+  image: {
+    url: {
+      type: String,
+      required: true
+    },
+    alt: String
+  },
+  link: {
+    url: String,
+    text: String,
+    openInNewTab: {
+      type: Boolean,
+      default: false
+    }
+  },
+  position: {
+    type: String,
+    enum: ['hero', 'secondary', 'sidebar', 'footer'],
+    default: 'hero'
+  },
+  isActive: {
+    type: Boolean,
+    default: true
+  },
+  startDate: Date,
+  endDate: Date,
+  sortOrder: {
+    type: Number,
+    default: 0
+  }
+}, {
+  timestamps: true
+});
+```
+
+---
+
+## 6. DATABASE INDEXES STRATEGY
+
+### Performance Indexes:
+```javascript
+// User Collection
+db.users.createIndex({ email: 1 }, { unique: true })
+db.users.createIndex({ role: 1 })
+db.users.createIndex({ status: 1 })
+
+// Product Collection
+db.products.createIndex({ name: "text", description: "text", tags: "text" })
+db.products.createIndex({ category: 1, brand: 1 })
+db.products.createIndex({ price: 1 })
+db.products.createIndex({ averageRating: -1 })
+db.products.createIndex({ totalSales: -1 })
+db.products.createIndex({ createdAt: -1 })
+db.products.createIndex({ vendor: 1, status: 1 })
+
+// Order Collection
+db.orders.createIndex({ customer: 1, createdAt: -1 })
+db.orders.createIndex({ orderNumber: 1 }, { unique: true })
+db.orders.createIndex({ status: 1 })
+db.orders.createIndex({ "payment.status": 1 })
+
+// Category Collection
+db.categories.createIndex({ parent: 1 })
+db.categories.createIndex({ slug: 1 }, { unique: true })
+
+// Review Collection
+db.reviews.createIndex({ product: 1, user: 1 }, { unique: true })
+db.reviews.createIndex({ product: 1, rating: -1 })
+```
+
+This comprehensive schema design supports all the features in your frontend application and provides a solid foundation for a scalable e-commerce platform.
