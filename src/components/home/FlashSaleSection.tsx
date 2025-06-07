@@ -1,22 +1,20 @@
-
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Zap, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ProductCard from "@/components/ProductCard";
 import SkeletonLoader from "@/components/SkeletonLoader";
-
 interface FlashSaleSectionProps {
   isLoading: boolean;
 }
-
-const FlashSaleSection = ({ isLoading }: FlashSaleSectionProps) => {
+const FlashSaleSection = ({
+  isLoading
+}: FlashSaleSectionProps) => {
   const [timeLeft, setTimeLeft] = useState({
     hours: 8,
     minutes: 45,
     seconds: 23
   });
-
   const flashSaleProducts = [{
     id: "fs-1",
     name: "Premium Wireless Headphones",
@@ -58,57 +56,57 @@ const FlashSaleSection = ({ isLoading }: FlashSaleSectionProps) => {
     brand: "TechGear",
     isFlashSale: true
   }];
-
   useEffect(() => {
     const timer = setInterval(() => {
       setTimeLeft(prev => {
         if (prev.seconds > 0) {
-          return { ...prev, seconds: prev.seconds - 1 };
+          return {
+            ...prev,
+            seconds: prev.seconds - 1
+          };
         } else if (prev.minutes > 0) {
-          return { ...prev, minutes: prev.minutes - 1, seconds: 59 };
+          return {
+            ...prev,
+            minutes: prev.minutes - 1,
+            seconds: 59
+          };
         } else if (prev.hours > 0) {
-          return { hours: prev.hours - 1, minutes: 59, seconds: 59 };
+          return {
+            hours: prev.hours - 1,
+            minutes: 59,
+            seconds: 59
+          };
         }
         return prev;
       });
     }, 1000);
     return () => clearInterval(timer);
   }, []);
-
-  const FlashSaleTimer = () => (
-    <div className="flex items-center gap-2 text-white">
+  const FlashSaleTimer = () => <div className="flex items-center gap-2 text-white">
       <Clock className="w-4 h-4" />
       <span className="text-sm font-semibold">
         {String(timeLeft.hours).padStart(2, '0')}:
         {String(timeLeft.minutes).padStart(2, '0')}:
         {String(timeLeft.seconds).padStart(2, '0')}
       </span>
-    </div>
-  );
-
-  const ProductGrid = ({ products, showSkeleton = false, maxProducts = 4 }) => {
+    </div>;
+  const ProductGrid = ({
+    products,
+    showSkeleton = false,
+    maxProducts = 4
+  }) => {
     const displayProducts = products.slice(0, maxProducts);
-    
-    return (
-      <div className="grid grid-cols-2 gap-3 px-4">
-        {showSkeleton ? 
-          Array.from({ length: maxProducts }).map((_, i) => (
-            <div key={i}>
+    return <div className="grid grid-cols-2 gap-3 px-4">
+        {showSkeleton ? Array.from({
+        length: maxProducts
+      }).map((_, i) => <div key={i}>
               <SkeletonLoader type="product" />
-            </div>
-          )) : 
-          displayProducts.map(product => (
-            <div key={product.id}>
+            </div>) : displayProducts.map(product => <div key={product.id}>
               <ProductCard product={product} />
-            </div>
-          ))
-        }
-      </div>
-    );
+            </div>)}
+      </div>;
   };
-
-  return (
-    <section className="bg-gradient-to-r from-obeyyo-red to-obeyyo-pink mx-4 rounded-2xl p-4 bg-red-400">
+  return <section className="bg-gradient-to-r from-obeyyo-red to-obeyyo-pink rounded-2xl p-4 bg-red-400 px-0 mx-0">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
           <Zap className="w-5 h-5 text-white" />
@@ -120,18 +118,12 @@ const FlashSaleSection = ({ isLoading }: FlashSaleSectionProps) => {
       <ProductGrid products={flashSaleProducts} showSkeleton={isLoading} />
       
       <div className="mt-4 text-center">
-        <Button 
-          variant="outline" 
-          className="bg-white/20 border-white/30 text-white hover:bg-white/30 rounded-xl"
-          asChild
-        >
+        <Button variant="outline" className="bg-white/20 border-white/30 text-white hover:bg-white/30 rounded-xl" asChild>
           <Link to="/flash-sale">
             View All Flash Sale Products
           </Link>
         </Button>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default FlashSaleSection;
