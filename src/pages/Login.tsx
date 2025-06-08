@@ -1,58 +1,32 @@
 
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { useAuth } from "@/contexts/AuthContext";
-import { toast } from "sonner";
 
 const Login = () => {
-  const navigate = useNavigate();
-  const { login, register, isLoading } = useAuth();
   const [loginData, setLoginData] = useState({ email: "", password: "" });
   const [signupData, setSignupData] = useState({ 
-    firstName: "", 
-    lastName: "",
+    name: "", 
     email: "", 
     password: "", 
     confirmPassword: "" 
   });
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      await login(loginData.email, loginData.password);
-      toast.success("Login successful!");
-      navigate("/");
-    } catch (error: any) {
-      toast.error(error.message || "Login failed");
-    }
+    console.log("Login attempt:", loginData);
+    // Handle login logic here
   };
 
-  const handleSignup = async (e: React.FormEvent) => {
+  const handleSignup = (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (signupData.password !== signupData.confirmPassword) {
-      toast.error("Passwords don't match");
-      return;
-    }
-
-    try {
-      await register({
-        firstName: signupData.firstName,
-        lastName: signupData.lastName,
-        email: signupData.email,
-        password: signupData.password,
-      });
-      toast.success("Registration successful!");
-      navigate("/");
-    } catch (error: any) {
-      toast.error(error.message || "Registration failed");
-    }
+    console.log("Signup attempt:", signupData);
+    // Handle signup logic here
   };
 
   return (
@@ -84,7 +58,6 @@ const Login = () => {
                         value={loginData.email}
                         onChange={(e) => setLoginData({ ...loginData, email: e.target.value })}
                         required
-                        disabled={isLoading}
                       />
                     </div>
                     <div className="space-y-2">
@@ -96,15 +69,10 @@ const Login = () => {
                         value={loginData.password}
                         onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
                         required
-                        disabled={isLoading}
                       />
                     </div>
-                    <Button 
-                      type="submit" 
-                      className="w-full bg-gradient-brand hover:opacity-90"
-                      disabled={isLoading}
-                    >
-                      {isLoading ? "Signing In..." : "Sign In"}
+                    <Button type="submit" className="w-full bg-gradient-brand hover:opacity-90">
+                      Sign In
                     </Button>
                   </form>
                   
@@ -119,10 +87,10 @@ const Login = () => {
                     </div>
                     
                     <div className="grid grid-cols-2 gap-4 mt-6">
-                      <Button variant="outline" className="w-full" disabled>
+                      <Button variant="outline" className="w-full">
                         Google
                       </Button>
-                      <Button variant="outline" className="w-full" disabled>
+                      <Button variant="outline" className="w-full">
                         Facebook
                       </Button>
                     </div>
@@ -141,31 +109,16 @@ const Login = () => {
                 </CardHeader>
                 <CardContent>
                   <form onSubmit={handleSignup} className="space-y-4">
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="firstName">First Name</Label>
-                        <Input
-                          id="firstName"
-                          type="text"
-                          placeholder="First name"
-                          value={signupData.firstName}
-                          onChange={(e) => setSignupData({ ...signupData, firstName: e.target.value })}
-                          required
-                          disabled={isLoading}
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="lastName">Last Name</Label>
-                        <Input
-                          id="lastName"
-                          type="text"
-                          placeholder="Last name"
-                          value={signupData.lastName}
-                          onChange={(e) => setSignupData({ ...signupData, lastName: e.target.value })}
-                          required
-                          disabled={isLoading}
-                        />
-                      </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="name">Full Name</Label>
+                      <Input
+                        id="name"
+                        type="text"
+                        placeholder="Enter your full name"
+                        value={signupData.name}
+                        onChange={(e) => setSignupData({ ...signupData, name: e.target.value })}
+                        required
+                      />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="signup-email">Email</Label>
@@ -176,7 +129,6 @@ const Login = () => {
                         value={signupData.email}
                         onChange={(e) => setSignupData({ ...signupData, email: e.target.value })}
                         required
-                        disabled={isLoading}
                       />
                     </div>
                     <div className="space-y-2">
@@ -188,7 +140,6 @@ const Login = () => {
                         value={signupData.password}
                         onChange={(e) => setSignupData({ ...signupData, password: e.target.value })}
                         required
-                        disabled={isLoading}
                       />
                     </div>
                     <div className="space-y-2">
@@ -200,15 +151,10 @@ const Login = () => {
                         value={signupData.confirmPassword}
                         onChange={(e) => setSignupData({ ...signupData, confirmPassword: e.target.value })}
                         required
-                        disabled={isLoading}
                       />
                     </div>
-                    <Button 
-                      type="submit" 
-                      className="w-full bg-gradient-brand hover:opacity-90"
-                      disabled={isLoading}
-                    >
-                      {isLoading ? "Creating Account..." : "Create Account"}
+                    <Button type="submit" className="w-full bg-gradient-brand hover:opacity-90">
+                      Create Account
                     </Button>
                   </form>
                   
@@ -223,10 +169,10 @@ const Login = () => {
                     </div>
                     
                     <div className="grid grid-cols-2 gap-4 mt-6">
-                      <Button variant="outline" className="w-full" disabled>
+                      <Button variant="outline" className="w-full">
                         Google
                       </Button>
-                      <Button variant="outline" className="w-full" disabled>
+                      <Button variant="outline" className="w-full">
                         Facebook
                       </Button>
                     </div>
