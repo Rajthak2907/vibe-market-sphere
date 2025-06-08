@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Home, Grid3X3, ShoppingCart, Heart, User, Menu, X, TrendingUp, Search } from "lucide-react";
@@ -6,12 +5,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import Sidebar from "./Sidebar";
-
 interface LayoutProps {
   children: React.ReactNode;
 }
-
-const Layout = ({ children }: LayoutProps) => {
+const Layout = ({
+  children
+}: LayoutProps) => {
   const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -47,7 +46,6 @@ const Layout = ({ children }: LayoutProps) => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location.pathname]);
-
   const bottomNavItems = [{
     label: "Home",
     path: "/",
@@ -71,7 +69,6 @@ const Layout = ({ children }: LayoutProps) => {
     path: "/profile",
     icon: User
   }];
-
   const quickCategories = [{
     name: "Men",
     path: "/men",
@@ -93,9 +90,7 @@ const Layout = ({ children }: LayoutProps) => {
     color: "#08a0ef",
     icon: "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?w=100&h=100&fit=crop&crop=center"
   }];
-
-  return (
-    <div className="min-h-screen bg-gray-50 font-['Poppins',sans-serif]">
+  return <div className="min-h-screen bg-gray-50 font-['Poppins',sans-serif]">
       {/* Sidebar */}
       <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
@@ -105,12 +100,7 @@ const Layout = ({ children }: LayoutProps) => {
           <div className="flex items-center justify-between">
             {/* Logo with Sidebar Toggle */}
             <div className="flex items-center space-x-3">
-              <Button 
-                variant="ghost" 
-                size="sm" 
-                className="p-2 hover:bg-white/10 transition-all duration-200 hover:scale-105 active:scale-95" 
-                onClick={() => setSidebarOpen(true)}
-              >
+              <Button variant="ghost" size="sm" onClick={() => setSidebarOpen(true)} className="p-2 transition-all duration-200 hover:scale-105 active:scale-95 text-gray-950 bg-blue-900 hover:bg-gray-800">
                 <Menu className="h-5 w-5 text-white" />
               </Button>
               
@@ -141,31 +131,20 @@ const Layout = ({ children }: LayoutProps) => {
           <div className="mt-3">
             <div className={`relative transition-all duration-300 ${searchFocused ? 'transform scale-[1.02]' : ''}`}>
               <Search className={`absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 transition-colors duration-200 ${searchFocused ? 'text-obeyyo-pink' : 'text-obeyyo-blue'}`} />
-              <Input 
-                placeholder="Search for brands, products..." 
-                className="pl-10 bg-gray-50 border-gray-200 rounded-xl h-10 focus:border-obeyyo-pink focus:ring-2 focus:ring-obeyyo-pink/20 transition-all duration-200"
-                onFocus={() => setSearchFocused(true)}
-                onBlur={() => setSearchFocused(false)}
-              />
+              <Input placeholder="Search for brands, products..." className="pl-10 bg-gray-50 border-gray-200 rounded-xl h-10 focus:border-obeyyo-pink focus:ring-2 focus:ring-obeyyo-pink/20 transition-all duration-200" onFocus={() => setSearchFocused(true)} onBlur={() => setSearchFocused(false)} />
             </div>
           </div>
 
           {/* Enhanced Quick Categories */}
           <div className="flex gap-2 mt-3 overflow-x-auto scrollbar-hide py-1">
-            {quickCategories.map((category, index) => (
-              <Link 
-                key={category.path} 
-                to={category.path} 
-                style={{
-                  background: `linear-gradient(135deg, ${category.color}, ${category.color}dd)`
-                }} 
-                className={`flex-shrink-0 flex items-center gap-2 text-white text-sm font-semibold rounded-full hover:shadow-lg transition-all duration-200 px-3 py-2 hover:scale-105 active:scale-95 animate-fade-in`}
-                style={{ animationDelay: `${index * 100}ms` }}
-              >
+            {quickCategories.map((category, index) => <Link key={category.path} to={category.path} style={{
+            background: `linear-gradient(135deg, ${category.color}, ${category.color}dd)`
+          }} className={`flex-shrink-0 flex items-center gap-2 text-white text-sm font-semibold rounded-full hover:shadow-lg transition-all duration-200 px-3 py-2 hover:scale-105 active:scale-95 animate-fade-in`} style={{
+            animationDelay: `${index * 100}ms`
+          }}>
                 <img src={category.icon} alt={category.name} className="w-6 h-6 rounded-full object-cover border-2 border-white/30" />
                 {category.name}
-              </Link>
-            ))}
+              </Link>)}
           </div>
         </div>
       </header>
@@ -176,8 +155,7 @@ const Layout = ({ children }: LayoutProps) => {
       </main>
 
       {/* Enhanced Mobile Menu Overlay */}
-      {menuOpen && (
-        <>
+      {menuOpen && <>
           <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm animate-fade-in" onClick={() => setMenuOpen(false)} />
           <div className="fixed inset-y-0 right-0 z-50 w-[85%] max-w-sm h-full bg-white shadow-2xl animate-slide-in-right">
             <div className="flex items-center justify-between p-4 border-b bg-gradient-to-r from-obeyyo-pink/5 to-obeyyo-blue/5">
@@ -199,40 +177,27 @@ const Layout = ({ children }: LayoutProps) => {
               </Link>
             </div>
           </div>
-        </>
-      )}
+        </>}
 
       {/* Enhanced Bottom Navigation */}
       <nav className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-gray-200 z-40 shadow-lg">
         <div className="grid grid-cols-5 h-16">
           {bottomNavItems.map((item, index) => {
-            const Icon = item.icon;
-            const isActive = location.pathname === item.path;
-            return (
-              <Link 
-                key={item.path} 
-                to={item.path} 
-                className={`flex flex-col items-center justify-center space-y-1 relative transition-all duration-300 hover:scale-105 active:scale-95 ${
-                  isActive ? "transform scale-105 text-obeyyo-pink" : "text-gray-500"
-                }`}
-              >
+          const Icon = item.icon;
+          const isActive = location.pathname === item.path;
+          return <Link key={item.path} to={item.path} className={`flex flex-col items-center justify-center space-y-1 relative transition-all duration-300 hover:scale-105 active:scale-95 ${isActive ? "transform scale-105 text-obeyyo-pink" : "text-gray-500"}`}>
                 <div className="relative">
                   <Icon className={`w-5 h-5 transition-all duration-200 ${isActive ? 'animate-pulse' : ''}`} />
-                  {item.badge && item.badge > 0 && (
-                    <Badge className="absolute -top-2 -right-2 h-5 w-5 p-0 flex items-center justify-center text-white text-xs bg-obeyyo-pink border-2 border-white animate-bounce">
+                  {item.badge && item.badge > 0 && <Badge className="absolute -top-2 -right-2 h-5 w-5 p-0 flex items-center justify-center text-white text-xs bg-obeyyo-pink border-2 border-white animate-bounce">
                       {item.badge}
-                    </Badge>
-                  )}
+                    </Badge>}
                 </div>
                 <span className={`text-xs font-medium transition-all duration-200 ${isActive ? 'animate-fade-in' : ''}`}>{item.label}</span>
                 {isActive && <div className="absolute bottom-0 w-8 h-1 rounded-full bg-gradient-to-r from-obeyyo-pink to-obeyyo-blue animate-scale-in" />}
-              </Link>
-            );
-          })}
+              </Link>;
+        })}
         </div>
       </nav>
-    </div>
-  );
+    </div>;
 };
-
 export default Layout;
