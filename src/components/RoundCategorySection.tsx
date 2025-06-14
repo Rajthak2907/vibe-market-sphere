@@ -9,14 +9,15 @@ interface RoundCategorySectionProps {
     image: string;
     link: string;
   }>;
+  title?: string;
 }
 
-const RoundCategorySection = ({ categories }: RoundCategorySectionProps) => {
+const RoundCategorySection = ({ categories, title = "Shop by Category" }: RoundCategorySectionProps) => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   return (
     <section className="px-4 py-4 bg-white">
-      <h2 className="text-base font-semibold text-gray-800 mb-3">Shop by Category</h2>
+      <h2 className="text-base font-semibold text-gray-800 mb-3">{title}</h2>
       
       <div 
         ref={scrollRef}

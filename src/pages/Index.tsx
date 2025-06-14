@@ -1,4 +1,3 @@
-
 import Layout from "@/components/Layout";
 import HeroSection from "@/components/home/HeroSection";
 import QuickActions from "@/components/home/QuickActions";
@@ -11,6 +10,7 @@ import ShopByBrandsSection from "@/components/home/ShopByBrandsSection";
 import BankOffersSection from "@/components/home/BankOffersSection";
 import TopPicksSection from "@/components/home/TopPicksSection";
 import PromoBanner from "@/components/PromoBanner";
+import RoundCategorySection from "@/components/RoundCategorySection";
 import { useState, useEffect } from "react";
 
 const Index = () => {
@@ -36,6 +36,46 @@ const Index = () => {
     title: "Fashion Week Special",
     subtitle: "Exclusive Designer Wear"
   }];
+
+  // Shop by Style categories for home page
+  const shopByStyleCategories = [
+    {
+      id: "style-1",
+      name: "Casual",
+      image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=100",
+      link: "/casual"
+    },
+    {
+      id: "style-2", 
+      name: "Formal",
+      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100",
+      link: "/formal"
+    },
+    {
+      id: "style-3",
+      name: "Ethnic",
+      image: "https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=100",
+      link: "/ethnic"
+    },
+    {
+      id: "style-4",
+      name: "Sports",
+      image: "https://images.unsplash.com/photo-1472851294608-062f824d2d5f?w=100",
+      link: "/sports"
+    },
+    {
+      id: "style-5",
+      name: "Party",
+      image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=100",
+      link: "/party"
+    },
+    {
+      id: "style-6",
+      name: "Vintage",
+      image: "https://images.unsplash.com/photo-1518917439142-deacd78191de?w=100",
+      link: "/vintage"
+    }
+  ];
 
   // Promotional banners data
   const promoBanners = [{
@@ -68,6 +108,10 @@ const Index = () => {
     <Layout>
       <div className="space-y-6 bg-gray-50">
         <HeroSection carouselImages={carouselImages} isLoading={isLoading} />
+        
+        {/* Shop by Style Section */}
+        <RoundCategorySection categories={shopByStyleCategories} title="Shop by Style" />
+        
         <QuickActions />
         <FlashSaleSection isLoading={isLoading} />
         
