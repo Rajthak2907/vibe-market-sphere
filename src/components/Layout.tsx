@@ -146,13 +146,9 @@ const Layout = ({
               <Link 
                 key={category.path} 
                 to={category.path} 
-                style={{
-                  background: `linear-gradient(135deg, ${category.color}, ${category.color}dd)`
-                }}
                 className={`flex-shrink-0 flex items-center gap-2 text-white text-sm font-semibold hover:shadow-lg transition-all duration-200 hover:scale-105 active:scale-95 animate-fade-in px-[14px] py-[6px] bg-white/10 rounded-full`}
                 style={{
                   animationDelay: `${index * 100}ms`,
-                  background: `rgba(255,255,255,0.1)`,
                   backdropFilter: 'blur(10px)'
                 }}
               >

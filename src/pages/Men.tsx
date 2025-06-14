@@ -7,6 +7,7 @@ import PocketFriendlySection from "@/components/PocketFriendlySection";
 import DealOfTheDay from "@/components/DealOfTheDay";
 import TabSection from "@/components/TabSection";
 import RoundCategorySection from "@/components/RoundCategorySection";
+import FashionCarousel from "@/components/FashionCarousel";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
@@ -344,13 +345,12 @@ const Men = () => {
   return (
     <Layout>
       <div className="space-y-2 bg-gray-50">
-        {/* Header with gradient background */}
-        <div className="bg-gradient-to-r from-[#FF6B9D] to-[#4A90E2] text-white px-3 py-6">
-          <div className="max-w-7xl mx-auto">
-            <h1 className="text-2xl sm:text-3xl font-bold mb-1">Men's Fashion</h1>
-            <p className="text-sm sm:text-base opacity-90">Discover the latest trends in men's clothing</p>
-          </div>
-        </div>
+        {/* Fashion Carousel Header */}
+        <FashionCarousel 
+          section="men" 
+          title="Men's Fashion" 
+          subtitle="Discover the latest trends in men's clothing" 
+        />
 
         {/* Tabs Section */}
         <TabSection tabs={tabs} />
