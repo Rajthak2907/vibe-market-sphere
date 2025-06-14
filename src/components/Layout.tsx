@@ -1,6 +1,7 @@
+
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Home, Grid3X3, ShoppingCart, Heart, User, Menu, X, TrendingUp, Search } from "lucide-react";
+import { Home, Grid3X3, ShoppingCart, Heart, User, Menu, X, TrendingUp, Search, Mic } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -112,39 +113,53 @@ const Layout = ({
               </Link>
             </div>
 
-            {/* Right Actions */}
+            {/* Right Actions - Only Trending */}
             <div className="flex items-center space-x-3">
               <Button variant="ghost" size="sm" className="p-2 relative hover:bg-white/10 transition-all duration-200 hover:scale-105 active:scale-95">
                 <TrendingUp className="h-5 w-5 text-obeyyo-orange" />
-                <Badge className="absolute -top-1 -right-1 h-4 w-4 p-0 flex items-center justify-center text-white text-xs bg-obeyyo-pink animate-pulse">
+                <Badge className="absolute -top-1 -right-1 text-white text-[10px] bg-obeyyo-pink animate-pulse min-w-[16px] h-4 p-0 flex items-center justify-center">
                   2
                 </Badge>
               </Button>
-              
-              <Button variant="ghost" size="sm" className="p-2 hover:bg-white/10 transition-all duration-200 hover:scale-105 active:scale-95" onClick={() => setMenuOpen(true)}>
-                <Menu className="h-5 w-5 text-obeyyo-blue" />
+            </div>
+          </div>
+
+          {/* Enhanced Search Bar with Pill Shape */}
+          <div className="mt-3">
+            <div className={`relative transition-all duration-300 ${searchFocused ? 'transform scale-[1.02]' : ''}`}>
+              <Search className={`absolute left-4 top-1/2 transform -translate-y-1/2 w-4 h-4 transition-colors duration-200 ${searchFocused ? 'text-obeyyo-pink' : 'text-obeyyo-blue'} z-10`} />
+              <Input 
+                placeholder="Search for brands, products..." 
+                className="pl-12 pr-12 bg-gray-50 border-gray-200 h-10 focus:border-obeyyo-pink focus:ring-2 focus:ring-obeyyo-pink/20 transition-all duration-200 rounded-full shadow-[inset_0_1px_2px_rgba(0,0,0,0.05)]" 
+                onFocus={() => setSearchFocused(true)} 
+                onBlur={() => setSearchFocused(false)} 
+              />
+              <Button variant="ghost" size="sm" className="absolute right-2 top-1/2 transform -translate-y-1/2 p-2 hover:bg-gray-200/50 rounded-full">
+                <Mic className="w-4 h-4 text-obeyyo-blue" />
               </Button>
             </div>
           </div>
 
-          {/* Enhanced Search Bar */}
-          <div className="mt-3">
-            <div className={`relative transition-all duration-300 ${searchFocused ? 'transform scale-[1.02]' : ''}`}>
-              <Search className={`absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 transition-colors duration-200 ${searchFocused ? 'text-obeyyo-pink' : 'text-obeyyo-blue'}`} />
-              <Input placeholder="Search for brands, products..." className="pl-10 bg-gray-50 border-gray-200 rounded-xl h-10 focus:border-obeyyo-pink focus:ring-2 focus:ring-obeyyo-pink/20 transition-all duration-200" onFocus={() => setSearchFocused(true)} onBlur={() => setSearchFocused(false)} />
-            </div>
-          </div>
-
-          {/* Enhanced Quick Categories */}
+          {/* Enhanced Quick Categories with Pill Styling */}
           <div className="flex gap-2 mt-3 overflow-x-auto scrollbar-hide py-1">
-            {quickCategories.map((category, index) => <Link key={category.path} to={category.path} style={{
-            background: `linear-gradient(135deg, ${category.color}, ${category.color}dd)`
-          }} className={`flex-shrink-0 flex items-center gap-2 text-white text-sm font-semibold rounded-full hover:shadow-lg transition-all duration-200 px-3 py-2 hover:scale-105 active:scale-95 animate-fade-in`} style={{
-            animationDelay: `${index * 100}ms`
-          }}>
+            {quickCategories.map((category, index) => 
+              <Link 
+                key={category.path} 
+                to={category.path} 
+                style={{
+                  background: `linear-gradient(135deg, ${category.color}, ${category.color}dd)`
+                }}
+                className={`flex-shrink-0 flex items-center gap-2 text-white text-sm font-semibold hover:shadow-lg transition-all duration-200 hover:scale-105 active:scale-95 animate-fade-in px-[14px] py-[6px] bg-white/10 rounded-full`}
+                style={{
+                  animationDelay: `${index * 100}ms`,
+                  background: `rgba(255,255,255,0.1)`,
+                  backdropFilter: 'blur(10px)'
+                }}
+              >
                 <img src={category.icon} alt={category.name} className="w-6 h-6 rounded-full object-cover border-2 border-white/30" />
                 {category.name}
-              </Link>)}
+              </Link>
+            )}
           </div>
         </div>
       </header>
