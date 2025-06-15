@@ -177,22 +177,44 @@ const Layout = ({
           </div>
         </>}
 
-      {/* Enhanced Bottom Navigation */}
+      {/* Enhanced Bottom Navigation - smoothed, classy animation */}
       <nav className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-gray-200 z-40 shadow-lg">
         <div className="grid grid-cols-5 h-16">
           {bottomNavItems.map((item, index) => {
           const Icon = item.icon;
           const isActive = location.pathname === item.path;
-          return <Link key={item.path} to={item.path} className={`flex flex-col items-center justify-center space-y-1 relative transition-all duration-300 hover:scale-105 active:scale-95 ${isActive ? "transform scale-105 text-obeyyo-pink" : "text-gray-500"}`}>
-                <div className="relative">
-                  <Icon className={`w-5 h-5 transition-all duration-200 ${isActive ? 'animate-pulse' : ''}`} />
-                  {item.badge && item.badge > 0 && <Badge className="absolute -top-2 -right-2 h-5 w-5 p-0 flex items-center justify-center text-white text-xs bg-obeyyo-pink border-2 border-white animate-bounce">
-                      {item.badge}
-                    </Badge>}
-                </div>
-                <span className={`text-xs font-medium transition-all duration-200 ${isActive ? 'animate-fade-in' : ''}`}>{item.label}</span>
-                {isActive && <div className="absolute bottom-0 w-8 h-1 rounded-full bg-gradient-to-r from-obeyyo-pink to-obeyyo-blue animate-scale-in" />}
-              </Link>;
+          return (
+            <Link
+              key={item.path}
+              to={item.path}
+              className={`flex flex-col items-center justify-center space-y-1 relative transition-all duration-300 ease-out 
+                ${isActive ? "text-obeyyo-pink animate-fade-in" : "text-gray-500"}
+                ${!isActive ? "hover:bg-gray-100" : ""}
+                rounded-md`}
+              style={{ WebkitTapHighlightColor: "transparent" }}
+            >
+              <div className="relative flex items-center justify-center">
+                <Icon
+                  className={`w-5 h-5 transition-transform duration-300 ease-out
+                    ${isActive ? 'scale-[1.07] text-obeyyo-pink animate-fade-in' : 'group-hover:scale-105 group-hover:text-obeyyo-blue'}
+                  `}
+                />
+                {/* Subtle badge, no bounce */}
+                {item.badge && item.badge > 0 && (
+                  <Badge className="absolute -top-2 -right-2 h-5 w-5 p-0 flex items-center justify-center text-white text-xs bg-obeyyo-pink border-2 border-white shadow-md">
+                    {item.badge}
+                  </Badge>
+                )}
+              </div>
+              <span className={`text-xs font-medium transition-all duration-200 ease-out ${isActive ? 'animate-fade-in' : ''}`}>
+                {item.label}
+              </span>
+              {/* Animated, elegant indicator for active tab */}
+              {isActive && (
+                <div className="absolute bottom-1 w-7 h-1.5 rounded-full bg-gradient-to-r from-obeyyo-pink to-obeyyo-blue animate-scale-in opacity-90 shadow-sm" />
+              )}
+            </Link>
+          );
         })}
         </div>
       </nav>
