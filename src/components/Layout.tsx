@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Home, Grid3X3, ShoppingCart, Heart, User, Menu, X, TrendingUp, Search, Mic } from "lucide-react";
@@ -97,7 +96,7 @@ const Layout = ({
 
       {/* Header - Mobile Optimized with Animations */}
       <header className="bg-white shadow-sm border-b sticky top-0 z-40 transition-all duration-300">
-        <div className="px-4 py-3 bg-gradient-to-r from-gray-800 to-gray-900">
+        <div className="bg-gradient-to-r from-gray-800 to-gray-900 px-0 py-[4px]">
           <div className="flex items-center justify-between">
             {/* Logo with Sidebar Toggle */}
             <div className="flex items-center space-x-3">
@@ -128,12 +127,7 @@ const Layout = ({
           <div className="mt-3">
             <div className={`relative transition-all duration-300 ${searchFocused ? 'transform scale-[1.02]' : ''}`}>
               <Search className={`absolute left-4 top-1/2 transform -translate-y-1/2 w-4 h-4 transition-colors duration-200 ${searchFocused ? 'text-obeyyo-pink' : 'text-obeyyo-blue'} z-10`} />
-              <Input 
-                placeholder="Search for brands, products..." 
-                className="pl-12 pr-12 bg-gray-50 border-gray-200 h-10 focus:border-obeyyo-pink focus:ring-2 focus:ring-obeyyo-pink/20 transition-all duration-200 rounded-full shadow-[inset_0_1px_2px_rgba(0,0,0,0.05)]" 
-                onFocus={() => setSearchFocused(true)} 
-                onBlur={() => setSearchFocused(false)} 
-              />
+              <Input placeholder="Search for brands, products..." className="pl-12 pr-12 bg-gray-50 border-gray-200 h-10 focus:border-obeyyo-pink focus:ring-2 focus:ring-obeyyo-pink/20 transition-all duration-200 rounded-full shadow-[inset_0_1px_2px_rgba(0,0,0,0.05)]" onFocus={() => setSearchFocused(true)} onBlur={() => setSearchFocused(false)} />
               <Button variant="ghost" size="sm" className="absolute right-2 top-1/2 transform -translate-y-1/2 p-2 hover:bg-gray-200/50 rounded-full">
                 <Mic className="w-4 h-4 text-obeyyo-blue" />
               </Button>
@@ -142,20 +136,13 @@ const Layout = ({
 
           {/* Enhanced Quick Categories with Pill Styling */}
           <div className="flex gap-2 mt-3 overflow-x-auto scrollbar-hide py-1">
-            {quickCategories.map((category, index) => 
-              <Link 
-                key={category.path} 
-                to={category.path} 
-                className={`flex-shrink-0 flex items-center gap-2 text-white text-sm font-semibold hover:shadow-lg transition-all duration-200 hover:scale-105 active:scale-95 animate-fade-in px-[14px] py-[6px] bg-white/10 rounded-full`}
-                style={{
-                  animationDelay: `${index * 100}ms`,
-                  backdropFilter: 'blur(10px)'
-                }}
-              >
+            {quickCategories.map((category, index) => <Link key={category.path} to={category.path} className={`flex-shrink-0 flex items-center gap-2 text-white text-sm font-semibold hover:shadow-lg transition-all duration-200 hover:scale-105 active:scale-95 animate-fade-in px-[14px] py-[6px] bg-white/10 rounded-full`} style={{
+            animationDelay: `${index * 100}ms`,
+            backdropFilter: 'blur(10px)'
+          }}>
                 <img src={category.icon} alt={category.name} className="w-6 h-6 rounded-full object-cover border-2 border-white/30" />
                 {category.name}
-              </Link>
-            )}
+              </Link>)}
           </div>
         </div>
       </header>
