@@ -249,8 +249,8 @@ const CategoryFlashSaleSection = ({
             </div>)}
       </div>;
   };
-  return <section className="bg-gradient-to-r from-obeyyo-orange to-obeyyo-red rounded-2xl p-4 bg-yellow-400 mx-[2px] px-px">
-      <div className="flex items-center justify-between mb-4 bg-yellow-400">
+  return <section className="bg-gradient-to-r from-obeyyo-orange to-obeyyo-red rounded-2xl p-4 mx-[2px] px-px bg-slate-600">
+      <div className="flex items-center justify-between mb-4 px-[13px] bg-orange-400 my-0">
         <div className="flex items-center gap-2">
           <Zap className="w-5 h-5 text-white" />
           <h2 className="text-lg font-bold text-white">Category Flash Sale</h2>
