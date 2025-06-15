@@ -1,13 +1,12 @@
-
 import { Link } from "react-router-dom";
 import { TrendingUp, ChevronRight } from "lucide-react";
 import ProductSlider from "@/components/ProductSlider";
-
 interface TrendingSectionProps {
   isLoading: boolean;
 }
-
-const TrendingSection = ({ isLoading }: TrendingSectionProps) => {
+const TrendingSection = ({
+  isLoading
+}: TrendingSectionProps) => {
   const trendingProducts = [{
     id: "t-1",
     name: "Oversized Graphic Hoodie",
@@ -39,9 +38,7 @@ const TrendingSection = ({ isLoading }: TrendingSectionProps) => {
     brand: "TechStyle",
     isTrending: true
   }];
-
-  return (
-    <section className="bg-gradient-to-r from-obeyyo-yellow to-obeyyo-orange mx-4 rounded-2xl p-4 bg-zinc-800">
+  return <section className="bg-gradient-to-r from-obeyyo-yellow to-obeyyo-orange rounded-2xl p-4 bg-zinc-800 px-0 mx-0">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
           <TrendingUp className="w-5 h-5 text-white" />
@@ -52,8 +49,6 @@ const TrendingSection = ({ isLoading }: TrendingSectionProps) => {
         </Link>
       </div>
       <ProductSlider title="" products={trendingProducts} />
-    </section>
-  );
+    </section>;
 };
-
 export default TrendingSection;
