@@ -111,7 +111,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
           />
           
           {/* Badges */}
-          <div className="absolute top-2 left-2 flex flex-col gap-1">
+          <div className="absolute top-2 left-2 flex flex-row flex-wrap gap-x-1 gap-y-1 max-w-[80%] z-10">
             {product.isNew && (
               <Badge className="bg-green-500 text-white text-xs px-2 py-1 animate-pulse">
                 NEW
