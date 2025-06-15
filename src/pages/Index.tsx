@@ -1,3 +1,4 @@
+
 import Layout from "@/components/Layout";
 import HeroSection from "@/components/home/HeroSection";
 import QuickActions from "@/components/home/QuickActions";
@@ -11,6 +12,14 @@ import BankOffersSection from "@/components/home/BankOffersSection";
 import TopPicksSection from "@/components/home/TopPicksSection";
 import PromoBanner from "@/components/PromoBanner";
 import RoundCategorySection from "@/components/RoundCategorySection";
+import PocketFriendlyBargainSection from "@/components/home/PocketFriendlyBargainSection";
+import FeaturedBrandsSection from "@/components/home/FeaturedBrandsSection";
+import BestsellerCategorySection from "@/components/home/BestsellerCategorySection";
+import TodaysSpecialsSection from "@/components/home/TodaysSpecialsSection";
+import UniqueBestOfObeyyoSection from "@/components/home/UniqueBestOfObeyyoSection";
+import BannerCarouselSection from "@/components/home/BannerCarouselSection";
+import TrendyThisWeekSection from "@/components/home/TrendyThisWeekSection";
+import StarsFromInstagramSection from "@/components/home/StarsFromInstagramSection";
 import { useState, useEffect } from "react";
 
 const Index = () => {
@@ -112,6 +121,15 @@ const Index = () => {
         {/* Shop by Style Section */}
         <RoundCategorySection categories={shopByStyleCategories} title="Shop by Style" />
         
+        {/* New sections added after Shop by Style */}
+        <PocketFriendlyBargainSection />
+        <FeaturedBrandsSection />
+        <BestsellerCategorySection />
+        <TodaysSpecialsSection />
+        <UniqueBestOfObeyyoSection />
+        <BannerCarouselSection />
+        <TrendyThisWeekSection />
+        
         <QuickActions />
         <FlashSaleSection isLoading={isLoading} />
         
@@ -139,6 +157,9 @@ const Index = () => {
         <ShopByBrandsSection isLoading={isLoading} />
         <BankOffersSection />
         <TopPicksSection isLoading={isLoading} />
+        
+        {/* Stars from Instagram - Added at the bottom */}
+        <StarsFromInstagramSection />
       </div>
     </Layout>
   );
