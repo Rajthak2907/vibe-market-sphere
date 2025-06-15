@@ -359,6 +359,12 @@ const Kids = () => {
     { id: "sb1", name: "H&M Kids", logo: "https://upload.wikimedia.org/wikipedia/commons/5/53/H%26M-Logo.svg", image: "https://images.unsplash.com/photo-1544965503-7ad535c4ead7?w=400", link: "/brands/hmkids" }
   ];
 
+  // ----- Add this block before it is used in JSX -----
+  const filterCategories = ["All", "Boys", "Girls", "Shoes", "Toys", "Accessories"];
+
+  const dealEndTime = new Date();
+  dealEndTime.setHours(dealEndTime.getHours() + 4);
+
   return (
     <Layout>
       <div className="space-y-2 bg-gray-50">
