@@ -1,6 +1,14 @@
 
 import ImageCarousel from "@/components/ImageCarousel";
 import SkeletonLoader from "@/components/SkeletonLoader";
+import { Link } from "react-router-dom";
+
+interface Category {
+  id: string;
+  name: string;
+  image: string;
+  link: string;
+}
 
 interface HeroSectionProps {
   carouselImages: Array<{
@@ -10,20 +18,37 @@ interface HeroSectionProps {
     subtitle: string;
   }>;
   isLoading: boolean;
+  categories: Category[];
 }
 
-const HeroSection = ({ carouselImages, isLoading }: HeroSectionProps) => {
+const HeroSection = ({ carouselImages, isLoading, categories }: HeroSectionProps) => {
   return (
     <>
-      {/* Personalized Greeting */}
-      <div className="px-4 pt-4">
-        <h1 className="text-xl font-bold bg-gradient-to-r from-obeyyo-pink to-obeyyo-blue bg-clip-text text-zinc-950">
-          Hi there! 👋
-        </h1>
-        <p className="text-sm text-gray-600 mt-1">Discover amazing deals just for you</p>
+      {/* Horizontal Scrollable Categories Bar */}
+      <div className="w-full px-2 py-3 bg-white sticky top-0 z-10">
+        <div className="flex items-center gap-3 overflow-x-auto scrollbar-hide">
+          {categories.map((cat) => (
+            <Link
+              key={cat.id}
+              to={cat.link}
+              className="flex flex-col items-center min-w-[60px] w-16 mx-1"
+              style={{ flex: "0 0 60px" }}
+            >
+              <div className="w-14 h-14 rounded-xl overflow-hidden flex items-center justify-center bg-gray-100 border border-gray-200 hover-lift transition">
+                <img
+                  src={cat.image}
+                  alt={cat.name}
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                />
+              </div>
+              <span className="text-xs text-gray-700 mt-2 text-center whitespace-nowrap">{cat.name}</span>
+            </Link>
+          ))}
+        </div>
       </div>
 
-      {/* Hero Carousel */}
+      {/* Hero Carousel (remains) */}
       <div className="px-4">
         <div className="relative w-full h-48 rounded-2xl overflow-hidden">
           {isLoading ? <SkeletonLoader type="banner" /> : <ImageCarousel images={carouselImages} />}
@@ -34,3 +59,4 @@ const HeroSection = ({ carouselImages, isLoading }: HeroSectionProps) => {
 };
 
 export default HeroSection;
+

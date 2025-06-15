@@ -1,4 +1,3 @@
-
 import Layout from "@/components/Layout";
 import HeroSection from "@/components/home/HeroSection";
 import QuickActions from "@/components/home/QuickActions";
@@ -116,8 +115,13 @@ const Index = () => {
   return (
     <Layout>
       <div className="space-y-6 bg-gray-50">
-        <HeroSection carouselImages={carouselImages} isLoading={isLoading} />
-        
+        {/* Pass categories to HeroSection */}
+        <HeroSection
+          carouselImages={carouselImages}
+          isLoading={isLoading}
+          categories={shopByStyleCategories}
+        />
+
         {/* Shop by Style Section */}
         <RoundCategorySection categories={shopByStyleCategories} title="Shop by Style" />
         
