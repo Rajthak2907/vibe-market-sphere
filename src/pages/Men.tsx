@@ -8,6 +8,8 @@ import DealOfTheDay from "@/components/DealOfTheDay";
 import TabSection from "@/components/TabSection";
 import RoundCategorySection from "@/components/RoundCategorySection";
 import FashionCarousel from "@/components/FashionCarousel";
+import HorizontalBrandSection from "@/components/HorizontalBrandSection";
+import HighlightsOfTheDaySection from "@/components/HighlightsOfTheDaySection";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
@@ -342,6 +344,23 @@ const Men = () => {
   const dealEndTime = new Date();
   dealEndTime.setHours(dealEndTime.getHours() + 6);
 
+  // ----- Brand Data -----
+  const highlightsProducts = products.slice(0, 3);
+  const featuredBrands = [
+    { id: "b1", name: "Nike", logo: "https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg", discount: "Up to 60% OFF", link: "/brands/nike" },
+    { id: "b2", name: "Adidas", logo: "https://upload.wikimedia.org/wikipedia/commons/2/20/Adidas_Logo.svg", discount: "Up to 50% OFF", link: "/brands/adidas" },
+    { id: "b3", name: "Ray-Ban", logo: "https://upload.wikimedia.org/wikipedia/commons/f/fa/Ray_Ban_logo.svg", discount: "Up to 30% OFF", link: "/brands/rayban" }
+  ];
+  const popularBrands = [
+    { id: "pb1", name: "Levi's", logo: "https://logos-world.net/wp-content/uploads/2020/04/Levis-Logo.png", link: "/brands/levis" },
+    { id: "pb2", name: "Puma", logo: "https://upload.wikimedia.org/wikipedia/commons/f/fd/Puma_logo.svg", link: "/brands/puma" },
+    { id: "pb3", name: "U.S. Polo", logo: "https://1000logos.net/wp-content/uploads/2020/03/US-Polo-Logo.png", link: "/brands/uspolo" }
+  ];
+  const sponsoredBrands = [
+    { id: "sb1", name: "H&M", logo: "https://upload.wikimedia.org/wikipedia/commons/5/53/H%26M-Logo.svg", link: "/brands/hm" },
+    { id: "sb2", name: "Zara", logo: "https://upload.wikimedia.org/wikipedia/commons/3/3a/Zara_Logo.svg", link: "/brands/zara" }
+  ];
+
   return (
     <Layout>
       <div className="space-y-2 bg-gray-50">
@@ -504,6 +523,15 @@ const Men = () => {
         <section className="px-3">
           <PromoBanner banner={promoBanners[3]} />
         </section>
+
+        {/* Highlights of the Day */}
+        <HighlightsOfTheDaySection products={highlightsProducts} />
+        {/* Featured Brands */}
+        <HorizontalBrandSection title="Featured Brands" brands={featuredBrands} labelText="FEATURED" labelColor="bg-pink-100 text-pink-500" />
+        {/* Popular Brands */}
+        <HorizontalBrandSection title="Popular Brands" brands={popularBrands} labelText="POPULAR" labelColor="bg-blue-100 text-blue-600" />
+        {/* Sponsored Brands */}
+        <HorizontalBrandSection title="Sponsored Brands" brands={sponsoredBrands} labelText="SPONSORED" labelColor="bg-yellow-100 text-yellow-600" />
 
         {/* Filters */}
         <div className="px-3">

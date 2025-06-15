@@ -8,6 +8,8 @@ import DealOfTheDay from "@/components/DealOfTheDay";
 import TabSection from "@/components/TabSection";
 import RoundCategorySection from "@/components/RoundCategorySection";
 import FashionCarousel from "@/components/FashionCarousel";
+import HorizontalBrandSection from "@/components/HorizontalBrandSection";
+import HighlightsOfTheDaySection from "@/components/HighlightsOfTheDaySection";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
@@ -351,6 +353,21 @@ const Women = () => {
     { name: "Kids", value: "kids", products: [] }
   ];
 
+  // ----- Brand Data -----
+  const highlightsProducts = products.slice(0, 3);
+  const featuredBrands = [
+    { id: "b1", name: "Lakme", logo: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=100", discount: "Up to 60% OFF", link: "/brands/lakme" },
+    { id: "b2", name: "RENÉE", logo: "https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=100", discount: "Up to 70% OFF", link: "/brands/renee" }
+  ];
+  const popularBrands = [
+    { id: "pb1", name: "H&M", logo: "https://upload.wikimedia.org/wikipedia/commons/5/53/H%26M-Logo.svg", link: "/brands/hm" },
+    { id: "pb2", name: "Zara", logo: "https://upload.wikimedia.org/wikipedia/commons/3/3a/Zara_Logo.svg", link: "/brands/zara" }
+  ];
+  const sponsoredBrands = [
+    { id: "sb1", name: "Puma", logo: "https://upload.wikimedia.org/wikipedia/commons/f/fd/Puma_logo.svg", link: "/brands/puma" },
+    { id: "sb2", name: "Calvin Klein", logo: "https://upload.wikimedia.org/wikipedia/commons/5/56/Calvin_klein_logo.svg", link: "/brands/calvinklein" }
+  ];
+
   return (
     <Layout>
       <div className="space-y-2 bg-gray-50">
@@ -513,6 +530,15 @@ const Women = () => {
         <section className="px-3">
           <PromoBanner banner={promoBanners[3]} />
         </section>
+
+        {/* Highlights of the Day */}
+        <HighlightsOfTheDaySection products={highlightsProducts} />
+        {/* Featured Brands */}
+        <HorizontalBrandSection title="Featured Brands" brands={featuredBrands} labelText="FEATURED" labelColor="bg-pink-100 text-pink-500" />
+        {/* Popular Brands */}
+        <HorizontalBrandSection title="Popular Brands" brands={popularBrands} labelText="POPULAR" labelColor="bg-blue-100 text-blue-600" />
+        {/* Sponsored Brands */}
+        <HorizontalBrandSection title="Sponsored Brands" brands={sponsoredBrands} labelText="SPONSORED" labelColor="bg-yellow-100 text-yellow-600" />
 
         {/* Filters */}
         <div className="px-3">

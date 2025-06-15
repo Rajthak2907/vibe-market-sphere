@@ -8,6 +8,8 @@ import DealOfTheDay from "@/components/DealOfTheDay";
 import TabSection from "@/components/TabSection";
 import RoundCategorySection from "@/components/RoundCategorySection";
 import FashionCarousel from "@/components/FashionCarousel";
+import HorizontalBrandSection from "@/components/HorizontalBrandSection";
+import HighlightsOfTheDaySection from "@/components/HighlightsOfTheDaySection";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
@@ -158,7 +160,7 @@ const Kids = () => {
       originalPrice: 4999,
       rating: 4.6,
       reviews: 234,
-      image: "https://images.unsplash.com/photo-1544966503-7cc5ac882d5f?w=400",
+      image: "https://images.unsplash.com/photo-1544965503-7ad535c4ead7?w=400",
       brand: "Adidas"
     }
   ];
@@ -295,7 +297,7 @@ const Kids = () => {
     },
     {
       id: "c3",
-      name: "School",
+4 name: "School",
       image: "https://images.unsplash.com/photo-1569263979104-865ab7cd8d13?w=100",
       link: "/kids/school"
     },
@@ -340,6 +342,20 @@ const Kids = () => {
   const filterCategories = ["All", "Boys", "Girls", "Shoes", "Toys", "Accessories"];
   const dealEndTime = new Date();
   dealEndTime.setHours(dealEndTime.getHours() + 4);
+
+  // ----- Brand Data -----
+  const highlightsProducts = products.slice(0, 3);
+  const featuredBrands = [
+    { id: "b1", name: "Disney", logo: "https://images.unsplash.com/photo-1503944583220-79d8926ad5e2?w=100", discount: "Up to 50% OFF", link: "/brands/disney" },
+    { id: "b2", name: "KidsTime", logo: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=100", discount: "Up to 40% OFF", link: "/brands/kidstime" }
+  ];
+  const popularBrands = [
+    { id: "pb1", name: "Nike Kids", logo: "https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg", link: "/brands/nikekids" },
+    { id: "pb2", name: "PartyKids", logo: "https://images.unsplash.com/photo-1518917439142-deacd78191de?w=100", link: "/brands/partykids" }
+  ];
+  const sponsoredBrands = [
+    { id: "sb1", name: "H&M Kids", logo: "https://upload.wikimedia.org/wikipedia/commons/5/53/H%26M-Logo.svg", link: "/brands/hmkids" }
+  ];
 
   return (
     <Layout>
@@ -503,6 +519,15 @@ const Kids = () => {
         <section className="px-3">
           <PromoBanner banner={promoBanners[3]} />
         </section>
+
+        {/* Highlights of the Day */}
+        <HighlightsOfTheDaySection products={highlightsProducts} />
+        {/* Featured Brands */}
+        <HorizontalBrandSection title="Featured Brands" brands={featuredBrands} labelText="FEATURED" labelColor="bg-pink-100 text-pink-500" />
+        {/* Popular Brands */}
+        <HorizontalBrandSection title="Popular Brands" brands={popularBrands} labelText="POPULAR" labelColor="bg-blue-100 text-blue-600" />
+        {/* Sponsored Brands */}
+        <HorizontalBrandSection title="Sponsored Brands" brands={sponsoredBrands} labelText="SPONSORED" labelColor="bg-yellow-100 text-yellow-600" />
 
         {/* Filters */}
         <div className="px-3">
