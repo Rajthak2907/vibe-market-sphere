@@ -100,13 +100,17 @@ const Layout = ({
           <div className="flex items-center justify-between py-0 px-[4px]">
             {/* Logo with Sidebar Toggle */}
             <div className="flex items-center space-x-3">
-              <Button variant="ghost" size="sm" onClick={() => setSidebarOpen(true)} className="p-2 transition-all duration-200 hover:scale-105 active:scale-95 text-gray-950 bg-blue-900 hover:bg-gray-800">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="p-2 transition-all duration-200 hover:scale-105 active:scale-95 text-gray-950 bg-obeyyo-blue hover:bg-obeyyo-blue/80"
+              >
                 <Menu className="h-5 w-5 text-white" />
               </Button>
               
               <Link to="/" className="flex items-center space-x-2 hover:scale-105 transition-transform duration-200">
-                <img src="/lovable-uploads/fcde6e4f-7f0d-4250-9eac-15f1c0e84293.png" alt="Obeyyo" className="h-8 w-auto object-contain" />
-                <span className="text-xl font-black bg-gradient-to-r from-[#fc2682] via-[#fc334d] to-[#08a0ef] bg-clip-text text-transparent">
+                <img src="/lovable-uploads/fcde6e4f-7f0d-4250-9eac-15f1c0e84293.png" alt="Obeyyo" className="h-10 w-auto object-contain drop-shadow-md" />
+                <span className="text-2xl font-black gradient-text-obeyyo tracking-tight" style={{ letterSpacing: "-0.04em" }}>
                   obeyyo
                 </span>
               </Link>

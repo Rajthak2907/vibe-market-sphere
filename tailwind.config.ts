@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -75,7 +74,12 @@ export default {
 					'pink-orange': 'linear-gradient(135deg, #E91E63 0%, #FF9800 100%)',
 					'blue-pink': 'linear-gradient(135deg, #2196F3 0%, #E91E63 100%)',
 					'orange-blue': 'linear-gradient(135deg, #FF9800 0%, #2196F3 100%)'
-				}
+				},
+				"obeyyo-red": "#fc334d",
+				"obeyyo-orange": "#fb8619",
+				"obeyyo-yellow": "#f9b704",
+				"obeyyo-blue": "#08a0ef",
+				"gradient-obeyyo": "linear-gradient(90deg, #fc334d 0%, #fb8619 33%, #f9b704 66%, #08a0ef 100%)"
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
