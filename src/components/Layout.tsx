@@ -96,7 +96,7 @@ const Layout = ({
 
       {/* Header - Mobile Optimized with Animations */}
       <header className="bg-white shadow-sm border-b sticky top-0 z-40 transition-all duration-300">
-        <div className="bg-gradient-to-r from-gray-800 to-gray-900 px-0 py-[4px]">
+        <div className="bg-gradient-to-r from-gray-800 to-gray-900 py-[4px] px-[4px]">
           <div className="flex items-center justify-between">
             {/* Logo with Sidebar Toggle */}
             <div className="flex items-center space-x-3">
