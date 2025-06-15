@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Home, Grid3X3, ShoppingCart, Heart, User, Menu, X, TrendingUp, Search, Mic } from "lucide-react";
@@ -103,6 +104,7 @@ const Layout = ({
               <Button
                 variant="ghost"
                 size="sm"
+                onClick={() => setSidebarOpen(true)}
                 className="p-2 transition-all duration-200 hover:scale-105 active:scale-95 text-gray-950 bg-obeyyo-blue hover:bg-obeyyo-blue/80"
               >
                 <Menu className="h-5 w-5 text-white" />
