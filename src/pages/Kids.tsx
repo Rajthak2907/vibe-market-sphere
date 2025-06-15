@@ -12,6 +12,7 @@ import HorizontalBrandSection from "@/components/HorizontalBrandSection";
 import HighlightsOfTheDaySection from "@/components/HighlightsOfTheDaySection";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import BrandPromoSlider from "@/components/BrandPromoSlider";
 
 const Kids = () => {
   const products = [
@@ -339,22 +340,23 @@ const Kids = () => {
     { name: "Kids", value: "kids", products: [] }
   ];
 
-  const filterCategories = ["All", "Boys", "Girls", "Shoes", "Toys", "Accessories"];
-  const dealEndTime = new Date();
-  dealEndTime.setHours(dealEndTime.getHours() + 4);
-
   // ----- Brand Data -----
+  // Highlights stays the same!
   const highlightsProducts = products.slice(0, 3);
-  const featuredBrands = [
-    { id: "b1", name: "Disney", logo: "https://images.unsplash.com/photo-1503944583220-79d8926ad5e2?w=100", discount: "Up to 50% OFF", link: "/brands/disney" },
-    { id: "b2", name: "KidsTime", logo: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=100", discount: "Up to 40% OFF", link: "/brands/kidstime" }
+
+  // EXTRACT promo image for each brand.
+  // We'll use distinct images--falling back to the logo if needed.
+  // You may update/augment your brand image URLs/fields later as you wish.
+  const featuredBrandsPromo = [
+    { id: "b1", name: "Disney", logo: "https://images.unsplash.com/photo-1503944583220-79d8926ad5e2?w=100", image: "https://images.unsplash.com/photo-1503944583220-79d8926ad5e2?w=400", discount: "Up to 50% OFF", link: "/brands/disney" },
+    { id: "b2", name: "KidsTime", logo: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=100", image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400", discount: "Up to 40% OFF", link: "/brands/kidstime" }
   ];
-  const popularBrands = [
-    { id: "pb1", name: "Nike Kids", logo: "https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg", link: "/brands/nikekids" },
-    { id: "pb2", name: "PartyKids", logo: "https://images.unsplash.com/photo-1518917439142-deacd78191de?w=100", link: "/brands/partykids" }
+  const popularBrandsPromo = [
+    { id: "pb1", name: "Nike Kids", logo: "https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg", image: "https://images.unsplash.com/photo-1607522370275-f14206abe5d3?w=400", link: "/brands/nikekids" },
+    { id: "pb2", name: "PartyKids", logo: "https://images.unsplash.com/photo-1518917439142-deacd78191de?w=100", image: "https://images.unsplash.com/photo-1518917439142-deacd78191de?w=400", link: "/brands/partykids" }
   ];
-  const sponsoredBrands = [
-    { id: "sb1", name: "H&M Kids", logo: "https://upload.wikimedia.org/wikipedia/commons/5/53/H%26M-Logo.svg", link: "/brands/hmkids" }
+  const sponsoredBrandsPromo = [
+    { id: "sb1", name: "H&M Kids", logo: "https://upload.wikimedia.org/wikipedia/commons/5/53/H%26M-Logo.svg", image: "https://images.unsplash.com/photo-1544965503-7ad535c4ead7?w=400", link: "/brands/hmkids" }
   ];
 
   return (
@@ -522,12 +524,13 @@ const Kids = () => {
 
         {/* Highlights of the Day */}
         <HighlightsOfTheDaySection products={highlightsProducts} />
-        {/* Featured Brands */}
-        <HorizontalBrandSection title="Featured Brands" brands={featuredBrands} labelText="FEATURED" labelColor="bg-pink-100 text-pink-500" />
+
+        {/* Featured Brands (NEW STYLE) */}
+        <BrandPromoSlider title="Featured Brands" brands={featuredBrandsPromo} labelText="FEATURED" />
         {/* Popular Brands */}
-        <HorizontalBrandSection title="Popular Brands" brands={popularBrands} labelText="POPULAR" labelColor="bg-blue-100 text-blue-600" />
+        <BrandPromoSlider title="Popular Brands" brands={popularBrandsPromo} labelText="POPULAR" />
         {/* Sponsored Brands */}
-        <HorizontalBrandSection title="Sponsored Brands" brands={sponsoredBrands} labelText="SPONSORED" labelColor="bg-yellow-100 text-yellow-600" />
+        <BrandPromoSlider title="Sponsored Brands" brands={sponsoredBrandsPromo} labelText="SPONSORED" />
 
         {/* Filters */}
         <div className="px-3">
