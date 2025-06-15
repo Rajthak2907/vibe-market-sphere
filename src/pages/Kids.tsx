@@ -297,7 +297,7 @@ const Kids = () => {
     },
     {
       id: "c3",
-4 name: "School",
+      name: "School",
       image: "https://images.unsplash.com/photo-1569263979104-865ab7cd8d13?w=100",
       link: "/kids/school"
     },
