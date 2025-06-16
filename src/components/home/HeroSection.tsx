@@ -38,7 +38,7 @@ const HeroSection = ({
       </div>
 
       {/* Hero Carousel (remains) */}
-      <div className="px-4">
+      <div className="px-0">
         <div className="relative w-full h-48 rounded-2xl overflow-hidden">
           {isLoading ? <SkeletonLoader type="banner" /> : <ImageCarousel images={carouselImages} />}
         </div>
