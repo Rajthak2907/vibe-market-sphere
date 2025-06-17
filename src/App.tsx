@@ -10,6 +10,8 @@ import Men from "./pages/Men";
 import Women from "./pages/Women";
 import Kids from "./pages/Kids";
 import Accessories from "./pages/Accessories";
+import Beauty from "./pages/Beauty";
+import Footwear from "./pages/Footwear";
 import ProductDetail from "./pages/ProductDetail";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
@@ -44,6 +46,8 @@ const App = () => (
           <Route path="/women" element={<Women />} />
           <Route path="/kids" element={<Kids />} />
           <Route path="/accessories" element={<Accessories />} />
+          <Route path="/beauty" element={<Beauty />} />
+          <Route path="/footwear" element={<Footwear />} />
           <Route path="/categories" element={<Categories />} />
           <Route path="/product/:id" element={<ProductDetail />} />
           <Route path="/brands/:brandName" element={<BrandPage />} />

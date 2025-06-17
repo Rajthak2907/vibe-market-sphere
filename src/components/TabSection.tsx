@@ -32,6 +32,12 @@ const TabSection = ({ tabs }: TabSectionProps) => {
       navigate("/women");
     } else if (tabValue === "kids") {
       navigate("/kids");
+    } else if (tabValue === "beauty") {
+      navigate("/beauty");
+    } else if (tabValue === "footwear") {
+      navigate("/footwear");
+    } else if (tabValue === "accessories") {
+      navigate("/accessories");
     }
   };
 
@@ -39,19 +45,19 @@ const TabSection = ({ tabs }: TabSectionProps) => {
     <section className="px-4 py-3 bg-white">
       <Tabs defaultValue="all" className="w-full">
         <div className="flex items-center justify-between">
-          <TabsList className="grid w-auto grid-cols-4 h-9 bg-gray-100 rounded-lg p-0.5">
+          <TabsList className="grid w-auto grid-cols-6 h-9 bg-gray-100 rounded-lg p-0.5">
             {tabs.map((tab) => (
               <TabsTrigger 
                 key={tab.value} 
                 value={tab.value} 
                 onClick={() => handleTabClick(tab.value)}
-                className="px-3 py-1.5 text-sm font-medium data-[state=active]:bg-white data-[state=active]:text-[#FF6B9D] data-[state=active]:shadow-sm rounded-md transition-all"
+                className="px-3 py-1.5 text-sm font-medium data-[state=active]:bg-white data-[state=active]:text-brand-red data-[state=active]:shadow-sm rounded-md transition-all"
               >
                 {tab.name}
               </TabsTrigger>
             ))}
           </TabsList>
-          <Button variant="outline" size="sm" className="text-xs border-[#FF6B9D] text-[#FF6B9D] hover:bg-[#FF6B9D] hover:text-white rounded-lg px-3 py-1.5 ml-2">
+          <Button variant="outline" size="sm" className="text-xs border-brand-red text-brand-red hover:bg-brand-red hover:text-white rounded-lg px-3 py-1.5 ml-2">
             View All
           </Button>
         </div>

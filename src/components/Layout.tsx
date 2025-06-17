@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Home, Grid3X3, ShoppingCart, Heart, User, Menu, X, TrendingUp, Search, Mic } from "lucide-react";
@@ -86,9 +85,19 @@ const Layout = ({
     color: "#f9b704",
     icon: "https://images.unsplash.com/photo-1535268647677-300dbf3d78d1?w=100&h=100&fit=crop&crop=face"
   }, {
+    name: "Beauty",
+    path: "/beauty",
+    color: "#fc334d",
+    icon: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=100&h=100&fit=crop&crop=center"
+  }, {
+    name: "Footwear",
+    path: "/footwear",
+    color: "#08a0ef",
+    icon: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=100&h=100&fit=crop&crop=center"
+  }, {
     name: "Accessories",
     path: "/accessories",
-    color: "#08a0ef",
+    color: "#fb8619",
     icon: "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?w=100&h=100&fit=crop&crop=center"
   }];
   return <div className="min-h-screen bg-gray-50 font-['Poppins',sans-serif]">
