@@ -5,20 +5,43 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import Sidebar from "./Sidebar";
+
 interface LayoutProps {
   children: React.ReactNode;
 }
-const Layout = ({
-  children
-}: LayoutProps) => {
+
+const Layout = ({ children }: LayoutProps) => {
   const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [searchFocused, setSearchFocused] = useState(false);
+  
+  // Scroll-based navigation visibility
+  const [lastScrollY, setLastScrollY] = useState(0);
+  const [navVisible, setNavVisible] = useState(true);
 
   // Functional cart and wishlist with localStorage
   const [cartCount, setCartCount] = useState(0);
   const [wishlistCount, setWishlistCount] = useState(0);
+
+  // Handle scroll for navigation visibility
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      
+      // Show nav when scrolling up, hide when scrolling down
+      if (currentScrollY < lastScrollY || currentScrollY < 100) {
+        setNavVisible(true);
+      } else if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        setNavVisible(false);
+      }
+      
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [lastScrollY]);
 
   // Update counts when component mounts or storage changes
   useEffect(() => {
@@ -46,6 +69,7 @@ const Layout = ({
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location.pathname]);
+
   const bottomNavItems = [{
     label: "Home",
     path: "/",
@@ -69,6 +93,7 @@ const Layout = ({
     path: "/profile",
     icon: User
   }];
+
   const quickCategories = [{
     name: "Men",
     path: "/men",
@@ -100,7 +125,9 @@ const Layout = ({
     color: "#fb8619",
     icon: "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?w=100&h=100&fit=crop&crop=center"
   }];
-  return <div className="min-h-screen bg-gray-50 font-['Poppins',sans-serif]">
+
+  return (
+    <div className="min-h-screen bg-gray-50 font-['Poppins',sans-serif]">
       {/* Sidebar */}
       <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
@@ -168,7 +195,8 @@ const Layout = ({
       </main>
 
       {/* Enhanced Mobile Menu Overlay */}
-      {menuOpen && <>
+      {menuOpen && (
+        <>
           <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm animate-fade-in" onClick={() => setMenuOpen(false)} />
           <div className="fixed inset-y-0 right-0 z-50 w-[85%] max-w-sm h-full bg-white shadow-2xl animate-slide-in-right">
             <div className="flex items-center justify-between p-4 border-b bg-gradient-to-r from-obeyyo-pink/5 to-obeyyo-blue/5">
@@ -190,49 +218,54 @@ const Layout = ({
               </Link>
             </div>
           </div>
-        </>}
+        </>
+      )}
 
-      {/* Enhanced Bottom Navigation - smoothed, classy animation */}
-      <nav className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-gray-200 z-40 shadow-lg">
+      {/* Enhanced Bottom Navigation with Scroll-based Visibility */}
+      <nav className={`fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-gray-200 z-40 shadow-lg transition-transform duration-300 ease-in-out ${
+        navVisible ? 'translate-y-0' : 'translate-y-full'
+      }`}>
         <div className="grid grid-cols-5 h-16">
           {bottomNavItems.map((item, index) => {
-          const Icon = item.icon;
-          const isActive = location.pathname === item.path;
-          return (
-            <Link
-              key={item.path}
-              to={item.path}
-              className={`flex flex-col items-center justify-center space-y-1 relative transition-all duration-300 ease-out 
-                ${isActive ? "text-obeyyo-pink animate-fade-in" : "text-gray-500"}
-                ${!isActive ? "hover:bg-gray-100" : ""}
-                rounded-md`}
-              style={{ WebkitTapHighlightColor: "transparent" }}
-            >
-              <div className="relative flex items-center justify-center">
-                <Icon
-                  className={`w-5 h-5 transition-transform duration-300 ease-out
-                    ${isActive ? 'scale-[1.07] text-obeyyo-pink animate-fade-in' : 'group-hover:scale-105 group-hover:text-obeyyo-blue'}
-                  `}
-                />
-                {/* Subtle badge, no bounce */}
-                {item.badge && item.badge > 0 && (
-                  <Badge className="absolute -top-2 -right-2 h-5 w-5 p-0 flex items-center justify-center text-white text-xs bg-obeyyo-pink border-2 border-white shadow-md">
-                    {item.badge}
-                  </Badge>
+            const Icon = item.icon;
+            const isActive = location.pathname === item.path;
+            return (
+              <Link
+                key={item.path}
+                to={item.path}
+                className={`flex flex-col items-center justify-center space-y-1 relative transition-all duration-300 ease-out 
+                  ${isActive ? "text-obeyyo-pink animate-fade-in" : "text-gray-500"}
+                  ${!isActive ? "hover:bg-gray-100" : ""}
+                  rounded-md`}
+                style={{ WebkitTapHighlightColor: "transparent" }}
+              >
+                <div className="relative flex items-center justify-center">
+                  <Icon
+                    className={`w-5 h-5 transition-transform duration-300 ease-out
+                      ${isActive ? 'scale-[1.07] text-obeyyo-pink animate-fade-in' : 'group-hover:scale-105 group-hover:text-obeyyo-blue'}
+                    `}
+                  />
+                  {/* Subtle badge, no bounce */}
+                  {item.badge && item.badge > 0 && (
+                    <Badge className="absolute -top-2 -right-2 h-5 w-5 p-0 flex items-center justify-center text-white text-xs bg-obeyyo-pink border-2 border-white shadow-md">
+                      {item.badge}
+                    </Badge>
+                  )}
+                </div>
+                <span className={`text-xs font-medium transition-all duration-200 ease-out ${isActive ? 'animate-fade-in' : ''}`}>
+                  {item.label}
+                </span>
+                {/* Animated, elegant indicator for active tab */}
+                {isActive && (
+                  <div className="absolute bottom-1 w-7 h-1.5 rounded-full bg-gradient-to-r from-obeyyo-pink to-obeyyo-blue animate-scale-in opacity-90 shadow-sm" />
                 )}
-              </div>
-              <span className={`text-xs font-medium transition-all duration-200 ease-out ${isActive ? 'animate-fade-in' : ''}`}>
-                {item.label}
-              </span>
-              {/* Animated, elegant indicator for active tab */}
-              {isActive && (
-                <div className="absolute bottom-1 w-7 h-1.5 rounded-full bg-gradient-to-r from-obeyyo-pink to-obeyyo-blue animate-scale-in opacity-90 shadow-sm" />
-              )}
-            </Link>
-          );
-        })}
+              </Link>
+            );
+          })}
         </div>
       </nav>
-    </div>;
+    </div>
+  );
 };
+
 export default Layout;
