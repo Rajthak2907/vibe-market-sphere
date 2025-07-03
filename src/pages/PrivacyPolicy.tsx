@@ -1,5 +1,4 @@
-
-import Layout from "@/components/Layout";
+import Layout from "@/components/layout/Layout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Shield, Eye, Lock, UserCheck, Database, Globe } from "lucide-react";
 

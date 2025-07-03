@@ -1,279 +1,42 @@
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { Zap, Clock } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import ProductCard from "@/components/ProductCard";
-import SkeletonLoader from "@/components/SkeletonLoader";
-interface CategoryFlashSaleSectionProps {
-  isLoading: boolean;
+
+interface Category {
+  id: string;
+  name: string;
+  image: string;
+  discount: string;
 }
-const CategoryFlashSaleSection = ({
-  isLoading
-}: CategoryFlashSaleSectionProps) => {
-  const [activeCategory, setActiveCategory] = useState('men');
-  const [timeLeft, setTimeLeft] = useState({
-    hours: 8,
-    minutes: 45,
-    seconds: 23
-  });
-  const categoryFlashSaleProducts = {
-    men: [{
-      id: "men-fs-1",
-      name: "Classic Polo Shirt",
-      price: 899,
-      originalPrice: 1799,
-      rating: 4.5,
-      reviews: 234,
-      image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400",
-      brand: "MenStyle",
-      isFlashSale: true
-    }, {
-      id: "men-fs-2",
-      name: "Cargo Pants",
-      price: 1299,
-      originalPrice: 2499,
-      rating: 4.3,
-      reviews: 156,
-      image: "https://images.unsplash.com/photo-1542272604-787c3835535d?w=400",
-      brand: "UrbanMen",
-      isFlashSale: true
-    }, {
-      id: "men-fs-3",
-      name: "Casual Sneakers",
-      price: 1999,
-      originalPrice: 3999,
-      rating: 4.6,
-      reviews: 189,
-      image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400",
-      brand: "FootWear",
-      isFlashSale: true
-    }, {
-      id: "men-fs-4",
-      name: "Denim Jacket",
-      price: 1599,
-      originalPrice: 2999,
-      rating: 4.4,
-      reviews: 234,
-      image: "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400",
-      brand: "DenimBrand",
-      isFlashSale: true
-    }],
-    women: [{
-      id: "women-fs-1",
-      name: "Floral Summer Dress",
-      price: 1599,
-      originalPrice: 2999,
-      rating: 4.7,
-      reviews: 189,
-      image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=400",
-      brand: "FloralWear",
-      isFlashSale: true
-    }, {
-      id: "women-fs-2",
-      name: "Denim Jacket",
-      price: 1199,
-      originalPrice: 2299,
-      rating: 4.4,
-      reviews: 267,
-      image: "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400",
-      brand: "DenimCo",
-      isFlashSale: true
-    }, {
-      id: "women-fs-3",
-      name: "High Heels",
-      price: 2299,
-      originalPrice: 4599,
-      rating: 4.5,
-      reviews: 156,
-      image: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400",
-      brand: "Elegance",
-      isFlashSale: true
-    }, {
-      id: "women-fs-4",
-      name: "Handbag",
-      price: 1799,
-      originalPrice: 3599,
-      rating: 4.6,
-      reviews: 234,
-      image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400",
-      brand: "LuxBags",
-      isFlashSale: true
-    }],
-    sports: [{
-      id: "sports-fs-1",
-      name: "Running Shoes",
-      price: 2999,
-      originalPrice: 5999,
-      rating: 4.8,
-      reviews: 445,
-      image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400",
-      brand: "SportMax",
-      isFlashSale: true
-    }, {
-      id: "sports-fs-2",
-      name: "Gym T-Shirt",
-      price: 799,
-      originalPrice: 1599,
-      rating: 4.4,
-      reviews: 234,
-      image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400",
-      brand: "FitWear",
-      isFlashSale: true
-    }, {
-      id: "sports-fs-3",
-      name: "Sports Shorts",
-      price: 999,
-      originalPrice: 1999,
-      rating: 4.3,
-      reviews: 156,
-      image: "https://images.unsplash.com/photo-1542272604-787c3835535d?w=400",
-      brand: "ActiveWear",
-      isFlashSale: true
-    }, {
-      id: "sports-fs-4",
-      name: "Water Bottle",
-      price: 599,
-      originalPrice: 1199,
-      rating: 4.5,
-      reviews: 189,
-      image: "https://images.unsplash.com/photo-1523362628745-0c100150b504?w=400",
-      brand: "HydroGear",
-      isFlashSale: true
-    }],
-    accessories: [{
-      id: "acc-fs-1",
-      name: "Smart Watch",
-      price: 3999,
-      originalPrice: 7999,
-      rating: 4.6,
-      reviews: 234,
-      image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400",
-      brand: "TechWear",
-      isFlashSale: true
-    }, {
-      id: "acc-fs-2",
-      name: "Sunglasses",
-      price: 1299,
-      originalPrice: 2599,
-      rating: 4.5,
-      reviews: 156,
-      image: "https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=400",
-      brand: "StyleShades",
-      isFlashSale: true
-    }, {
-      id: "acc-fs-3",
-      name: "Wireless Earbuds",
-      price: 1999,
-      originalPrice: 3999,
-      rating: 4.7,
-      reviews: 234,
-      image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400",
-      brand: "AudioTech",
-      isFlashSale: true
-    }, {
-      id: "acc-fs-4",
-      name: "Leather Wallet",
-      price: 899,
-      originalPrice: 1799,
-      rating: 4.4,
-      reviews: 189,
-      image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400",
-      brand: "LeatherCraft",
-      isFlashSale: true
-    }]
-  };
-  const categories = [{
-    id: 'men',
-    name: "Men's",
-    color: "#fc2682"
-  }, {
-    id: 'women',
-    name: "Women's",
-    color: "#fc334d"
-  }, {
-    id: 'sports',
-    name: "Sports",
-    color: "#08a0ef"
-  }, {
-    id: 'accessories',
-    name: "Accessories",
-    color: "#f9b704"
-  }];
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setTimeLeft(prev => {
-        if (prev.seconds > 0) {
-          return {
-            ...prev,
-            seconds: prev.seconds - 1
-          };
-        } else if (prev.minutes > 0) {
-          return {
-            ...prev,
-            minutes: prev.minutes - 1,
-            seconds: 59
-          };
-        } else if (prev.hours > 0) {
-          return {
-            hours: prev.hours - 1,
-            minutes: 59,
-            seconds: 59
-          };
-        }
-        return prev;
-      });
-    }, 1000);
-    return () => clearInterval(timer);
-  }, []);
-  const FlashSaleTimer = () => <div className="flex items-center gap-2 text-white">
-      <Clock className="w-4 h-4" />
-      <span className="text-sm font-semibold">
-        {String(timeLeft.hours).padStart(2, '0')}:
-        {String(timeLeft.minutes).padStart(2, '0')}:
-        {String(timeLeft.seconds).padStart(2, '0')}
-      </span>
-    </div>;
-  const ProductGrid = ({
-    products,
-    showSkeleton = false,
-    maxProducts = 4
-  }) => {
-    const displayProducts = products.slice(0, maxProducts);
-    return <div className="grid grid-cols-2 gap-3 px-4">
-        {showSkeleton ? Array.from({
-        length: maxProducts
-      }).map((_, i) => <div key={i}>
-              <SkeletonLoader type="product" />
-            </div>) : displayProducts.map(product => <div key={product.id}>
-              <ProductCard product={product} />
-            </div>)}
-      </div>;
-  };
-  return <section className="bg-gradient-to-r from-obeyyo-orange to-obeyyo-red rounded-2xl p-4 mx-[2px] px-px bg-slate-600">
-      <div className="flex items-center justify-between mb-4 px-[13px] bg-orange-400 my-0">
-        <div className="flex items-center gap-2">
-          <Zap className="w-5 h-5 text-white" />
-          <h2 className="text-lg font-bold text-white">Category Flash Sale</h2>
+
+interface CategoryFlashSaleSectionProps {
+  categories: Category[];
+}
+
+const CategoryFlashSaleSection = ({ categories }: CategoryFlashSaleSectionProps) => {
+  return (
+    <section className="px-3">
+      <div className="bg-white rounded-lg p-4">
+        <div className="mb-4">
+          <h2 className="text-lg font-bold text-gray-800">⚡ Category Flash Sale</h2>
+          <p className="text-sm text-gray-600 mt-1">Category-wise amazing deals</p>
         </div>
-        <FlashSaleTimer />
+
+        <div className="grid grid-cols-2 gap-3">
+          {categories.map((category) => (
+            <div key={category.id} className="relative rounded-lg overflow-hidden">
+              <img
+                src={category.image}
+                alt={category.name}
+                className="w-full h-32 object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-end p-3">
+                <span className="text-white font-semibold">{category.name}</span>
+                <span className="text-yellow-400 text-sm">{category.discount}</span>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
-      
-      {/* Category Tabs */}
-      <div className="flex gap-2 mb-4 overflow-x-auto scrollbar-hide px-[5px] bg-transparent">
-        {categories.map(category => <button key={category.id} onClick={() => setActiveCategory(category.id)} className={`flex-shrink-0 px-4 py-2 text-sm font-semibold rounded-full transition-all ${activeCategory === category.id ? 'bg-white text-gray-800' : 'bg-white/20 text-white hover:bg-white/30'}`}>
-            {category.name}
-          </button>)}
-      </div>
-      
-      <ProductGrid products={categoryFlashSaleProducts[activeCategory as keyof typeof categoryFlashSaleProducts]} showSkeleton={isLoading} />
-      
-      <div className="mt-4 text-center">
-        <Button variant="outline" className="bg-white/20 border-white/30 text-white hover:bg-white/30 rounded-xl" asChild>
-          <Link to="/flash-sale">
-            View All Category Products
-          </Link>
-        </Button>
-      </div>
-    </section>;
+    </section>
+  );
 };
+
 export default CategoryFlashSaleSection;

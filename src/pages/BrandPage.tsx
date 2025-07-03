@@ -1,7 +1,6 @@
-
 import { useParams } from "react-router-dom";
-import Layout from "@/components/Layout";
-import ProductCard from "@/components/ProductCard";
+import Layout from "@/components/layout/Layout";
+import ProductCard from "@/components/shared/ProductCard";
 import SkeletonLoader from "@/components/SkeletonLoader";
 import { ChevronLeft, Filter, SortAsc } from "lucide-react";
 import { Button } from "@/components/ui/button";

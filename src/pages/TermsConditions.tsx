@@ -1,5 +1,4 @@
-
-import Layout from "@/components/Layout";
+import Layout from "@/components/layout/Layout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { FileText, ShoppingCart, RefreshCw, CreditCard, Scale, AlertTriangle } from "lucide-react";
 

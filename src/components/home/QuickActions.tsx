@@ -1,58 +1,34 @@
 
-import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Search, Gift, Truck, Headphones } from "lucide-react";
 
 const QuickActions = () => {
-  const actions = [{
-    icon: "🔥",
-    label: "Flash Sale",
-    link: "/flash-sale",
-    color: "#fc334d",
-    bgImage: "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=400&h=300&fit=crop"
-  }, {
-    icon: "🌟",
-    label: "New Arrivals",
-    link: "/new-arrivals",
-    color: "#f9b704",
-    bgImage: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=300&fit=crop"
-  }, {
-    icon: "🏆",
-    label: "Top Brands",
-    link: "/top-brands",
-    color: "#08a0ef",
-    bgImage: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=400&h=300&fit=crop"
-  }, {
-    icon: "💰",
-    label: "Budget Picks",
-    link: "/budget",
-    color: "#fb8619",
-    bgImage: "https://images.unsplash.com/photo-1500673922987-e212871fec22?w=400&h=300&fit=crop"
-  }];
+  const actions = [
+    { icon: Search, label: "Search", color: "bg-blue-500" },
+    { icon: Gift, label: "Offers", color: "bg-pink-500" },
+    { icon: Truck, label: "Track", color: "bg-green-500" },
+    { icon: Headphones, label: "Support", color: "bg-purple-500" }
+  ];
 
   return (
-    <div className="px-4">
-      <div className="grid grid-cols-4 gap-3">
-        {actions.map(action => 
-          <Link 
-            key={action.label} 
-            to={action.link} 
-            className="relative bg-white rounded-2xl p-4 text-center shadow-sm hover:shadow-md transition-all overflow-hidden h-24 flex flex-col justify-center items-center group"
-          >
-            {/* Background Image */}
-            <div 
-              className="absolute inset-0 bg-cover bg-center transition-transform duration-300 group-hover:scale-110"
-              style={{ backgroundImage: `url(${action.bgImage})` }}
-            />
-            {/* Dark Overlay */}
-            <div className="absolute inset-0 bg-black/40" />
-            {/* Content */}
-            <div className="relative z-10 text-white">
-              <div className="text-lg mb-1">{action.icon}</div>
-              <span className="text-xs font-semibold text-shadow">{action.label}</span>
-            </div>
-          </Link>
-        )}
+    <section className="px-3">
+      <div className="bg-white rounded-lg p-4">
+        <div className="grid grid-cols-4 gap-3">
+          {actions.map((action, index) => (
+            <Button
+              key={index}
+              variant="outline"
+              className="flex flex-col items-center gap-2 h-auto py-3"
+            >
+              <div className={`w-8 h-8 rounded-full ${action.color} flex items-center justify-center`}>
+                <action.icon className="w-4 h-4 text-white" />
+              </div>
+              <span className="text-xs">{action.label}</span>
+            </Button>
+          ))}
+        </div>
       </div>
-    </div>
+    </section>
   );
 };
 

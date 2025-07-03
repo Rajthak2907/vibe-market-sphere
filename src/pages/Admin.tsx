@@ -1,213 +1,179 @@
-
-import { useState, useEffect } from "react";
-import { supabase } from "@/integrations/supabase/client";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import Layout from "@/components/layout/Layout";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useToast } from "@/hooks/use-toast";
-import { User, Session } from '@supabase/supabase-js';
-import AdminDashboard from "@/components/admin/AdminDashboard";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Plus, Edit, Trash2, Upload, Download } from "lucide-react";
 
 const Admin = () => {
-  const [user, setUser] = useState<User | null>(null);
-  const [session, setSession] = useState<Session | null>(null);
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [isLogin, setIsLogin] = useState(true);
-  const navigate = useNavigate();
-  const { toast } = useToast();
+  const [products, setProducts] = useState([
+    { id: "1", name: "Product A", price: 2999, category: "Electronics", stock: 50 },
+    { id: "2", name: "Product B", price: 1499, category: "Clothing", stock: 120 },
+    { id: "3", name: "Product C", price: 999, category: "Home & Kitchen", stock: 80 }
+  ]);
 
-  useEffect(() => {
-    // Set up auth state listener
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
-        console.log('Auth state changed:', event, session);
-        setSession(session);
-        setUser(session?.user ?? null);
-        
-        if (session?.user) {
-          // Check if user is admin
-          setTimeout(async () => {
-            try {
-              const { data: adminCheck } = await supabase
-                .rpc('is_admin', { user_id: session.user.id });
-              console.log('Admin check result:', adminCheck);
-              setIsAdmin(adminCheck || false);
-            } catch (error) {
-              console.error('Error checking admin status:', error);
-              setIsAdmin(false);
-            }
-            setLoading(false);
-          }, 0);
-        } else {
-          setIsAdmin(false);
-          setLoading(false);
-        }
-      }
-    );
+  const [newProduct, setNewProduct] = useState({
+    name: "",
+    price: 0,
+    category: "",
+    stock: 0
+  });
 
-    // Check for existing session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      console.log('Initial session:', session);
-      setSession(session);
-      setUser(session?.user ?? null);
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
-
-  const handleAuth = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-
-    try {
-      if (isLogin) {
-        const { error } = await supabase.auth.signInWithPassword({
-          email,
-          password,
-        });
-        if (error) throw error;
-        toast({
-          title: "Success",
-          description: "Logged in successfully",
-        });
-      } else {
-        const { error } = await supabase.auth.signUp({
-          email,
-          password,
-        });
-        if (error) throw error;
-        toast({
-          title: "Success",
-          description: "Account created successfully",
-        });
-      }
-    } catch (error: any) {
-      toast({
-        title: "Error",
-        description: error.message,
-        variant: "destructive",
-      });
-      setLoading(false);
-    }
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setNewProduct({ ...newProduct, [name]: value });
   };
 
-  const handleLogout = async () => {
-    const { error } = await supabase.auth.signOut();
-    if (error) {
-      toast({
-        title: "Error",
-        description: error.message,
-        variant: "destructive",
-      });
-    } else {
-      toast({
-        title: "Success",
-        description: "Logged out successfully",
-      });
-      navigate("/");
-    }
+  const addProduct = () => {
+    const newId = Math.random().toString(36).substring(7);
+    setProducts([...products, { id: newId, ...newProduct }]);
+    setNewProduct({ name: "", price: 0, category: "", stock: 0 });
   };
 
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-[#FF6B9D] mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading...</p>
+  const deleteProduct = (id: string) => {
+    setProducts(products.filter(product => product.id !== id));
+  };
+
+  return (
+    <Layout>
+      <div className="min-h-screen bg-gray-50 py-6">
+        <div className="max-w-5xl mx-auto px-4">
+          {/* Header */}
+          <div className="text-center mb-8">
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">Admin Dashboard</h1>
+            <p className="text-gray-600">Manage products, orders, and more</p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Product List */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Product List</CardTitle>
+                <CardDescription>Manage existing products</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="overflow-x-auto">
+                  <table className="w-full border-collapse">
+                    <thead>
+                      <tr className="border-b">
+                        <th className="text-left py-2 px-3 font-semibold">Name</th>
+                        <th className="text-left py-2 px-3 font-semibold">Price</th>
+                        <th className="text-left py-2 px-3 font-semibold">Category</th>
+                        <th className="text-left py-2 px-3 font-semibold">Stock</th>
+                        <th className="text-right py-2 px-3 font-semibold">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {products.map((product) => (
+                        <tr key={product.id} className="border-b hover:bg-gray-50">
+                          <td className="py-2 px-3">{product.name}</td>
+                          <td className="py-2 px-3">₹{product.price}</td>
+                          <td className="py-2 px-3">{product.category}</td>
+                          <td className="py-2 px-3">{product.stock}</td>
+                          <td className="py-2 px-3 text-right">
+                            <Button variant="ghost" size="sm">
+                              <Edit className="w-4 h-4 mr-1" />
+                              Edit
+                            </Button>
+                            <Button variant="destructive" size="sm" onClick={() => deleteProduct(product.id)}>
+                              <Trash2 className="w-4 h-4 mr-1" />
+                              Delete
+                            </Button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Add Product Form */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Add New Product</CardTitle>
+                <CardDescription>Create a new product listing</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div>
+                  <Label htmlFor="name">Name</Label>
+                  <Input
+                    id="name"
+                    name="name"
+                    placeholder="Product Name"
+                    value={newProduct.name}
+                    onChange={handleInputChange}
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="price">Price</Label>
+                  <Input
+                    id="price"
+                    name="price"
+                    type="number"
+                    placeholder="Product Price"
+                    value={newProduct.price}
+                    onChange={(e) => handleInputChange({ ...e, target: { ...e.target, value: parseInt(e.target.value) } })}
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="category">Category</Label>
+                  <Select onValueChange={(value) => handleInputChange({ target: { name: "category", value } } as any)}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select category" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Electronics">Electronics</SelectItem>
+                      <SelectItem value="Clothing">Clothing</SelectItem>
+                      <SelectItem value="Home & Kitchen">Home & Kitchen</SelectItem>
+                      <SelectItem value="Beauty">Beauty</SelectItem>
+                      <SelectItem value="Footwear">Footwear</SelectItem>
+                      <SelectItem value="Accessories">Accessories</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div>
+                  <Label htmlFor="stock">Stock</Label>
+                  <Input
+                    id="stock"
+                    name="stock"
+                    type="number"
+                    placeholder="Stock Quantity"
+                    value={newProduct.stock}
+                    onChange={(e) => handleInputChange({ ...e, target: { ...e.target, value: parseInt(e.target.value) } })}
+                  />
+                </div>
+                <Button className="w-full" onClick={addProduct}>
+                  <Plus className="w-4 h-4 mr-2" />
+                  Add Product
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Bulk Actions */}
+          <Card className="mt-8">
+            <CardHeader>
+              <CardTitle>Bulk Actions</CardTitle>
+              <CardDescription>Import and export product data</CardDescription>
+            </CardHeader>
+            <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <Button variant="outline" className="w-full justify-start">
+                <Upload className="w-4 h-4 mr-2" />
+                Import Products
+              </Button>
+              <Button variant="outline" className="w-full justify-start">
+                <Download className="w-4 h-4 mr-2" />
+                Export Products
+              </Button>
+            </CardContent>
+          </Card>
         </div>
       </div>
-    );
-  }
-
-  if (!user) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <Card className="w-full max-w-md">
-          <CardHeader>
-            <CardTitle className="text-center text-2xl font-bold bg-gradient-to-r from-[#FF6B9D] to-[#4A90E2] bg-clip-text text-transparent">
-              Admin Login
-            </CardTitle>
-            <CardDescription className="text-center">
-              {isLogin ? "Sign in to your admin account" : "Create an admin account"}
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={handleAuth} className="space-y-4">
-              <div>
-                <Label htmlFor="email">Email</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
-              </div>
-              <div>
-                <Label htmlFor="password">Password</Label>
-                <Input
-                  id="password"
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
-              </div>
-              <Button 
-                type="submit" 
-                className="w-full bg-gradient-to-r from-[#FF6B9D] to-[#4A90E2]"
-                disabled={loading}
-              >
-                {loading ? "Loading..." : (isLogin ? "Sign In" : "Sign Up")}
-              </Button>
-            </form>
-            <div className="mt-4 text-center">
-              <Button
-                variant="link"
-                onClick={() => setIsLogin(!isLogin)}
-                className="text-[#FF6B9D]"
-              >
-                {isLogin ? "Need an account? Sign up" : "Already have an account? Sign in"}
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    );
-  }
-
-  if (!isAdmin) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <Card className="w-full max-w-md">
-          <CardHeader>
-            <CardTitle className="text-center text-2xl font-bold text-red-600">
-              Access Denied
-            </CardTitle>
-            <CardDescription className="text-center">
-              You don't have admin privileges. Please contact an administrator.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <Button onClick={handleLogout} variant="outline" className="w-full">
-              Logout
-            </Button>
-            <Button onClick={() => navigate("/")} className="w-full">
-              Go to Homepage
-            </Button>
-          </CardContent>
-        </Card>
-      </div>
-    );
-  }
-
-  return <AdminDashboard user={user} onLogout={handleLogout} />;
+    </Layout>
+  );
 };
 
 export default Admin;

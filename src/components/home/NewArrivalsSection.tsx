@@ -1,57 +1,38 @@
 
-import { Link } from "react-router-dom";
-import { ChevronRight } from "lucide-react";
-import ProductSlider from "@/components/ProductSlider";
+import ProductCard from "@/components/shared/ProductCard";
 
-interface NewArrivalsSectionProps {
-  isLoading: boolean;
+interface Product {
+  id: string;
+  name: string;
+  price: number;
+  originalPrice?: number;
+  rating: number;
+  reviews: number;
+  image: string;
+  brand: string;
+  isNew?: boolean;
+  isTrending?: boolean;
 }
 
-const NewArrivalsSection = ({ isLoading }: NewArrivalsSectionProps) => {
-  const newArrivals = [{
-    id: "na-1",
-    name: "Designer Midi Dress",
-    price: 2299,
-    originalPrice: 3999,
-    rating: 4.8,
-    reviews: 156,
-    image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=400",
-    brand: "ElegantWear",
-    isNew: true
-  }, {
-    id: "na-2",
-    name: "Casual Cotton Tee",
-    price: 599,
-    originalPrice: 999,
-    rating: 4.4,
-    reviews: 234,
-    image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400",
-    brand: "BasicWear",
-    isNew: true
-  }, {
-    id: "na-3",
-    name: "Trendy Sneakers",
-    price: 3499,
-    originalPrice: 5999,
-    rating: 4.7,
-    reviews: 189,
-    image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400",
-    brand: "StreetWear",
-    isNew: true
-  }];
+interface NewArrivalsSectionProps {
+  products: Product[];
+}
 
+const NewArrivalsSection = ({ products }: NewArrivalsSectionProps) => {
   return (
-    <section className="bg-gradient-to-r from-obeyyo-blue to-obeyyo-pink mx-4 rounded-2xl p-4 bg-zinc-200">
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center gap-2">
-          <span className="text-lg">🌟</span>
-          <h2 className="text-lg font-bold text-zinc-800">New Arrivals</h2>
+    <section className="px-3">
+      <div className="bg-white rounded-lg p-4">
+        <div className="mb-4">
+          <h2 className="text-lg font-bold text-gray-800">🆕 New Arrivals</h2>
+          <p className="text-sm text-gray-600 mt-1">Fresh styles just for you</p>
         </div>
-        <Link to="/new-arrivals" className="text-sm text-white/80 hover:text-white flex items-center gap-1 font-medium">
-          View All <ChevronRight className="w-4 h-4" />
-        </Link>
+
+        <div className="grid grid-cols-2 gap-3">
+          {products.slice(0, 4).map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </div>
       </div>
-      <ProductSlider title="" products={newArrivals} />
     </section>
   );
 };

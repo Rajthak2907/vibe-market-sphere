@@ -1,5 +1,4 @@
-
-import Layout from "@/components/Layout";
+import Layout from "@/components/layout/Layout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { FileText, Shield, Scale, AlertTriangle } from "lucide-react";

@@ -1,7 +1,6 @@
-
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import Layout from "@/components/Layout";
+import Layout from "@/components/layout/Layout";
 import { ChevronRight } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 

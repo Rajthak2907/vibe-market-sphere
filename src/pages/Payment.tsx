@@ -1,5 +1,5 @@
-
 import { useState } from "react";
+import Layout from "@/components/layout/Layout";
 import { ArrowLeft, ChevronDown, ChevronUp } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
