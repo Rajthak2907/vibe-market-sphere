@@ -1,5 +1,6 @@
+
 import { useState, useEffect } from "react";
-import Layout from "@/components/layout/Layout";
+import Layout from "@/components/Layout";
 import { Minus, Plus, Trash2, ShoppingBag, MapPin, Edit3, Gift, Share, Tag } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from "react-router-dom";

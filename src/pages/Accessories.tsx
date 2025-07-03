@@ -1,4 +1,5 @@
-import Layout from "@/components/layout/Layout";
+
+import Layout from "@/components/Layout";
 import ProductCard from "@/components/ProductCard";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";

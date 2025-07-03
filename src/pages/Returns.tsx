@@ -1,4 +1,5 @@
-import Layout from "@/components/layout/Layout";
+
+import Layout from "@/components/Layout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { RefreshCw, Package, Clock, CreditCard, CheckCircle, AlertCircle } from "lucide-react";
@@ -6,7 +7,7 @@ import { RefreshCw, Package, Clock, CreditCard, CheckCircle, AlertCircle } from 
 const Returns = () => {
   const returnReasons = [
     "Size doesn't fit",
-    "Different from description", 
+    "Different from description",
     "Defective/Damaged item",
     "Wrong item received",
     "Changed my mind",

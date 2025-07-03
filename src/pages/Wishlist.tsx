@@ -1,6 +1,7 @@
+
 import { useState, useEffect } from "react";
-import Layout from "@/components/layout/Layout";
-import ProductCard from "@/components/shared/ProductCard";
+import Layout from "@/components/Layout";
+import ProductCard from "@/components/ProductCard";
 import { Heart, ShoppingBag } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
