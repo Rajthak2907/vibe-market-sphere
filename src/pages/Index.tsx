@@ -19,6 +19,12 @@ import UniqueBestOfObeyyoSection from "@/components/home/UniqueBestOfObeyyoSecti
 import BannerCarouselSection from "@/components/home/BannerCarouselSection";
 import TrendyThisWeekSection from "@/components/home/TrendyThisWeekSection";
 import StarsFromInstagramSection from "@/components/home/StarsFromInstagramSection";
+import MensBrandsSection from "@/components/home/MensBrandsSection";
+import WomensBrandsSection from "@/components/home/WomensBrandsSection";
+import KidsBrandsSection from "@/components/home/KidsBrandsSection";
+import BeautyBrandsSection from "@/components/home/BeautyBrandsSection";
+import FootwearBrandsSection from "@/components/home/FootwearBrandsSection";
+import AccessoriesBrandsSection from "@/components/home/AccessoriesBrandsSection";
 import { useState, useEffect } from "react";
 
 const Index = () => {
@@ -129,6 +135,15 @@ const Index = () => {
         <PocketFriendlyBargainSection />
         <FeaturedBrandsSection />
         <BestsellerCategorySection />
+        
+        {/* New Category-Specific Brand Sections */}
+        <MensBrandsSection />
+        <WomensBrandsSection />
+        <KidsBrandsSection />
+        <BeautyBrandsSection />
+        <FootwearBrandsSection />
+        <AccessoriesBrandsSection />
+        
         <TodaysSpecialsSection />
         <UniqueBestOfObeyyoSection />
         <BannerCarouselSection />
