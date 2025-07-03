@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Heart, ShoppingCart, Star } from "lucide-react";
@@ -21,9 +20,10 @@ interface Product {
 
 interface ProductCardProps {
   product: Product;
+  compact?: boolean;
 }
 
-const ProductCard = ({ product }: ProductCardProps) => {
+const ProductCard = ({ product, compact = false }: ProductCardProps) => {
   const [isInWishlist, setIsInWishlist] = useState(false);
   const [isInCart, setIsInCart] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
@@ -93,6 +93,72 @@ const ProductCard = ({ product }: ProductCardProps) => {
     // Trigger custom event for count update
     window.dispatchEvent(new CustomEvent('wishlistUpdated'));
   };
+
+  if (compact) {
+    return (
+      <div className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 overflow-hidden">
+        <div className="relative aspect-[3/4]">
+          <img
+            src={product.image}
+            alt={product.name}
+            className="w-full h-full object-cover"
+          />
+          {product.isNew && (
+            <span className="absolute top-2 left-2 bg-obeyyo-red text-white text-xs px-2 py-1 rounded-full">
+              New
+            </span>
+          )}
+          {product.isTrending && (
+            <span className="absolute top-2 left-2 bg-obeyyo-orange text-white text-xs px-2 py-1 rounded-full">
+              Trending
+            </span>
+          )}
+          <button
+            onClick={handleToggleWishlist}
+            className="absolute top-2 right-2 p-1.5 bg-white/80 rounded-full hover:bg-white transition-colors"
+          >
+            <Heart className={`w-3 h-3 ${isInWishlist ? 'fill-obeyyo-red text-obeyyo-red' : 'text-gray-600'}`} />
+          </button>
+        </div>
+        
+        <div className="p-2">
+          <p className="text-xs text-gray-500 mb-1">{product.brand}</p>
+          <h3 className="font-medium text-sm text-gray-800 mb-1 line-clamp-1">{product.name}</h3>
+          
+          <div className="flex items-center mb-1">
+            <div className="flex items-center">
+              {[...Array(5)].map((_, i) => (
+                <Star
+                  key={i}
+                  className={`w-2.5 h-2.5 ${
+                    i < Math.floor(product.rating) 
+                      ? 'fill-obeyyo-yellow text-obeyyo-yellow' 
+                      : 'text-gray-300'
+                  }`}
+                />
+              ))}
+            </div>
+            <span className="text-xs text-gray-500 ml-1">({product.reviews})</span>
+          </div>
+          
+          <div className="flex items-center justify-between">
+            <div>
+              <span className="font-bold text-sm text-gray-900">₹{product.price.toLocaleString()}</span>
+              {product.originalPrice && (
+                <span className="text-xs text-gray-500 line-through ml-1">₹{product.originalPrice.toLocaleString()}</span>
+              )}
+            </div>
+            <button
+              onClick={handleAddToCart}
+              className="bg-obeyyo-blue text-white px-2 py-1 rounded text-xs hover:bg-obeyyo-blue/90 transition-colors"
+            >
+              Add
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <Link to={`/product/${product.id}`} className="block group">
@@ -222,4 +288,3 @@ const ProductCard = ({ product }: ProductCardProps) => {
 };
 
 export default ProductCard;
-

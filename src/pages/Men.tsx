@@ -8,8 +8,11 @@ import DealOfTheDay from "@/components/DealOfTheDay";
 import TabSection from "@/components/TabSection";
 import RoundCategorySection from "@/components/RoundCategorySection";
 import FashionCarousel from "@/components/FashionCarousel";
-import HorizontalBrandSection from "@/components/HorizontalBrandSection";
-import HighlightsOfTheDaySection from "@/components/HighlightsOfTheDaySection";
+import BrandsFlexSection from "@/components/BrandsFlexSection";
+import TShirtCategoriesSection from "@/components/TShirtCategoriesSection";
+import OffersAndCouponsSection from "@/components/OffersAndCouponsSection";
+import BiggestOfferSection from "@/components/BiggestOfferSection";
+import EverythingInOfferSection from "@/components/EverythingInOfferSection";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
@@ -344,50 +347,88 @@ const Men = () => {
   const dealEndTime = new Date();
   dealEndTime.setHours(dealEndTime.getHours() + 6);
 
-  // ----- Brand Data -----
-  const highlightsProducts = products.slice(0, 3);
-  const featuredBrands = [
-    { id: "b1", name: "Nike", logo: "https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg", discount: "Up to 60% OFF", link: "/brands/nike" },
-    { id: "b2", name: "Adidas", logo: "https://upload.wikimedia.org/wikipedia/commons/2/20/Adidas_Logo.svg", discount: "Up to 50% OFF", link: "/brands/adidas" },
-    { id: "b3", name: "Ray-Ban", logo: "https://upload.wikimedia.org/wikipedia/commons/f/fa/Ray_Ban_logo.svg", discount: "Up to 30% OFF", link: "/brands/rayban" }
+  const brandsFlexData = [
+    { id: "bf1", name: "Nike", logo: "https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg", discount: "Up to 60% OFF" },
+    { id: "bf2", name: "Adidas", logo: "https://upload.wikimedia.org/wikipedia/commons/2/20/Adidas_Logo.svg", discount: "Up to 50% OFF" },
+    { id: "bf3", name: "Puma", logo: "https://upload.wikimedia.org/wikipedia/commons/f/fd/Puma_logo.svg", discount: "Up to 45% OFF" },
+    { id: "bf4", name: "Levi's", logo: "https://logos-world.net/wp-content/uploads/2020/04/Levis-Logo.png", discount: "Up to 40% OFF" },
+    { id: "bf5", name: "H&M", logo: "https://upload.wikimedia.org/wikipedia/commons/5/53/H%26M-Logo.svg", discount: "Up to 35% OFF" },
+    { id: "bf6", name: "Zara", logo: "https://upload.wikimedia.org/wikipedia/commons/3/3a/Zara_Logo.svg", discount: "Up to 30% OFF" },
+    { id: "bf7", name: "Tommy Hilfiger", logo: "https://upload.wikimedia.org/wikipedia/commons/1/10/Tommy_Hilfiger_logo.svg", discount: "Up to 45% OFF" },
+    { id: "bf8", name: "Calvin Klein", logo: "https://upload.wikimedia.org/wikipedia/commons/5/56/Calvin_klein_logo.svg", discount: "Up to 40% OFF" },
+    { id: "bf9", name: "Lacoste", logo: "https://upload.wikimedia.org/wikipedia/commons/7/78/Lacoste_logo.svg", discount: "Up to 35% OFF" },
+    { id: "bf10", name: "Ralph Lauren", logo: "https://upload.wikimedia.org/wikipedia/commons/8/87/Polo_Ralph_Lauren_logo.svg", discount: "Up to 50% OFF" },
+    { id: "bf11", name: "Hugo Boss", logo: "https://upload.wikimedia.org/wikipedia/commons/e/e4/Hugo_Boss_logo.svg", discount: "Up to 45% OFF" },
+    { id: "bf12", name: "Armani", logo: "https://upload.wikimedia.org/wikipedia/commons/b/b3/Giorgio_Armani_logo.svg", discount: "Up to 40% OFF" },
+    { id: "bf13", name: "Diesel", logo: "https://upload.wikimedia.org/wikipedia/commons/d/d4/Diesel_logo.svg", discount: "Up to 35% OFF" },
+    { id: "bf14", name: "Guess", logo: "https://upload.wikimedia.org/wikipedia/commons/6/68/Guess_logo.svg", discount: "Up to 30% OFF" },
+    { id: "bf15", name: "Versace", logo: "https://upload.wikimedia.org/wikipedia/commons/4/4d/Versace_logo.svg", discount: "Up to 50% OFF" },
+    { id: "bf16", name: "Burberry", logo: "https://upload.wikimedia.org/wikipedia/commons/4/4b/Burberry_logo.svg", discount: "Up to 45% OFF" }
   ];
-  const popularBrands = [
-    { id: "pb1", name: "Levi's", logo: "https://logos-world.net/wp-content/uploads/2020/04/Levis-Logo.png", link: "/brands/levis" },
-    { id: "pb2", name: "Puma", logo: "https://upload.wikimedia.org/wikipedia/commons/f/fd/Puma_logo.svg", link: "/brands/puma" },
-    { id: "pb3", name: "U.S. Polo", logo: "https://1000logos.net/wp-content/uploads/2020/03/US-Polo-Logo.png", link: "/brands/uspolo" }
+
+  const tshirtCategories = [
+    { id: "t1", name: "Basic Tees", image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=80", link: "/men/basic-tees" },
+    { id: "t2", name: "Graphic Tees", image: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=80", link: "/men/graphic-tees" },
+    { id: "t3", name: "Polo Shirts", image: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=80", link: "/men/polo-shirts" },
+    { id: "t4", name: "Sports Tees", image: "https://images.unsplash.com/photo-1544966503-7cc5ac882d5f?w=80", link: "/men/sports-tees" },
+    { id: "t5", name: "V-Neck", image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=80", link: "/men/v-neck" },
+    { id: "t6", name: "Henley", image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=80", link: "/men/henley" }
   ];
-  const sponsoredBrands = [
-    { id: "sb1", name: "H&M", logo: "https://upload.wikimedia.org/wikipedia/commons/5/53/H%26M-Logo.svg", link: "/brands/hm" },
-    { id: "sb2", name: "Zara", logo: "https://upload.wikimedia.org/wikipedia/commons/3/3a/Zara_Logo.svg", link: "/brands/zara" }
+
+  const couponsData = [
+    {
+      id: "c1",
+      code: "SAVE50",
+      title: "Flat ₹500 Off",
+      description: "On orders above ₹2000",
+      discount: "₹500 OFF",
+      validUntil: "31 Dec 2024"
+    },
+    {
+      id: "c2",
+      code: "FIRST30",
+      title: "First Order Discount",
+      description: "Extra 30% off for new users",
+      discount: "30% OFF",
+      validUntil: "31 Dec 2024"
+    }
+  ];
+
+  const biggestOfferProducts = [
+    ...products.slice(0, 3),
+    ...topBrandsProducts.slice(0, 3),
+    ...genzPicksProducts.slice(0, 3)
+  ];
+
+  const everythingInOfferCategories = [
+    { id: "e1", name: "Jeans", image: "https://images.unsplash.com/photo-1542272604-787c3835535d?w=400", discount: "Up to 60% OFF", link: "/men/jeans" },
+    { id: "e2", name: "Watches", image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400", discount: "Up to 50% OFF", link: "/men/watches" },
+    { id: "e3", name: "Accessories", image: "https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=400", discount: "Up to 40% OFF", link: "/men/accessories" },
+    { id: "e4", name: "Shoes", image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400", discount: "Up to 70% OFF", link: "/men/shoes" }
   ];
 
   return (
     <Layout>
       <div className="space-y-2 bg-gray-50">
-        {/* Fashion Carousel Header */}
         <FashionCarousel 
           section="men" 
           title="Men's Fashion" 
           subtitle="Discover the latest trends in men's clothing" 
         />
 
-        {/* Tabs Section */}
         <TabSection tabs={tabs} />
 
-        {/* Shop by Category */}
         <RoundCategorySection categories={categories} />
 
-        {/* Hero Carousel */}
         <div className="px-3">
           <ImageCarousel images={carouselImages} />
         </div>
 
-        {/* Subcategory Section */}
         <section className="px-3">
           <div className="bg-white rounded-lg p-4">
             <div className="flex items-center justify-between mb-3">
               <h2 className="text-base font-semibold text-gray-800">Shop by Style</h2>
-              <Button variant="outline" size="sm" className="text-xs border-[#FF6B9D] text-[#FF6B9D] hover:bg-[#FF6B9D] hover:text-white rounded-lg px-3 py-1.5">
+              <Button variant="outline" size="sm" className="text-xs border-obeyyo-red text-obeyyo-red hover:bg-obeyyo-red hover:text-white rounded-lg px-3 py-1.5">
                 View All
               </Button>
             </div>
@@ -408,168 +449,82 @@ const Men = () => {
           </div>
         </section>
 
-        {/* Deal of the Day */}
-        <section className="px-3">
-          <DealOfTheDay product={dealProduct} endTime={dealEndTime} />
-        </section>
-
-        {/* Pocket Friendly Section */}
-        <PocketFriendlySection products={pocketFriendlyProducts} />
-
-        {/* Promo Banner 1 */}
         <section className="px-3">
           <PromoBanner banner={promoBanners[0]} />
         </section>
 
-        {/* GenZ Picks */}
-        <section className="px-3">
-          <div className="flex items-center justify-between mb-3">
-            <h2 className="text-lg font-bold text-gray-800">🔥 GenZ Picks</h2>
-            <Button variant="outline" size="sm" className="text-xs border-[#FF6B9D] text-[#FF6B9D] hover:bg-[#FF6B9D] hover:text-white rounded-lg px-3 py-1.5">
-              View All
-            </Button>
-          </div>
-          <ProductSlider title="" products={genzPicksProducts} />
-        </section>
+        <BrandsFlexSection brands={brandsFlexData} />
 
-        {/* Top Brands on Offer */}
         <section className="px-3">
           <div className="flex items-center justify-between mb-3">
-            <h2 className="text-lg font-bold text-gray-800">🏆 Top Brands on Offer</h2>
-            <Button variant="outline" size="sm" className="text-xs border-[#FF6B9D] text-[#FF6B9D] hover:bg-[#FF6B9D] hover:text-white rounded-lg px-3 py-1.5">
+            <h2 className="text-lg font-bold text-gray-800">🏆 Biggest Brands On Offers</h2>
+            <Button variant="outline" size="sm" className="text-xs border-obeyyo-red text-obeyyo-red hover:bg-obeyyo-red hover:text-white rounded-lg px-3 py-1.5">
               View All
             </Button>
           </div>
           <ProductSlider title="" products={topBrandsProducts} />
         </section>
 
-        {/* Promo Banner 2 */}
+        <TShirtCategoriesSection categories={tshirtCategories} />
+
+        <OffersAndCouponsSection coupons={couponsData} />
+
+        <BiggestOfferSection products={biggestOfferProducts} />
+
         <section className="px-3">
           <PromoBanner banner={promoBanners[1]} />
         </section>
 
-        {/* GenZ Brands on Offer */}
-        <section className="px-3">
-          <div className="flex items-center justify-between mb-3">
-            <h2 className="text-lg font-bold text-gray-800">✨ GenZ Brands on Offer</h2>
-            <Button variant="outline" size="sm" className="text-xs border-[#FF6B9D] text-[#FF6B9D] hover:bg-[#FF6B9D] hover:text-white rounded-lg px-3 py-1.5">
-              View All
-            </Button>
-          </div>
-          <ProductSlider title="" products={genzBrandsProducts} />
-        </section>
+        <EverythingInOfferSection categories={everythingInOfferCategories} />
 
-        {/* Deals on Men's Wardrobe */}
-        <section className="px-3">
-          <div className="flex items-center justify-between mb-3">
-            <h2 className="text-lg font-bold text-gray-800">👔 Deals on Men's Wardrobe</h2>
-            <Button variant="outline" size="sm" className="text-xs border-[#FF6B9D] text-[#FF6B9D] hover:bg-[#FF6B9D] hover:text-white rounded-lg px-3 py-1.5">
-              View All
-            </Button>
-          </div>
-          <ProductSlider title="" products={mensWardrobeProducts} />
-        </section>
-
-        {/* Promo Banner 3 */}
         <section className="px-3">
           <PromoBanner banner={promoBanners[2]} />
         </section>
 
-        {/* Brands Deal You Can't Miss */}
         <section className="px-3">
           <div className="flex items-center justify-between mb-3">
-            <h2 className="text-lg font-bold text-gray-800">💎 Brands Deal You Can't Miss</h2>
-            <Button variant="outline" size="sm" className="text-xs border-[#FF6B9D] text-[#FF6B9D] hover:bg-[#FF6B9D] hover:text-white rounded-lg px-3 py-1.5">
+            <h2 className="text-lg font-bold text-gray-800">🧴 Men's Grooming & Beauty</h2>
+            <Button variant="outline" size="sm" className="text-xs border-obeyyo-red text-obeyyo-red hover:bg-obeyyo-red hover:text-white rounded-lg px-3 py-1.5">
               View All
             </Button>
           </div>
-          <ProductSlider title="" products={brandsDealsProducts} />
+          <ProductSlider title="" products={beautyProducts} />
         </section>
 
-        {/* Deals on Women's Wardrobe */}
         <section className="px-3">
           <div className="flex items-center justify-between mb-3">
-            <h2 className="text-lg font-bold text-gray-800">👗 Deals on Women's Wardrobe</h2>
-            <Button variant="outline" size="sm" className="text-xs border-[#FF6B9D] text-[#FF6B9D] hover:bg-[#FF6B9D] hover:text-white rounded-lg px-3 py-1.5">
+            <h2 className="text-lg font-bold text-gray-800">👟 Men's Footwear</h2>
+            <Button variant="outline" size="sm" className="text-xs border-obeyyo-red text-obeyyo-red hover:bg-obeyyo-red hover:text-white rounded-lg px-3 py-1.5">
               View All
             </Button>
           </div>
-          <ProductSlider title="" products={womensWardrobeProducts} />
+          <ProductSlider title="" products={footwearProducts} />
         </section>
 
-        {/* Featured Brands */}
         <section className="px-3">
           <div className="flex items-center justify-between mb-3">
-            <h2 className="text-lg font-bold text-gray-800">⭐ Featured Brands</h2>
-            <Button variant="outline" size="sm" className="text-xs border-[#FF6B9D] text-[#FF6B9D] hover:bg-[#FF6B9D] hover:text-white rounded-lg px-3 py-1.5">
+            <h2 className="text-lg font-bold text-gray-800">⌚ Men's Watches</h2>
+            <Button variant="outline" size="sm" className="text-xs border-obeyyo-red text-obeyyo-red hover:bg-obeyyo-red hover:text-white rounded-lg px-3 py-1.5">
               View All
             </Button>
           </div>
-          <ProductSlider title="" products={featuredBrandsProducts} />
+          <ProductSlider title="" products={watchesProducts} />
         </section>
 
-        {/* Best Brands */}
         <section className="px-3">
           <div className="flex items-center justify-between mb-3">
-            <h2 className="text-lg font-bold text-gray-800">🎯 Best Brands</h2>
-            <Button variant="outline" size="sm" className="text-xs border-[#FF6B9D] text-[#FF6B9D] hover:bg-[#FF6B9D] hover:text-white rounded-lg px-3 py-1.5">
+            <h2 className="text-lg font-bold text-gray-800">🌟 Men's Fragrances</h2>
+            <Button variant="outline" size="sm" className="text-xs border-obeyyo-red text-obeyyo-red hover:bg-obeyyo-red hover:text-white rounded-lg px-3 py-1.5">
               View All
             </Button>
           </div>
-          <ProductSlider title="" products={bestBrandsProducts} />
+          <ProductSlider title="" products={perfumeProducts} />
         </section>
 
-        {/* Final Promo Banner */}
         <section className="px-3">
-          <PromoBanner banner={promoBanners[3]} />
+          <DealOfTheDay product={dealProduct} endTime={dealEndTime} />
         </section>
 
-        {/* Highlights of the Day */}
-        <HighlightsOfTheDaySection products={highlightsProducts} />
-        {/* Featured Brands */}
-        <HorizontalBrandSection title="Featured Brands" brands={featuredBrands} labelText="FEATURED" labelColor="bg-pink-100 text-pink-500" />
-        {/* Popular Brands */}
-        <HorizontalBrandSection title="Popular Brands" brands={popularBrands} labelText="POPULAR" labelColor="bg-blue-100 text-blue-600" />
-        {/* Sponsored Brands */}
-        <HorizontalBrandSection title="Sponsored Brands" brands={sponsoredBrands} labelText="SPONSORED" labelColor="bg-yellow-100 text-yellow-600" />
-
-        {/* Filters */}
-        <div className="px-3">
-          <div className="flex flex-wrap items-center gap-3 py-3 border-t border-gray-200 bg-white rounded-lg">
-            <div className="flex overflow-x-auto space-x-2 pb-2">
-              {filterCategories.map((category) => (
-                <Button
-                  key={category}
-                  variant={category === "All" ? "default" : "outline"}
-                  size="sm"
-                  className={`whitespace-nowrap rounded-full text-xs px-3 py-1.5 ${
-                    category === "All" 
-                      ? "bg-[#FF6B9D] hover:bg-[#FF6B9D]/90" 
-                      : "border-gray-300 hover:border-[#FF6B9D] hover:text-[#FF6B9D]"
-                  }`}
-                >
-                  {category}
-                </Button>
-              ))}
-            </div>
-            <div className="ml-auto">
-              <Select>
-                <SelectTrigger className="w-40 rounded-full text-xs">
-                  <SelectValue placeholder="Sort by" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="popular">Most Popular</SelectItem>
-                  <SelectItem value="price-low">Price: Low to High</SelectItem>
-                  <SelectItem value="price-high">Price: High to Low</SelectItem>
-                  <SelectItem value="rating">Highest Rated</SelectItem>
-                  <SelectItem value="newest">Newest First</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-        </div>
-
-        {/* Products Grid */}
         <div className="px-3">
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
             {products.map((product) => (

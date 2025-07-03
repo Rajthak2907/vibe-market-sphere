@@ -12,7 +12,11 @@ import HorizontalBrandSection from "@/components/HorizontalBrandSection";
 import HighlightsOfTheDaySection from "@/components/HighlightsOfTheDaySection";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import BrandPromoSlider from "@/components/BrandPromoSlider";
+import BrandsFlexSection from "@/components/BrandsFlexSection";
+import TShirtCategoriesSection from "@/components/TShirtCategoriesSection";
+import OffersAndCouponsSection from "@/components/OffersAndCouponsSection";
+import BiggestOfferSection from "@/components/BiggestOfferSection";
+import EverythingInOfferSection from "@/components/EverythingInOfferSection";
 
 const Women = () => {
   const products = [
@@ -354,23 +358,7 @@ const Women = () => {
     { name: "Kids", value: "kids", products: [] }
   ];
 
-  // ----- Brand Data -----
-  // Highlights stays the same!
   const highlightsProducts = products.slice(0, 3);
-
-  // Align promo styling & imagery for the promo section
-  const featuredBrandsPromo = [
-    { id: "b1", name: "Lakme", logo: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=100", image: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=400", discount: "Up to 60% OFF", link: "/brands/lakme" },
-    { id: "b2", name: "RENÉE", logo: "https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=100", image: "https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=400", discount: "Up to 70% OFF", link: "/brands/renee" }
-  ];
-  const popularBrandsPromo = [
-    { id: "pb1", name: "H&M", logo: "https://upload.wikimedia.org/wikipedia/commons/5/53/H%26M-Logo.svg", image: "https://images.unsplash.com/photo-1571945153237-4929e783af4a?w=400", link: "/brands/hm" },
-    { id: "pb2", name: "Zara", logo: "https://upload.wikimedia.org/wikipedia/commons/3/3a/Zara_Logo.svg", image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=400", link: "/brands/zara" }
-  ];
-  const sponsoredBrandsPromo = [
-    { id: "sb1", name: "Puma", logo: "https://upload.wikimedia.org/wikipedia/commons/f/fd/Puma_logo.svg", image: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400", link: "/brands/puma" },
-    { id: "sb2", name: "Calvin Klein", logo: "https://upload.wikimedia.org/wikipedia/commons/5/56/Calvin_klein_logo.svg", image: "https://images.unsplash.com/photo-1541643600914-78b084683601?w=400", link: "/brands/calvinklein" }
-  ];
 
   return (
     <Layout>
@@ -393,7 +381,7 @@ const Women = () => {
           <ImageCarousel images={carouselImages} />
         </div>
 
-        {/* Subcategory Section */}
+        {/* Subcategory Section - Updated to 2 lines */}
         <section className="px-3">
           <div className="bg-white rounded-lg p-4">
             <div className="flex items-center justify-between mb-3">
@@ -419,34 +407,18 @@ const Women = () => {
           </div>
         </section>
 
-        {/* Deal of the Day */}
-        <section className="px-3">
-          <DealOfTheDay product={dealProduct} endTime={dealEndTime} />
-        </section>
-
-        {/* Pocket Friendly Section */}
-        <PocketFriendlySection products={pocketFriendlyProducts} />
-
-        {/* Promo Banner 1 */}
+        {/* Banner Section */}
         <section className="px-3">
           <PromoBanner banner={promoBanners[0]} />
         </section>
 
-        {/* GenZ Picks */}
-        <section className="px-3">
-          <div className="flex items-center justify-between mb-3">
-            <h2 className="text-lg font-bold text-gray-800">🔥 GenZ Picks</h2>
-            <Button variant="outline" size="sm" className="text-xs border-[#FF6B9D] text-[#FF6B9D] hover:bg-[#FF6B9D] hover:text-white rounded-lg px-3 py-1.5">
-              View All
-            </Button>
-          </div>
-          <ProductSlider title="" products={genzPicksProducts} />
-        </section>
+        {/* Brands Flex Section */}
+        <BrandsFlexSection brands={brandsFlexData} />
 
-        {/* Top Brands on Offer */}
+        {/* Biggest Brands On Offers */}
         <section className="px-3">
           <div className="flex items-center justify-between mb-3">
-            <h2 className="text-lg font-bold text-gray-800">🏆 Top Brands on Offer</h2>
+            <h2 className="text-lg font-bold text-gray-800">🏆 Biggest Brands On Offers</h2>
             <Button variant="outline" size="sm" className="text-xs border-[#FF6B9D] text-[#FF6B9D] hover:bg-[#FF6B9D] hover:text-white rounded-lg px-3 py-1.5">
               View All
             </Button>
@@ -454,131 +426,76 @@ const Women = () => {
           <ProductSlider title="" products={topBrandsProducts} />
         </section>
 
-        {/* Promo Banner 2 */}
+        {/* Top Categories Section */}
+        <TShirtCategoriesSection categories={topCategories} title="👚 Top Categories" />
+
+        {/* Offers and Coupons Section */}
+        <OffersAndCouponsSection coupons={couponsData} />
+
+        {/* Biggest Offers Only on Obeyyo */}
+        <BiggestOfferSection products={biggestOfferProducts} />
+
+        {/* Banner */}
         <section className="px-3">
           <PromoBanner banner={promoBanners[1]} />
         </section>
 
-        {/* GenZ Brands on Offer */}
-        <section className="px-3">
-          <div className="flex items-center justify-between mb-3">
-            <h2 className="text-lg font-bold text-gray-800">✨ GenZ Brands on Offer</h2>
-            <Button variant="outline" size="sm" className="text-xs border-[#FF6B9D] text-[#FF6B9D] hover:bg-[#FF6B9D] hover:text-white rounded-lg px-3 py-1.5">
-              View All
-            </Button>
-          </div>
-          <ProductSlider title="" products={genzBrandsProducts} />
-        </section>
+        {/* Everything in Offer */}
+        <EverythingInOfferSection categories={everythingInOfferCategories} />
 
-        {/* Deals on Men's Wardrobe */}
-        <section className="px-3">
-          <div className="flex items-center justify-between mb-3">
-            <h2 className="text-lg font-bold text-gray-800">👔 Deals on Men's Wardrobe</h2>
-            <Button variant="outline" size="sm" className="text-xs border-[#FF6B9D] text-[#FF6B9D] hover:bg-[#FF6B9D] hover:text-white rounded-lg px-3 py-1.5">
-              View All
-            </Button>
-          </div>
-          <ProductSlider title="" products={mensWardrobeProducts} />
-        </section>
-
-        {/* Promo Banner 3 */}
+        {/* Banner with Offer */}
         <section className="px-3">
           <PromoBanner banner={promoBanners[2]} />
         </section>
 
-        {/* Brands Deal You Can't Miss */}
+        {/* Beauty Products Section */}
         <section className="px-3">
           <div className="flex items-center justify-between mb-3">
-            <h2 className="text-lg font-bold text-gray-800">💎 Brands Deal You Can't Miss</h2>
+            <h2 className="text-lg font-bold text-gray-800">💄 Women's Beauty</h2>
             <Button variant="outline" size="sm" className="text-xs border-[#FF6B9D] text-[#FF6B9D] hover:bg-[#FF6B9D] hover:text-white rounded-lg px-3 py-1.5">
               View All
             </Button>
           </div>
-          <ProductSlider title="" products={brandsDealsProducts} />
+          <ProductSlider title="" products={beautyProducts} />
         </section>
 
-        {/* Deals on Women's Wardrobe */}
+        {/* Footwear Section */}
         <section className="px-3">
           <div className="flex items-center justify-between mb-3">
-            <h2 className="text-lg font-bold text-gray-800">👗 Deals on Women's Wardrobe</h2>
+            <h2 className="text-lg font-bold text-gray-800">👠 Women's Footwear</h2>
             <Button variant="outline" size="sm" className="text-xs border-[#FF6B9D] text-[#FF6B9D] hover:bg-[#FF6B9D] hover:text-white rounded-lg px-3 py-1.5">
               View All
             </Button>
           </div>
-          <ProductSlider title="" products={womensWardrobeProducts} />
+          <ProductSlider title="" products={footwearProducts} />
         </section>
 
-        {/* Featured Brands */}
+        {/* Watches Section */}
         <section className="px-3">
           <div className="flex items-center justify-between mb-3">
-            <h2 className="text-lg font-bold text-gray-800">⭐ Featured Brands</h2>
+            <h2 className="text-lg font-bold text-gray-800">⌚ Women's Watches</h2>
             <Button variant="outline" size="sm" className="text-xs border-[#FF6B9D] text-[#FF6B9D] hover:bg-[#FF6B9D] hover:text-white rounded-lg px-3 py-1.5">
               View All
             </Button>
           </div>
-          <ProductSlider title="" products={featuredBrandsProducts} />
+          <ProductSlider title="" products={watchesProducts} />
         </section>
 
-        {/* Best Brands */}
+        {/* Perfume Section */}
         <section className="px-3">
           <div className="flex items-center justify-between mb-3">
-            <h2 className="text-lg font-bold text-gray-800">🎯 Best Brands</h2>
+            <h2 className="text-lg font-bold text-gray-800">🌺 Women's Fragrances</h2>
             <Button variant="outline" size="sm" className="text-xs border-[#FF6B9D] text-[#FF6B9D] hover:bg-[#FF6B9D] hover:text-white rounded-lg px-3 py-1.5">
               View All
             </Button>
           </div>
-          <ProductSlider title="" products={bestBrandsProducts} />
+          <ProductSlider title="" products={perfumeProducts} />
         </section>
 
-        {/* Final Promo Banner */}
+        {/* Deal of the Day */}
         <section className="px-3">
-          <PromoBanner banner={promoBanners[3]} />
+          <DealOfTheDay product={dealProduct} endTime={dealEndTime} />
         </section>
-
-        {/* Highlights of the Day */}
-        <HighlightsOfTheDaySection products={highlightsProducts} />
-        {/* Featured Brands (HOME PAGE STYLE) */}
-        <BrandPromoSlider title="Featured Brands" brands={featuredBrandsPromo} labelText="FEATURED" />
-        {/* Popular Brands */}
-        <BrandPromoSlider title="Popular Brands" brands={popularBrandsPromo} labelText="POPULAR" />
-        {/* Sponsored Brands */}
-        <BrandPromoSlider title="Sponsored Brands" brands={sponsoredBrandsPromo} labelText="SPONSORED" />
-
-        {/* Filters */}
-        <div className="px-3">
-          <div className="flex flex-wrap items-center gap-3 py-3 border-t border-gray-200 bg-white rounded-lg">
-            <div className="flex overflow-x-auto space-x-2 pb-2">
-              {filterCategories.map((category) => (
-                <Button
-                  key={category}
-                  variant={category === "All" ? "default" : "outline"}
-                  size="sm"
-                  className={`whitespace-nowrap rounded-full text-xs px-3 py-1.5 ${
-                    category === "All" 
-                      ? "bg-[#FF6B9D] hover:bg-[#FF6B9D]/90" 
-                      : "border-gray-300 hover:border-[#FF6B9D] hover:text-[#FF6B9D]"
-                  }`}
-                >
-                  {category}
-                </Button>
-              ))}
-            </div>
-            <div className="ml-auto">
-              <Select>
-                <SelectTrigger className="w-40 rounded-full text-xs">
-                  <SelectValue placeholder="Sort by" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="popular">Most Popular</SelectItem>
-                  <SelectItem value="price-low">Price: Low to High</SelectItem>
-                  <SelectItem value="price-high">Price: High to Low</SelectItem>
-                  <SelectItem value="rating">Highest Rated</SelectItem>
-                  <SelectItem value="newest">Newest First</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-        </div>
 
         {/* Products Grid */}
         <div className="px-3">
