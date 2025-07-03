@@ -407,6 +407,138 @@ const Men = () => {
     { id: "e4", name: "Shoes", image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400", discount: "Up to 70% OFF", link: "/men/shoes" }
   ];
 
+  const beautyProducts = [
+    {
+      id: "b1",
+      name: "Men's Face Wash",
+      price: 299,
+      originalPrice: 499,
+      rating: 4.3,
+      reviews: 156,
+      image: "https://images.unsplash.com/photo-1556229010-aa4aac71b912?w=400",
+      brand: "MenCare"
+    },
+    {
+      id: "b2",
+      name: "Beard Oil Premium",
+      price: 599,
+      originalPrice: 999,
+      rating: 4.6,
+      reviews: 234,
+      image: "https://images.unsplash.com/photo-1556229010-aa4aac71b912?w=400",
+      brand: "BeardCraft"
+    },
+    {
+      id: "b3", 
+      name: "Hair Styling Gel",
+      price: 399,
+      originalPrice: 699,
+      rating: 4.2,
+      reviews: 89,
+      image: "https://images.unsplash.com/photo-1556229010-aa4aac71b912?w=400",
+      brand: "StyleHub"
+    }
+  ];
+
+  const footwearProducts = [
+    {
+      id: "f1",
+      name: "Casual Sneakers",
+      price: 1999,
+      originalPrice: 3499,
+      rating: 4.5,
+      reviews: 345,
+      image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=400",
+      brand: "FootStyle"
+    },
+    {
+      id: "f2",
+      name: "Formal Leather Shoes",
+      price: 2499,
+      originalPrice: 4299,
+      rating: 4.7,
+      reviews: 234,
+      image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=400",
+      brand: "FormalWear"
+    },
+    {
+      id: "f3",
+      name: "Running Shoes",
+      price: 2999,
+      originalPrice: 4999,
+      rating: 4.8,
+      reviews: 567,
+      image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400",
+      brand: "RunFast"
+    }
+  ];
+
+  const watchesProducts = [
+    {
+      id: "w1",
+      name: "Smart Watch Pro",
+      price: 8999,
+      originalPrice: 12999,
+      rating: 4.6,
+      reviews: 456,
+      image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400",
+      brand: "TechTime"
+    },
+    {
+      id: "w2",
+      name: "Classic Analog Watch",
+      price: 3999,
+      originalPrice: 6999,
+      rating: 4.4,
+      reviews: 234,
+      image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400",
+      brand: "TimeCraft"
+    },
+    {
+      id: "w3",
+      name: "Sports Digital Watch",
+      price: 2499,
+      originalPrice: 3999,
+      rating: 4.5,
+      reviews: 189,
+      image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400",
+      brand: "SportTime"
+    }
+  ];
+
+  const perfumeProducts = [
+    {
+      id: "p1",
+      name: "Men's Cologne Premium",
+      price: 2999,
+      originalPrice: 4999,
+      rating: 4.7,
+      reviews: 345,
+      image: "https://images.unsplash.com/photo-1541643600914-78b084683601?w=400",
+      brand: "FragranceKing"
+    },
+    {
+      id: "p2",
+      name: "Fresh Deodorant Spray",
+      price: 599,
+      originalPrice: 999,
+      rating: 4.3,
+      reviews: 234,
+      image: "https://images.unsplash.com/photo-1541643600914-78b084683601?w=400",
+      brand: "FreshScent"
+    },
+    {
+      id: "p3",
+      name: "Luxury Aftershave",
+      price: 1999,
+      originalPrice: 3299,
+      rating: 4.5,
+      reviews: 156,
+      image: "https://images.unsplash.com/photo-1541643600914-78b084683601?w=400",
+      brand: "LuxuryMen"
+    }
+  ];
+
   return (
     <Layout>
       <div className="space-y-2 bg-gray-50">

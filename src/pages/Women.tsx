@@ -358,6 +358,198 @@ const Women = () => {
     { name: "Kids", value: "kids", products: [] }
   ];
 
+  const brandsFlexData = [
+    { id: "bf1", name: "Zara", logo: "https://upload.wikimedia.org/wikipedia/commons/3/3a/Zara_Logo.svg", discount: "Up to 60% OFF" },
+    { id: "bf2", name: "H&M", logo: "https://upload.wikimedia.org/wikipedia/commons/5/53/H%26M-Logo.svg", discount: "Up to 50% OFF" },
+    { id: "bf3", name: "Forever 21", logo: "https://logos-world.net/wp-content/uploads/2020/04/Forever-21-Logo.png", discount: "Up to 45% OFF" },
+    { id: "bf4", name: "Mango", logo: "https://logos-world.net/wp-content/uploads/2020/11/Mango-Logo.png", discount: "Up to 40% OFF" },
+    { id: "bf5", name: "Vero Moda", logo: "https://logos-world.net/wp-content/uploads/2020/11/Vero-Moda-Logo.png", discount: "Up to 35% OFF" },
+    { id: "bf6", name: "Only", logo: "https://logos-world.net/wp-content/uploads/2020/11/Only-Logo.png", discount: "Up to 30% OFF" },
+    { id: "bf7", name: "Calvin Klein", logo: "https://upload.wikimedia.org/wikipedia/commons/5/56/Calvin_klein_logo.svg", discount: "Up to 45% OFF" },
+    { id: "bf8", name: "Tommy Hilfiger", logo: "https://upload.wikimedia.org/wikipedia/commons/1/10/Tommy_Hilfiger_logo.svg", discount: "Up to 40% OFF" },
+    { id: "bf9", name: "Gap", logo: "https://logos-world.net/wp-content/uploads/2020/04/Gap-Logo.png", discount: "Up to 35% OFF" },
+    { id: "bf10", name: "Levi's", logo: "https://logos-world.net/wp-content/uploads/2020/04/Levis-Logo.png", discount: "Up to 50% OFF" },
+    { id: "bf11", name: "Nike", logo: "https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg", discount: "Up to 45% OFF" },
+    { id: "bf12", name: "Adidas", logo: "https://upload.wikimedia.org/wikipedia/commons/2/20/Adidas_Logo.svg", discount: "Up to 40% OFF" },
+    { id: "bf13", name: "Puma", logo: "https://upload.wikimedia.org/wikipedia/commons/f/fd/Puma_logo.svg", discount: "Up to 35% OFF" },
+    { id: "bf14", name: "Guess", logo: "https://upload.wikimedia.org/wikipedia/commons/6/68/Guess_logo.svg", discount: "Up to 30% OFF" },
+    { id: "bf15", name: "Versace", logo: "https://upload.wikimedia.org/wikipedia/commons/4/4d/Versace_logo.svg", discount: "Up to 50% OFF" },
+    { id: "bf16", name: "Coach", logo: "https://logos-world.net/wp-content/uploads/2020/04/Coach-Logo.png", discount: "Up to 45% OFF" }
+  ];
+
+  const topCategories = [
+    { id: "t1", name: "Casual Dresses", image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=80", link: "/women/casual-dresses" },
+    { id: "t2", name: "Formal Wear", image: "https://images.unsplash.com/photo-1571945153237-4929e783af4a?w=80", link: "/women/formal-wear" },
+    { id: "t3", name: "Ethnic Wear", image: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=80", link: "/women/ethnic-wear" },
+    { id: "t4", name: "Party Wear", image: "https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=80", link: "/women/party-wear" },
+    { id: "t5", name: "Tops & Tees", image: "https://images.unsplash.com/photo-1571945153237-4929e783af4a?w=80", link: "/women/tops" },
+    { id: "t6", name: "Activewear", image: "https://images.unsplash.com/photo-1571019613540-97d60b3c49f8?w=80", link: "/women/activewear" }
+  ];
+
+  const couponsData = [
+    {
+      id: "c1",
+      code: "SAVE50",
+      title: "Flat ₹500 Off",
+      description: "On orders above ₹2000",
+      discount: "₹500 OFF",
+      validUntil: "31 Dec 2024"
+    },
+    {
+      id: "c2",
+      code: "FIRST30",
+      title: "First Order Discount",
+      description: "Extra 30% off for new users",
+      discount: "30% OFF",
+      validUntil: "31 Dec 2024"
+    }
+  ];
+
+  const biggestOfferProducts = [
+    ...products.slice(0, 3),
+    ...topBrandsProducts.slice(0, 3),
+    ...genzPicksProducts.slice(0, 3)
+  ];
+
+  const everythingInOfferCategories = [
+    { id: "e1", name: "Dresses", image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=400", discount: "Up to 60% OFF", link: "/women/dresses" },
+    { id: "e2", name: "Handbags", image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400", discount: "Up to 50% OFF", link: "/women/handbags" },
+    { id: "e3", name: "Jewelry", image: "https://images.unsplash.com/photo-1590736969955-71cc94901144?w=400", discount: "Up to 40% OFF", link: "/women/jewelry" },
+    { id: "e4", name: "Shoes", image: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400", discount: "Up to 70% OFF", link: "/women/shoes" }
+  ];
+
+  const beautyProducts = [
+    {
+      id: "b1",
+      name: "Lipstick Matte Finish",
+      price: 599,
+      originalPrice: 999,
+      rating: 4.5,
+      reviews: 234,
+      image: "https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=400",
+      brand: "BeautyHub"
+    },
+    {
+      id: "b2",
+      name: "Foundation Long Lasting",
+      price: 1299,
+      originalPrice: 1999,
+      rating: 4.6,
+      reviews: 345,
+      image: "https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=400",
+      brand: "GlowCraft"
+    },
+    {
+      id: "b3",
+      name: "Eyeshadow Palette",
+      price: 999,
+      originalPrice: 1699,
+      rating: 4.4,
+      reviews: 156,
+      image: "https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=400",
+      brand: "ColorMagic"
+    }
+  ];
+
+  const footwearProducts = [
+    {
+      id: "f1",
+      name: "High Heel Pumps",
+      price: 1899,
+      originalPrice: 2999,
+      rating: 4.3,
+      reviews: 189,
+      image: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400",
+      brand: "ElegantStep"
+    },
+    {
+      id: "f2",
+      name: "Casual Sneakers",
+      price: 1299,
+      originalPrice: 2199,
+      rating: 4.5,
+      reviews: 267,
+      image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=400",
+      brand: "ComfortWalk"
+    },
+    {
+      id: "f3",
+      name: "Ankle Boots",
+      price: 2299,
+      originalPrice: 3599,
+      rating: 4.6,
+      reviews: 234,
+      image: "https://images.unsplash.com/photo-1544966503-7cc5ac882d5f?w=400",
+      brand: "StyleBoots"
+    }
+  ];
+
+  const watchesProducts = [
+    {
+      id: "w1",
+      name: "Fashion Smart Watch",
+      price: 6999,
+      originalPrice: 9999,
+      rating: 4.4,
+      reviews: 345,
+      image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400",
+      brand: "FashionTech"
+    },
+    {
+      id: "w2",
+      name: "Classic Gold Watch",
+      price: 4999,
+      originalPrice: 7999,
+      rating: 4.6,
+      reviews: 189,
+      image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400",
+      brand: "GoldTime"
+    },
+    {
+      id: "w3",
+      name: "Diamond Studded Watch",
+      price: 12999,
+      originalPrice: 19999,
+      rating: 4.8,
+      reviews: 156,
+      image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400",
+      brand: "LuxuryTime"
+    }
+  ];
+
+  const perfumeProducts = [
+    {
+      id: "p1",
+      name: "Floral Perfume",
+      price: 1999,
+      originalPrice: 2999,
+      rating: 4.5,
+      reviews: 234,
+      image: "https://images.unsplash.com/photo-1541643600914-78b084683601?w=400",
+      brand: "FloralScents"
+    },
+    {
+      id: "p2",
+      name: "Vanilla Essence",
+      price: 1599,
+      originalPrice: 2499,
+      rating: 4.3,
+      reviews: 156,
+      image: "https://images.unsplash.com/photo-1541643600914-78b084683601?w=400",
+      brand: "VanillaLux"
+    },
+    {
+      id: "p3",
+      name: "Rose Water Spray",
+      price: 799,
+      originalPrice: 1299,
+      rating: 4.4,
+      reviews: 189,
+      image: "https://images.unsplash.com/photo-1541643600914-78b084683601?w=400",
+      brand: "RoseGarden"
+    }
+  ];
+
   const highlightsProducts = products.slice(0, 3);
 
   return (
