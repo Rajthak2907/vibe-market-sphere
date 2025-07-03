@@ -4,10 +4,10 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import HomePage from "./pages/home/Index"; // Updated import
+import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
-import MenPage from "./pages/men/MenPage"; // Updated import
-import WomenPage from "./pages/women/WomenPage"; // Updated import
+import Men from "./pages/Men";
+import Women from "./pages/Women";
 import Kids from "./pages/Kids";
 import Accessories from "./pages/Accessories";
 import Beauty from "./pages/Beauty";
@@ -41,9 +41,9 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/men" element={<MenPage />} />
-          <Route path="/women" element={<WomenPage />} />
+          <Route path="/" element={<Index />} />
+          <Route path="/men" element={<Men />} />
+          <Route path="/women" element={<Women />} />
           <Route path="/kids" element={<Kids />} />
           <Route path="/accessories" element={<Accessories />} />
           <Route path="/beauty" element={<Beauty />} />
