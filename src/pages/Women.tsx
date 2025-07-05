@@ -1,610 +1,317 @@
 import Layout from "@/components/Layout";
 import ProductCard from "@/components/ProductCard";
-import ImageCarousel from "@/components/ImageCarousel";
-import PromoBanner from "@/components/PromoBanner";
-import ProductSlider from "@/components/ProductSlider";
-import PocketFriendlySection from "@/components/PocketFriendlySection";
-import DealOfTheDay from "@/components/DealOfTheDay";
-import TabSection from "@/components/TabSection";
-import RoundCategorySection from "@/components/RoundCategorySection";
-import FashionCarousel from "@/components/FashionCarousel";
-import HorizontalBrandSection from "@/components/HorizontalBrandSection";
-import HighlightsOfTheDaySection from "@/components/HighlightsOfTheDaySection";
 import { Button } from "@/components/ui/button";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import BrandsFlexSection from "@/components/BrandsFlexSection";
-import TShirtCategoriesSection from "@/components/TShirtCategoriesSection";
-import OffersAndCouponsSection from "@/components/OffersAndCouponsSection";
-import BiggestOfferSection from "@/components/BiggestOfferSection";
-import EverythingInOfferSection from "@/components/EverythingInOfferSection";
+import { Link } from "react-router-dom";
+import { Star } from "lucide-react";
 
 const Women = () => {
   const products = [
     {
       id: "w1",
-      name: "Floral Print Summer Dress",
-      price: 1299,
-      originalPrice: 2199,
-      rating: 4.8,
-      reviews: 189,
-      image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=400",
-      brand: "FashionHub",
+      name: "Floral Print Dress",
+      price: 2999,
+      originalPrice: 4999,
+      rating: 4.5,
+      reviews: 120,
+      image: "https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=300",
+      brand: "Fashionista",
       isNew: true
     },
     {
       id: "w2",
-      name: "Designer Ethnic Kurta Set",
-      price: 1899,
-      originalPrice: 3299,
-      rating: 4.6,
-      reviews: 124,
-      image: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=400",
-      brand: "EthnicWear",
+      name: "Elegant Evening Gown",
+      price: 5999,
+      originalPrice: 8999,
+      rating: 4.8,
+      reviews: 85,
+      image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=300",
+      brand: "GlamourStyle",
       isTrending: true
     },
     {
       id: "w3",
-      name: "Casual Denim Jacket",
+      name: "Casual Summer Top",
       price: 999,
-      originalPrice: 1699,
-      rating: 4.4,
-      reviews: 156,
-      image: "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=400",
-      brand: "CasualCo"
+      originalPrice: 1499,
+      rating: 4.2,
+      reviews: 150,
+      image: "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=300",
+      brand: "DailyWear"
     },
     {
       id: "w4",
-      name: "Elegant High Heels",
-      price: 1499,
-      originalPrice: 2499,
-      rating: 4.7,
-      reviews: 89,
-      image: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400",
-      brand: "FootWear"
-    }
-  ];
-
-  const carouselImages = [
-    {
-      id: "1",
-      url: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=800",
-      title: "Women's Summer Collection",
-      subtitle: "Elegant styles for every occasion"
-    },
-    {
-      id: "2", 
-      url: "https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=800",
-      title: "Ethnic Wear Sale",
-      subtitle: "Traditional meets modern"
-    }
-  ];
-
-  const dealProduct = {
-    id: "deal-w1",
-    name: "Designer Handbag Collection",
-    price: 3999,
-    originalPrice: 7999,
-    rating: 4.9,
-    reviews: 456,
-    image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400",
-    brand: "LuxeBags",
-    isNew: true
-  };
-
-  const pocketFriendlyProducts = [
-    {
-      id: "pf-w1",
-      name: "Cotton Casual Top",
-      price: 399,
-      originalPrice: 799,
-      rating: 4.3,
-      reviews: 145,
-      image: "https://images.unsplash.com/photo-1571945153237-4929e783af4a?w=400",
-      brand: "CasualWear"
-    },
-    {
-      id: "pf-w2",
-      name: "Basic Denim Jeans",
-      price: 699,
-      originalPrice: 1299,
-      rating: 4.1,
-      reviews: 234,
-      image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=400",
+      name: "Classic Denim Jeans",
+      price: 1999,
+      originalPrice: 2999,
+      rating: 4.6,
+      reviews: 90,
+      image: "https://images.unsplash.com/photo-1542272604-787c3835535d?w=300",
       brand: "DenimCo"
-    },
-    {
-      id: "pf-w3",
-      name: "Comfort Flats",
-      price: 599,
-      originalPrice: 999,
-      rating: 4.2,
-      reviews: 89,
-      image: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400",
-      brand: "ComfortShoes"
     }
-  ];
-
-  const genzPicksProducts = [
-    {
-      id: "gz-w1",
-      name: "Aesthetic Crop Top",
-      price: 899,
-      originalPrice: 1599,
-      rating: 4.4,
-      reviews: 234,
-      image: "https://images.unsplash.com/photo-1571945153237-4929e783af4a?w=400",
-      brand: "VibeCheck"
-    },
-    {
-      id: "gz-w2",
-      name: "Y2K Style Sunglasses",
-      price: 699,
-      originalPrice: 1299,
-      rating: 4.3,
-      reviews: 189,
-      image: "https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=400",
-      brand: "RetroFuture"
-    }
-  ];
-
-  const topBrandsProducts = [
-    {
-      id: "tb-w1",
-      name: "Zara Style Dress",
-      price: 2999,
-      originalPrice: 4999,
-      rating: 4.7,
-      reviews: 567,
-      image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=400",
-      brand: "Zara"
-    },
-    {
-      id: "tb-w2",
-      name: "H&M Trendy Top",
-      price: 1499,
-      originalPrice: 2499,
-      rating: 4.5,
-      reviews: 234,
-      image: "https://images.unsplash.com/photo-1571945153237-4929e783af4a?w=400",
-      brand: "H&M"
-    }
-  ];
-
-  const genzBrandsProducts = [
-    {
-      id: "gb-w1",
-      name: "Urban Outfitters Tee",
-      price: 1299,
-      originalPrice: 2299,
-      rating: 4.6,
-      reviews: 345,
-      image: "https://images.unsplash.com/photo-1571945153237-4929e783af4a?w=400",
-      brand: "Urban Outfitters"
-    }
-  ];
-
-  const mensWardrobeProducts = [
-    {
-      id: "mw-w1",
-      name: "Gift for Him - Watch",
-      price: 2999,
-      originalPrice: 4999,
-      rating: 4.8,
-      reviews: 123,
-      image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400",
-      brand: "TimeCraft"
-    }
-  ];
-
-  const brandsDealsProducts = [
-    {
-      id: "bd-w1",
-      name: "Calvin Klein Perfume",
-      price: 3499,
-      originalPrice: 5999,
-      rating: 4.6,
-      reviews: 234,
-      image: "https://images.unsplash.com/photo-1541643600914-78b084683601?w=400",
-      brand: "Calvin Klein"
-    }
-  ];
-
-  const womensWardrobeProducts = [
-    {
-      id: "ww-w1",
-      name: "Elegant Midi Dress",
-      price: 2299,
-      originalPrice: 3999,
-      rating: 4.8,
-      reviews: 567,
-      image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=400",
-      brand: "ElegantWear"
-    },
-    {
-      id: "ww-w2",
-      name: "Designer Handbag",
-      price: 3999,
-      originalPrice: 6999,
-      rating: 4.6,
-      reviews: 234,
-      image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400",
-      brand: "LuxeBags"
-    }
-  ];
-
-  const featuredBrandsProducts = [
-    {
-      id: "fb-w1",
-      name: "Premium Jewelry Set",
-      price: 8999,
-      originalPrice: 14999,
-      rating: 4.9,
-      reviews: 345,
-      image: "https://images.unsplash.com/photo-1590736969955-71cc94901144?w=400",
-      brand: "JewelCraft"
-    }
-  ];
-
-  const bestBrandsProducts = [
-    {
-      id: "bb-w1",
-      name: "Smart Fitness Watch",
-      price: 6999,
-      originalPrice: 9999,
-      rating: 4.5,
-      reviews: 456,
-      image: "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=400",
-      brand: "FitStyle"
-    }
-  ];
-
-  const promoBanners = [
-    {
-      id: "promo-w1",
-      title: "Women's Fashion Week",
-      subtitle: "Up to 70% off on trending styles",
-      buttonText: "Shop Now",
-      buttonLink: "/women/sale",
-      image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=800",
-      backgroundColor: "#FF6B9D"
-    },
-    {
-      id: "promo-w2",
-      title: "New Arrivals",
-      subtitle: "Fresh women's collection just dropped",
-      buttonText: "Explore",
-      buttonLink: "/women/new",
-      image: "https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=800",
-      backgroundColor: "#FF9A6B"
-    },
-    {
-      id: "promo-w3",
-      title: "Brand Festival",
-      subtitle: "Best women's brands, unbeatable prices",
-      buttonText: "Shop Brands",
-      buttonLink: "/women/brands",
-      image: "https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=800",
-      backgroundColor: "#4A90E2"
-    },
-    {
-      id: "promo-w4",
-      title: "Final Sale",
-      subtitle: "Last chance to grab women's deals",
-      buttonText: "Grab Deals",
-      buttonLink: "/women/final-sale",
-      image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=800",
-      backgroundColor: "#FF6B9D"
-    }
-  ];
-
-  const filterCategories = ["All", "Dresses", "Tops", "Ethnic", "Shoes", "Accessories"];
-  const dealEndTime = new Date();
-  dealEndTime.setHours(dealEndTime.getHours() + 8);
-
-  const categories = [
-    {
-      id: "c1",
-      name: "Dresses",
-      image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=100",
-      link: "/women/dresses"
-    },
-    {
-      id: "c2",
-      name: "Tops",
-      image: "https://images.unsplash.com/photo-1571945153237-4929e783af4a?w=100",
-      link: "/women/tops"
-    },
-    {
-      id: "c3",
-      name: "Ethnic",
-      image: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=100",
-      link: "/women/ethnic"
-    },
-    {
-      id: "c4",
-      name: "Shoes",
-      image: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=100",
-      link: "/women/shoes"
-    },
-    {
-      id: "c5",
-      name: "Handbags",
-      image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=100",
-      link: "/women/handbags"
-    },
-    {
-      id: "c6",
-      name: "Jewelry",
-      image: "https://images.unsplash.com/photo-1590736969955-71cc94901144?w=100",
-      link: "/women/jewelry"
-    }
-  ];
-
-  const subcategories = [
-    { id: "s1", name: "Casual Wear", image: "https://images.unsplash.com/photo-1571945153237-4929e783af4a?w=80", link: "/women/casual" },
-    { id: "s2", name: "Formal Wear", image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=80", link: "/women/formal" },
-    { id: "s3", name: "Party Wear", image: "https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=80", link: "/women/party" },
-    { id: "s4", name: "Ethnic Wear", image: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=80", link: "/women/ethnic" },
-    { id: "s5", name: "Western Wear", image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=80", link: "/women/western" },
-    { id: "s6", name: "Summer Collection", image: "https://images.unsplash.com/photo-1571945153237-4929e783af4a?w=80", link: "/women/summer" },
-    { id: "s7", name: "Footwear", image: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=80", link: "/women/footwear" },
-    { id: "s8", name: "Accessories", image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=80", link: "/women/accessories" }
-  ];
-
-  const tabs = [
-    { name: "All", value: "all", products: [] },
-    { name: "Men", value: "men", products: [] },
-    { name: "Women", value: "women", products: [] },
-    { name: "Kids", value: "kids", products: [] }
-  ];
-
-  const highlightsProducts = products.slice(0, 3);
-
-  const brandsFlexData = [
-    { id: "bf1", name: "Zara", image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=100", link: "/women?brand=zara" },
-    { id: "bf2", name: "H&M", image: "https://images.unsplash.com/photo-1571945153237-4929e783af4a?w=100", link: "/women?brand=hm" },
-    { id: "bf3", name: "Forever 21", image: "https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=100", link: "/women?brand=forever21" },
-    { id: "bf4", name: "Mango", image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=100", link: "/women?brand=mango" }
-  ];
-
-  const topCategories = [
-    { id: "tc1", name: "T-Shirts", image: "https://images.unsplash.com/photo-1571945153237-4929e783af4a?w=100", link: "/women/tshirts" },
-    { id: "tc2", name: "Dresses", image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=100", link: "/women/dresses" },
-    { id: "tc3", name: "Jeans", image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=100", link: "/women/jeans" },
-    { id: "tc4", name: "Tops", image: "https://images.unsplash.com/photo-1571945153237-4929e783af4a?w=100", link: "/women/tops" }
-  ];
-
-  const couponsData = [
-    { code: "SAVE30", discount: "30% OFF", description: "On orders above ₹1999" },
-    { code: "FIRST15", discount: "15% OFF", description: "First time buyers" },
-    { code: "FLAT500", discount: "₹500 OFF", description: "On orders above ₹2999" }
-  ];
-
-  const biggestOfferProducts = products.slice(0, 4);
-
-  const everythingInOfferCategories = [
-    { id: "eio1", name: "All Fashion", image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=100", link: "/women/all" },
-    { id: "eio2", name: "Footwear", image: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=100", link: "/women/footwear" },
-    { id: "eio3", name: "Accessories", image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=100", link: "/women/accessories" }
   ];
 
   const beautyProducts = [
     {
-      id: "bp1",
-      name: "Lipstick Set",
-      price: 899,
-      originalPrice: 1499,
-      rating: 4.5,
-      reviews: 234,
-      image: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=400",
-      brand: "BeautyBrand"
+      id: "wb-1",
+      name: "Luxury Skincare Set",
+      price: 3499,
+      originalPrice: 5999,
+      rating: 4.7,
+      reviews: 75,
+      image: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=300",
+      brand: "BeautyEssentials"
     },
     {
-      id: "bp2",
-      name: "Face Cream",
-      price: 1299,
-      originalPrice: 1999,
-      rating: 4.6,
-      reviews: 156,
-      image: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=400",
-      brand: "SkinCare"
+      id: "wb-2",
+      name: "Makeup Palette",
+      price: 1499,
+      originalPrice: 2499,
+      rating: 4.4,
+      reviews: 110,
+      image: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=300",
+      brand: "ColorGlam"
     }
   ];
 
   const footwearProducts = [
     {
-      id: "fp1",
-      name: "Casual Sneakers",
-      price: 2499,
-      originalPrice: 3999,
-      rating: 4.4,
-      reviews: 189,
-      image: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400",
-      brand: "FootBrand"
+      id: "wf-1",
+      name: "High Heel Sandals",
+      price: 2799,
+      originalPrice: 4499,
+      rating: 4.6,
+      reviews: 60,
+      image: "https://images.unsplash.com/photo-1603808033192-082d6919d3e1?w=300",
+      brand: "ElegantSteps"
     },
     {
-      id: "fp2",
-      name: "Formal Heels",
-      price: 1899,
-      originalPrice: 2999,
+      id: "wf-2",
+      name: "Comfortable Sneakers",
+      price: 1799,
+      originalPrice: 2799,
       rating: 4.3,
-      reviews: 124,
-      image: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400",
-      brand: "HeelCo"
+      reviews: 95,
+      image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300",
+      brand: "ActiveFoot"
     }
   ];
 
   const watchesProducts = [
     {
-      id: "wp1",
+      id: "ww-1",
+      name: "Designer Watch",
+      price: 4499,
+      originalPrice: 6999,
+      rating: 4.8,
+      reviews: 50,
+      image: "https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=300",
+      brand: "TimeLuxe"
+    },
+    {
+      id: "ww-2",
       name: "Smart Watch",
-      price: 5999,
-      originalPrice: 8999,
-      rating: 4.7,
-      reviews: 345,
-      image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400",
-      brand: "TechWatch"
+      price: 3299,
+      originalPrice: 5299,
+      rating: 4.5,
+      reviews: 80,
+      image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=300",
+      brand: "TechTime"
     }
   ];
 
   const perfumeProducts = [
     {
-      id: "pp1",
-      name: "Floral Perfume",
-      price: 2999,
-      originalPrice: 4999,
-      rating: 4.8,
-      reviews: 278,
-      image: "https://images.unsplash.com/photo-1541643600914-78b084683601?w=400",
-      brand: "FragranceCo"
+      id: "wp-1",
+      name: "Exclusive Perfume",
+      price: 1999,
+      originalPrice: 3499,
+      rating: 4.9,
+      reviews: 40,
+      image: "https://images.unsplash.com/photo-1541643600914-78b084683601?w=300",
+      brand: "ScentDelight"
+    },
+    {
+      id: "wp-2",
+      name: "Floral Scent",
+      price: 1299,
+      originalPrice: 2299,
+      rating: 4.6,
+      reviews: 70,
+      image: "https://images.unsplash.com/photo-1541643600914-78b084683601?w=300",
+      brand: "AromaEssence"
+    }
+  ];
+
+  const womensTopBrands = [
+    {
+      id: "wtb-1",
+      name: "Zara",
+      logo: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=100",
+      image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=300",
+      link: "/women?brand=zara"
+    },
+    {
+      id: "wtb-2", 
+      name: "H&M",
+      logo: "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=100",
+      image: "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=300",
+      link: "/women?brand=hm"
+    }
+  ];
+
+  const womensCoupons = [
+    {
+      id: "wc-1",
+      title: "Extra 20% Off",
+      code: "WOMEN20",
+      discount: "20% OFF",
+      description: "On all women's fashion",
+      validUntil: "2024-12-31"
+    },
+    {
+      id: "wc-2",
+      title: "Buy 2 Get 1 Free",
+      code: "BUY2GET1",
+      discount: "33% OFF",
+      description: "On select items",
+      validUntil: "2024-12-31"
+    }
+  ];
+
+  const womensTopCategories = [
+    {
+      id: "wtc-1",
+      name: "Dresses",
+      image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=300",
+      link: "/women?category=dresses",
+      discount: "Up to 40% OFF"
+    },
+    {
+      id: "wtc-2",
+      name: "Tops & Blouses", 
+      image: "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=300",
+      link: "/women?category=tops",
+      discount: "Up to 35% OFF"
     }
   ];
 
   return (
     <Layout>
-      <div className="space-y-2 bg-gray-50">
-        {/* Fashion Carousel Header */}
-        <FashionCarousel 
-          section="women" 
-          title="Women's Fashion" 
-          subtitle="Explore trendy and stylish women's collection" 
-        />
+      <div className="container mx-auto py-8">
+        <h1 className="text-2xl font-bold mb-4">Women's Collection</h1>
 
-        {/* Tabs Section */}
-        <TabSection tabs={tabs} />
-
-        {/* Shop by Category */}
-        <RoundCategorySection categories={categories} />
-
-        {/* Hero Carousel */}
-        <div className="px-3">
-          <ImageCarousel images={carouselImages} />
-        </div>
-
-        {/* Subcategory Section - Updated to 2 lines */}
-        <section className="px-3">
-          <div className="bg-white rounded-lg p-4">
-            <div className="flex items-center justify-between mb-3">
-              <h2 className="text-base font-semibold text-gray-800">Shop by Style</h2>
-              <Button variant="outline" size="sm" className="text-xs border-[#FF6B9D] text-[#FF6B9D] hover:bg-[#FF6B9D] hover:text-white rounded-lg px-3 py-1.5">
-                View All
-              </Button>
-            </div>
-            <div className="grid grid-cols-4 gap-2">
-              {subcategories.map((subcategory) => (
-                <div key={subcategory.id} className="text-center">
-                  <div className="aspect-square rounded-lg overflow-hidden bg-gray-100 mb-1">
-                    <img
-                      src={subcategory.image}
-                      alt={subcategory.name}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <p className="text-xs text-gray-600 leading-tight">{subcategory.name}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Banner Section */}
-        <section className="px-3">
-          <PromoBanner banner={promoBanners[0]} />
-        </section>
-
-        {/* Brands Flex Section */}
-        <BrandsFlexSection brands={brandsFlexData} />
-
-        {/* Biggest Brands On Offers */}
-        <section className="px-3">
-          <div className="flex items-center justify-between mb-3">
-            <h2 className="text-lg font-bold text-gray-800">🏆 Biggest Brands On Offers</h2>
-            <Button variant="outline" size="sm" className="text-xs border-[#FF6B9D] text-[#FF6B9D] hover:bg-[#FF6B9D] hover:text-white rounded-lg px-3 py-1.5">
-              View All
-            </Button>
-          </div>
-          <ProductSlider title="" products={topBrandsProducts} />
-        </section>
-
-        {/* Top Categories Section */}
-        <TShirtCategoriesSection categories={topCategories} title="👚 Top Categories" />
-
-        {/* Offers and Coupons Section */}
-        <OffersAndCouponsSection coupons={couponsData} />
-
-        {/* Biggest Offers Only on Obeyyo */}
-        <BiggestOfferSection products={biggestOfferProducts} />
-
-        {/* Banner */}
-        <section className="px-3">
-          <PromoBanner banner={promoBanners[1]} />
-        </section>
-
-        {/* Everything in Offer */}
-        <EverythingInOfferSection categories={everythingInOfferCategories} />
-
-        {/* Banner with Offer */}
-        <section className="px-3">
-          <PromoBanner banner={promoBanners[2]} />
-        </section>
-
-        {/* Beauty Products Section */}
-        <section className="px-3">
-          <div className="flex items-center justify-between mb-3">
-            <h2 className="text-lg font-bold text-gray-800">💄 Women's Beauty</h2>
-            <Button variant="outline" size="sm" className="text-xs border-[#FF6B9D] text-[#FF6B9D] hover:bg-[#FF6B9D] hover:text-white rounded-lg px-3 py-1.5">
-              View All
-            </Button>
-          </div>
-          <ProductSlider title="" products={beautyProducts} />
-        </section>
-
-        {/* Footwear Section */}
-        <section className="px-3">
-          <div className="flex items-center justify-between mb-3">
-            <h2 className="text-lg font-bold text-gray-800">👠 Women's Footwear</h2>
-            <Button variant="outline" size="sm" className="text-xs border-[#FF6B9D] text-[#FF6B9D] hover:bg-[#FF6B9D] hover:text-white rounded-lg px-3 py-1.5">
-              View All
-            </Button>
-          </div>
-          <ProductSlider title="" products={footwearProducts} />
-        </section>
-
-        {/* Watches Section */}
-        <section className="px-3">
-          <div className="flex items-center justify-between mb-3">
-            <h2 className="text-lg font-bold text-gray-800">⌚ Women's Watches</h2>
-            <Button variant="outline" size="sm" className="text-xs border-[#FF6B9D] text-[#FF6B9D] hover:bg-[#FF6B9D] hover:text-white rounded-lg px-3 py-1.5">
-              View All
-            </Button>
-          </div>
-          <ProductSlider title="" products={watchesProducts} />
-        </section>
-
-        {/* Perfume Section */}
-        <section className="px-3">
-          <div className="flex items-center justify-between mb-3">
-            <h2 className="text-lg font-bold text-gray-800">🌺 Women's Fragrances</h2>
-            <Button variant="outline" size="sm" className="text-xs border-[#FF6B9D] text-[#FF6B9D] hover:bg-[#FF6B9D] hover:text-white rounded-lg px-3 py-1.5">
-              View All
-            </Button>
-          </div>
-          <ProductSlider title="" products={perfumeProducts} />
-        </section>
-
-        {/* Deal of the Day */}
-        <section className="px-3">
-          <DealOfTheDay product={dealProduct} endTime={dealEndTime} />
-        </section>
-
-        {/* Products Grid */}
-        <div className="px-3">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
+        {/* Featured Products */}
+        <section className="mb-8">
+          <h2 className="text-xl font-semibold mb-2">Featured Products</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {products.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
           </div>
-        </div>
+        </section>
+
+        {/* Top Brands */}
+        <section className="mb-8">
+          <h2 className="text-xl font-semibold mb-2">Top Brands</h2>
+          <div className="flex gap-4 overflow-x-auto">
+            {womensTopBrands.map((brand) => (
+              <Link key={brand.id} to={brand.link} className="flex flex-col items-center">
+                <img src={brand.logo} alt={brand.name} className="w-16 h-16 rounded-full object-cover mb-2" />
+                <p className="text-sm">{brand.name}</p>
+              </Link>
+            ))}
+          </div>
+        </section>
+
+        {/* Coupons & Offers */}
+        <section className="mb-8">
+          <h2 className="text-xl font-semibold mb-2">Coupons & Offers</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {womensCoupons.map((coupon) => (
+              <div key={coupon.id} className="bg-white p-4 rounded-md shadow-sm">
+                <h3 className="text-lg font-semibold">{coupon.title}</h3>
+                <p className="text-gray-600">{coupon.description}</p>
+                <p className="text-sm">Code: {coupon.code}</p>
+                <p className="text-xs">Valid Until: {coupon.validUntil}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Top Categories */}
+        <section className="mb-8">
+          <h2 className="text-xl font-semibold mb-2">Top Categories</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {womensTopCategories.map((category) => (
+              <Link key={category.id} to={category.link} className="relative">
+                <img src={category.image} alt={category.name} className="w-full h-48 object-cover rounded-md" />
+                <div className="absolute inset-0 bg-black opacity-40 rounded-md"></div>
+                <div className="absolute bottom-0 left-0 p-4 text-white">
+                  <h3 className="text-lg font-semibold">{category.name}</h3>
+                  <p className="text-sm">{category.discount}</p>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+
+        {/* Shop by Section */}
+        <section className="mb-8">
+          <h2 className="text-xl font-semibold mb-2">Shop By</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {/* Beauty Products */}
+            <div>
+              <h3 className="text-lg font-semibold mb-2">Beauty</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                {beautyProducts.map((product) => (
+                  <ProductCard key={product.id} product={product} />
+                ))}
+              </div>
+              <Button variant="link" asChild>
+                <Link to="/women?category=beauty">View All Beauty Products</Link>
+              </Button>
+            </div>
+
+            {/* Footwear Products */}
+            <div>
+              <h3 className="text-lg font-semibold mb-2">Footwear</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                {footwearProducts.map((product) => (
+                  <ProductCard key={product.id} product={product} />
+                ))}
+              </div>
+              <Button variant="link" asChild>
+                <Link to="/women?category=footwear">View All Footwear</Link>
+              </Button>
+            </div>
+
+            {/* Watches Products */}
+            <div>
+              <h3 className="text-lg font-semibold mb-2">Watches</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                {watchesProducts.map((product) => (
+                  <ProductCard key={product.id} product={product} />
+                ))}
+              </div>
+              <Button variant="link" asChild>
+                <Link to="/women?category=watches">View All Watches</Link>
+              </Button>
+            </div>
+
+            {/* Perfume Products */}
+            <div>
+              <h3 className="text-lg font-semibold mb-2">Perfumes</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                {perfumeProducts.map((product) => (
+                  <ProductCard key={product.id} product={product} />
+                ))}
+              </div>
+              <Button variant="link" asChild>
+                <Link to="/women?category=perfumes">View All Perfumes</Link>
+              </Button>
+            </div>
+          </div>
+        </section>
       </div>
     </Layout>
   );

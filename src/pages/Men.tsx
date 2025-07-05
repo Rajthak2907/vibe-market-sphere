@@ -407,6 +407,98 @@ const Men = () => {
     { id: "e4", name: "Shoes", image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400", discount: "Up to 70% OFF", link: "/men/shoes" }
   ];
 
+  const beautyProducts = [
+    {
+      id: "mb-1",
+      name: "Men's Grooming Kit",
+      price: 899,
+      originalPrice: 1499,
+      rating: 4.3,
+      reviews: 67,
+      image: "https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=300",
+      brand: "GroomMax"
+    },
+    {
+      id: "mb-2",
+      name: "Beard Oil Set",
+      price: 599,
+      originalPrice: 999,
+      rating: 4.5,
+      reviews: 89,
+      image: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=300",
+      brand: "BeardCare"
+    }
+  ];
+
+  const footwearProducts = [
+    {
+      id: "mf-1",
+      name: "Men's Sports Shoes",
+      price: 2499,
+      originalPrice: 3999,
+      rating: 4.4,
+      reviews: 156,
+      image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300",
+      brand: "SportMax"
+    },
+    {
+      id: "mf-2",
+      name: "Casual Sneakers",
+      price: 1899,
+      originalPrice: 2999,
+      rating: 4.2,
+      reviews: 234,
+      image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=300",
+      brand: "StreetWear"
+    }
+  ];
+
+  const watchesProducts = [
+    {
+      id: "mw-1",
+      name: "Men's Digital Watch",
+      price: 1299,
+      originalPrice: 1999,
+      rating: 4.1,
+      reviews: 78,
+      image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=300",
+      brand: "TimeZone"
+    },
+    {
+      id: "mw-2",
+      name: "Analog Watch",
+      price: 1599,
+      originalPrice: 2499,
+      rating: 4.3,
+      reviews: 145,
+      image: "https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=300",
+      brand: "ClassicTime"
+    }
+  ];
+
+  const perfumeProducts = [
+    {
+      id: "mp-1",
+      name: "Men's Cologne",
+      price: 799,
+      originalPrice: 1299,
+      rating: 4.2,
+      reviews: 123,
+      image: "https://images.unsplash.com/photo-1541643600914-78b084683601?w=300",
+      brand: "FragranceMax"
+    },
+    {
+      id: "mp-2",
+      name: "Premium Perfume",
+      price: 1199,
+      originalPrice: 1899,
+      rating: 4.4,
+      reviews: 89,
+      image: "https://images.unsplash.com/photo-1541643600914-78b084683601?w=300",
+      brand: "LuxeScent"
+    }
+  ];
+
   return (
     <Layout>
       <div className="space-y-2 bg-gray-50">

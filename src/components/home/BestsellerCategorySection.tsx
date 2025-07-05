@@ -1,6 +1,7 @@
 
 import { useRef } from "react";
 import { Link } from "react-router-dom";
+import SectionBanner from "@/components/SectionBanner";
 
 const BestsellerCategorySection = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -38,8 +39,13 @@ const BestsellerCategorySection = () => {
 
   return (
     <section className="px-4 py-6 bg-gray-50">
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl font-bold text-gray-800">🏆 Bestseller Category</h2>
+      <div className="mb-4">
+        <SectionBanner
+          title="Bestseller Category"
+          subtitle="Top-performing categories loved by customers"
+          imageUrl="https://images.unsplash.com/photo-1483058712412-4245e9b90334?w=800"
+          height="h-28"
+        />
       </div>
       
       <div 

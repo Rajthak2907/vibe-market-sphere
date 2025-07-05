@@ -2,6 +2,7 @@
 import { Link } from "react-router-dom";
 import { ChevronRight } from "lucide-react";
 import ProductSlider from "@/components/ProductSlider";
+import SectionBanner from "@/components/SectionBanner";
 
 interface NewArrivalsSectionProps {
   isLoading: boolean;
@@ -42,10 +43,19 @@ const NewArrivalsSection = ({ isLoading }: NewArrivalsSectionProps) => {
 
   return (
     <section className="bg-gradient-to-r from-obeyyo-blue to-obeyyo-pink mx-4 rounded-2xl p-4 bg-zinc-200">
+      <div className="mb-4">
+        <SectionBanner
+          title="New Arrivals"
+          subtitle="Fresh styles for the season"
+          imageUrl="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800"
+          height="h-28"
+        />
+      </div>
+
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
           <span className="text-lg">🌟</span>
-          <h2 className="text-lg font-bold text-zinc-800">New Arrivals</h2>
+          <h2 className="text-lg font-bold text-zinc-800">Latest Collection</h2>
         </div>
         <Link to="/new-arrivals" className="text-sm text-white/80 hover:text-white flex items-center gap-1 font-medium">
           View All <ChevronRight className="w-4 h-4" />

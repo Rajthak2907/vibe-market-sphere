@@ -1,6 +1,7 @@
 
 import { useRef } from "react";
 import ProductCard from "@/components/ProductCard";
+import SectionBanner from "@/components/SectionBanner";
 
 const TrendyThisWeekSection = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -54,13 +55,13 @@ const TrendyThisWeekSection = () => {
 
   return (
     <section className="px-4 py-6 bg-gradient-to-r from-teal-50 to-cyan-50">
-      <div className="flex items-center justify-between mb-4">
-        <div>
-          <h2 className="text-xl font-bold text-gray-800 flex items-center gap-2">
-            🔥 Trendy This Week
-          </h2>
-          <p className="text-sm text-gray-600">What everyone's talking about</p>
-        </div>
+      <div className="mb-4">
+        <SectionBanner
+          title="Trendy This Week"
+          subtitle="What everyone's talking about"
+          imageUrl="https://images.unsplash.com/photo-1500673922987-e212871fec22?w=800"
+          height="h-28"
+        />
       </div>
       
       <div 

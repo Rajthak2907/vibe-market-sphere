@@ -1,6 +1,7 @@
 
 import { useRef } from "react";
 import { Link } from "react-router-dom";
+import SectionBanner from "@/components/SectionBanner";
 
 const FeaturedBrandsSection = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -34,16 +35,19 @@ const FeaturedBrandsSection = () => {
 
   return (
     <section className="px-4 py-6 bg-white">
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl font-bold text-gray-800">FEATURED BRANDS</h2>
-        <span className="bg-gray-200 text-gray-600 px-2 py-1 rounded text-xs">AD</span>
+      <div className="mb-4">
+        <SectionBanner
+          title="FEATURED BRANDS"
+          subtitle="Premium collections from top brands"
+          imageUrl="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800"
+          height="h-28"
+        />
       </div>
       
       <div
         ref={scrollRef}
         className="flex overflow-x-auto space-x-4 pb-2 scrollbar-hide scroll-smooth"
         style={{
-          // 2.5 cards: each card is ~40% width, total = 2*40 + 20 = 100
           WebkitOverflowScrolling: 'touch'
         }}
       >

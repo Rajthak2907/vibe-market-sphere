@@ -2,6 +2,7 @@
 import { Link } from "react-router-dom";
 import { ChevronRight } from "lucide-react";
 import ProductSlider from "@/components/ProductSlider";
+import SectionBanner from "@/components/SectionBanner";
 
 interface RecommendedSectionProps {
   isLoading: boolean;
@@ -39,10 +40,19 @@ const RecommendedSection = ({ isLoading }: RecommendedSectionProps) => {
 
   return (
     <section className="bg-gradient-to-r from-obeyyo-pink to-obeyyo-red mx-4 rounded-2xl p-4 bg-amber-300">
+      <div className="mb-4">
+        <SectionBanner
+          title="Recommended for You"
+          subtitle="Personalized picks just for you"
+          imageUrl="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800"
+          height="h-28"
+        />
+      </div>
+
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
           <span className="text-lg">🧠</span>
-          <h2 className="text-lg font-bold text-zinc-950">Recommended for You</h2>
+          <h2 className="text-lg font-bold text-zinc-950">AI Curated</h2>
         </div>
         <Link to="/recommended" className="text-sm text-white/80 hover:text-white flex items-center gap-1 font-medium">
           View All <ChevronRight className="w-4 h-4" />

@@ -1,9 +1,12 @@
 import { Link } from "react-router-dom";
 import { TrendingUp, ChevronRight } from "lucide-react";
 import ProductSlider from "@/components/ProductSlider";
+import SectionBanner from "@/components/SectionBanner";
+
 interface TrendingSectionProps {
   isLoading: boolean;
 }
+
 const TrendingSection = ({
   isLoading
 }: TrendingSectionProps) => {
@@ -38,17 +41,30 @@ const TrendingSection = ({
     brand: "TechStyle",
     isTrending: true
   }];
-  return <section className="bg-gradient-to-r from-obeyyo-yellow to-obeyyo-orange rounded-2xl p-4 bg-zinc-800 px-0 mx-0">
+
+  return (
+    <section className="bg-gradient-to-r from-obeyyo-yellow to-obeyyo-orange rounded-2xl p-4 bg-zinc-800 px-0 mx-0">
+      <div className="mb-4">
+        <SectionBanner
+          title="Trending Now"
+          subtitle="What's hot in fashion right now"
+          imageUrl="https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800"
+          height="h-28"
+        />
+      </div>
+
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
           <TrendingUp className="w-5 h-5 text-white" />
-          <h2 className="text-lg font-bold text-white">Trending Now</h2>
+          <h2 className="text-lg font-bold text-white">Popular Items</h2>
         </div>
         <Link to="/trending" className="text-sm text-white/80 hover:text-white flex items-center gap-1 font-medium">
           View All <ChevronRight className="w-4 h-4" />
         </Link>
       </div>
       <ProductSlider title="" products={trendingProducts} />
-    </section>;
+    </section>
+  );
 };
+
 export default TrendingSection;

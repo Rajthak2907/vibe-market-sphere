@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Star, ChevronRight } from "lucide-react";
 import FeaturedBrands from "@/components/FeaturedBrands";
 import SkeletonLoader from "@/components/SkeletonLoader";
+import SectionBanner from "@/components/SectionBanner";
 
 interface ShopByBrandsSectionProps {
   isLoading: boolean;
@@ -43,10 +44,19 @@ const ShopByBrandsSection = ({ isLoading }: ShopByBrandsSectionProps) => {
 
   return (
     <section className="bg-gradient-to-r from-obeyyo-orange to-obeyyo-yellow mx-4 rounded-2xl p-4 bg-white">
+      <div className="mb-4">
+        <SectionBanner
+          title="Shop by Brands"
+          subtitle="Explore collections from your favorite brands"
+          imageUrl="https://images.unsplash.com/photo-1493397212122-2b85dda8106b?w=800"
+          height="h-28"
+        />
+      </div>
+
       <div className="flex items-center justify-between mb-4 rounded-sm bg-white">
         <div className="flex items-center gap-2 bg-white">
           <Star className="w-5 h-5 text-white bg-slate-950" />
-          <h2 className="text-lg font-bold text-black">Shop by Brands</h2>
+          <h2 className="text-lg font-bold text-black">Premium Brands</h2>
         </div>
         <Link to="/brands" className="text-sm text-black/80 hover:text-black flex items-center gap-1 font-medium">
           View All <ChevronRight className="w-4 h-4" />

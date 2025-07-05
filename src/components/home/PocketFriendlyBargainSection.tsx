@@ -1,7 +1,7 @@
 
 import { useRef } from "react";
 import ProductCard from "@/components/ProductCard";
-import SectionHeader from "@/components/SectionHeader";
+import SectionBanner from "@/components/SectionBanner";
 
 const PocketFriendlyBargainSection = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -67,13 +67,13 @@ const PocketFriendlyBargainSection = () => {
 
   return (
     <section className="px-4 py-6 bg-gradient-to-r from-yellow-50 to-orange-50">
-      <div className="flex items-center justify-between mb-4">
-        <div>
-          <h2 className="text-xl font-bold text-gray-800 flex items-center gap-2">
-            💰 Pocket Friendly Bargain!
-          </h2>
-          <p className="text-sm text-gray-600">Where style matches savings</p>
-        </div>
+      <div className="mb-4">
+        <SectionBanner
+          title="Pocket Friendly Bargain!"
+          subtitle="Where style matches savings"
+          imageUrl="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800"
+          height="h-28"
+        />
       </div>
       
       <div 

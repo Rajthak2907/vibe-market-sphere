@@ -1,6 +1,7 @@
 
 import { useRef } from "react";
 import ProductCard from "@/components/ProductCard";
+import SectionBanner from "@/components/SectionBanner";
 
 const UniqueBestOfObeyyoSection = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -43,13 +44,13 @@ const UniqueBestOfObeyyoSection = () => {
 
   return (
     <section className="px-4 py-6 bg-gradient-to-r from-purple-50 to-indigo-50">
-      <div className="flex items-center justify-between mb-4">
-        <div>
-          <h2 className="text-xl font-bold text-gray-800 flex items-center gap-2">
-            ✨ Unique Best of Obeyyo
-          </h2>
-          <p className="text-sm text-gray-600">Exclusive collections you won't find anywhere else</p>
-        </div>
+      <div className="mb-4">
+        <SectionBanner
+          title="Unique Best of Obeyyo"
+          subtitle="Exclusive collections you won't find anywhere else"
+          imageUrl="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800"
+          height="h-28"
+        />
       </div>
       
       <div 

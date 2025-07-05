@@ -4,9 +4,12 @@ import { Zap, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ProductCard from "@/components/ProductCard";
 import SkeletonLoader from "@/components/SkeletonLoader";
+import SectionBanner from "@/components/SectionBanner";
+
 interface CategoryFlashSaleSectionProps {
   isLoading: boolean;
 }
+
 const CategoryFlashSaleSection = ({
   isLoading
 }: CategoryFlashSaleSectionProps) => {
@@ -16,6 +19,7 @@ const CategoryFlashSaleSection = ({
     minutes: 45,
     seconds: 23
   });
+
   const categoryFlashSaleProducts = {
     men: [{
       id: "men-fs-1",
@@ -182,6 +186,7 @@ const CategoryFlashSaleSection = ({
       isFlashSale: true
     }]
   };
+
   const categories = [{
     id: 'men',
     name: "Men's",
@@ -199,6 +204,7 @@ const CategoryFlashSaleSection = ({
     name: "Accessories",
     color: "#f9b704"
   }];
+
   useEffect(() => {
     const timer = setInterval(() => {
       setTimeLeft(prev => {
@@ -225,6 +231,7 @@ const CategoryFlashSaleSection = ({
     }, 1000);
     return () => clearInterval(timer);
   }, []);
+
   const FlashSaleTimer = () => <div className="flex items-center gap-2 text-white">
       <Clock className="w-4 h-4" />
       <span className="text-sm font-semibold">
@@ -233,6 +240,7 @@ const CategoryFlashSaleSection = ({
         {String(timeLeft.seconds).padStart(2, '0')}
       </span>
     </div>;
+
   const ProductGrid = ({
     products,
     showSkeleton = false,
@@ -249,24 +257,27 @@ const CategoryFlashSaleSection = ({
             </div>)}
       </div>;
   };
-  return <section className="bg-gradient-to-r from-obeyyo-orange to-obeyyo-red rounded-2xl p-4 mx-[2px] px-px bg-slate-600">
-      <div className="flex items-center justify-between mb-4 px-[13px] bg-orange-400 my-0">
-        <div className="flex items-center gap-2">
-          <Zap className="w-5 h-5 text-white" />
-          <h2 className="text-lg font-bold text-white">Category Flash Sale</h2>
-        </div>
-        <FlashSaleTimer />
+
+  return (
+    <section className="bg-gradient-to-r from-obeyyo-blue to-obeyyo-green rounded-2xl p-4 bg-emerald-600 px-0 mx-[2px]">
+      <div className="mb-4">
+        <SectionBanner
+          title="Category Flash Sale"
+          subtitle="Category-wise exclusive deals"
+          imageUrl="https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=800"
+          height="h-28"
+        />
       </div>
-      
+
       {/* Category Tabs */}
       <div className="flex gap-2 mb-4 overflow-x-auto scrollbar-hide px-[5px] bg-transparent">
         {categories.map(category => <button key={category.id} onClick={() => setActiveCategory(category.id)} className={`flex-shrink-0 px-4 py-2 text-sm font-semibold rounded-full transition-all ${activeCategory === category.id ? 'bg-white text-gray-800' : 'bg-white/20 text-white hover:bg-white/30'}`}>
             {category.name}
           </button>)}
       </div>
-      
+
       <ProductGrid products={categoryFlashSaleProducts[activeCategory as keyof typeof categoryFlashSaleProducts]} showSkeleton={isLoading} />
-      
+
       <div className="mt-4 text-center">
         <Button variant="outline" className="bg-white/20 border-white/30 text-white hover:bg-white/30 rounded-xl" asChild>
           <Link to="/flash-sale">
@@ -274,6 +285,8 @@ const CategoryFlashSaleSection = ({
           </Link>
         </Button>
       </div>
-    </section>;
+    </section>
+  );
 };
+
 export default CategoryFlashSaleSection;
