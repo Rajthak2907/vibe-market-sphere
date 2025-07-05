@@ -5,17 +5,17 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import Sidebar from "./Sidebar";
-
 interface LayoutProps {
   children: React.ReactNode;
 }
-
-const Layout = ({ children }: LayoutProps) => {
+const Layout = ({
+  children
+}: LayoutProps) => {
   const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [searchFocused, setSearchFocused] = useState(false);
-  
+
   // Scroll-based navigation visibility
   const [lastScrollY, setLastScrollY] = useState(0);
   const [navVisible, setNavVisible] = useState(true);
@@ -28,18 +28,18 @@ const Layout = ({ children }: LayoutProps) => {
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      
+
       // Show nav when scrolling up, hide when scrolling down
       if (currentScrollY < lastScrollY || currentScrollY < 100) {
         setNavVisible(true);
       } else if (currentScrollY > lastScrollY && currentScrollY > 100) {
         setNavVisible(false);
       }
-      
       setLastScrollY(currentScrollY);
     };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('scroll', handleScroll, {
+      passive: true
+    });
     return () => window.removeEventListener('scroll', handleScroll);
   }, [lastScrollY]);
 
@@ -69,7 +69,6 @@ const Layout = ({ children }: LayoutProps) => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location.pathname]);
-
   const bottomNavItems = [{
     label: "Home",
     path: "/",
@@ -93,7 +92,6 @@ const Layout = ({ children }: LayoutProps) => {
     path: "/profile",
     icon: User
   }];
-
   const quickCategories = [{
     name: "Men",
     path: "/men",
@@ -125,30 +123,25 @@ const Layout = ({ children }: LayoutProps) => {
     color: "#fb8619",
     icon: "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?w=100&h=100&fit=crop&crop=center"
   }];
-
-  return (
-    <div className="min-h-screen bg-gray-50 font-['Poppins',sans-serif]">
+  return <div className="min-h-screen bg-gray-50 font-['Poppins',sans-serif]">
       {/* Sidebar */}
       <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       {/* Header - Mobile Optimized with Animations */}
       <header className="bg-white shadow-sm border-b sticky top-0 z-40 transition-all duration-300">
-        <div className="bg-gradient-to-r from-gray-800 to-gray-900 py-[4px] px-[4px]">
+        <div className="bg-gradient-to-r from-gray-800 to-gray-900 px-[4px] py-0">
           <div className="flex items-center justify-between py-0 px-[4px]">
             {/* Logo with Sidebar Toggle */}
-            <div className="flex items-center space-x-3">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setSidebarOpen(true)}
-                className="p-2 transition-all duration-200 hover:scale-105 active:scale-95 text-gray-950 bg-obeyyo-blue hover:bg-obeyyo-blue/80"
-              >
+            <div className="flex items-center space-x-3 my-0">
+              <Button variant="ghost" size="sm" onClick={() => setSidebarOpen(true)} className="p-2 transition-all duration-200 hover:scale-105 active:scale-95 text-gray-950 bg-obeyyo-blue hover:bg-obeyyo-blue/80">
                 <Menu className="h-5 w-5 text-white" />
               </Button>
               
               <Link to="/" className="flex items-center space-x-2 hover:scale-105 transition-transform duration-200">
                 <img src="/lovable-uploads/fcde6e4f-7f0d-4250-9eac-15f1c0e84293.png" alt="Obeyyo" className="h-10 w-auto object-contain drop-shadow-md" />
-                <span className="text-2xl font-black gradient-text-obeyyo tracking-tight" style={{ letterSpacing: "-0.04em" }}>
+                <span className="text-2xl font-black gradient-text-obeyyo tracking-tight" style={{
+                letterSpacing: "-0.04em"
+              }}>
                   obeyyo
                 </span>
               </Link>
@@ -177,7 +170,7 @@ const Layout = ({ children }: LayoutProps) => {
           </div>
 
           {/* Enhanced Quick Categories with Pill Styling */}
-          <div className="flex gap-2 mt-3 overflow-x-auto scrollbar-hide py-1">
+          <div className="flex gap-2 mt-3 overflow-x-auto scrollbar-hide py-[4px] my-px">
             {quickCategories.map((category, index) => <Link key={category.path} to={category.path} className={`flex-shrink-0 flex items-center gap-2 text-white text-sm font-semibold hover:shadow-lg transition-all duration-200 hover:scale-105 active:scale-95 animate-fade-in px-[14px] py-[6px] bg-white/10 rounded-full`} style={{
             animationDelay: `${index * 100}ms`,
             backdropFilter: 'blur(10px)'
@@ -195,8 +188,7 @@ const Layout = ({ children }: LayoutProps) => {
       </main>
 
       {/* Enhanced Mobile Menu Overlay */}
-      {menuOpen && (
-        <>
+      {menuOpen && <>
           <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm animate-fade-in" onClick={() => setMenuOpen(false)} />
           <div className="fixed inset-y-0 right-0 z-50 w-[85%] max-w-sm h-full bg-white shadow-2xl animate-slide-in-right">
             <div className="flex items-center justify-between p-4 border-b bg-gradient-to-r from-obeyyo-pink/5 to-obeyyo-blue/5">
@@ -218,54 +210,38 @@ const Layout = ({ children }: LayoutProps) => {
               </Link>
             </div>
           </div>
-        </>
-      )}
+        </>}
 
       {/* Enhanced Bottom Navigation with Scroll-based Visibility */}
-      <nav className={`fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-gray-200 z-40 shadow-lg transition-transform duration-300 ease-in-out ${
-        navVisible ? 'translate-y-0' : 'translate-y-full'
-      }`}>
+      <nav className={`fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-gray-200 z-40 shadow-lg transition-transform duration-300 ease-in-out ${navVisible ? 'translate-y-0' : 'translate-y-full'}`}>
         <div className="grid grid-cols-5 h-16">
           {bottomNavItems.map((item, index) => {
-            const Icon = item.icon;
-            const isActive = location.pathname === item.path;
-            return (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={`flex flex-col items-center justify-center space-y-1 relative transition-all duration-300 ease-out 
+          const Icon = item.icon;
+          const isActive = location.pathname === item.path;
+          return <Link key={item.path} to={item.path} className={`flex flex-col items-center justify-center space-y-1 relative transition-all duration-300 ease-out 
                   ${isActive ? "text-obeyyo-pink animate-fade-in" : "text-gray-500"}
                   ${!isActive ? "hover:bg-gray-100" : ""}
-                  rounded-md`}
-                style={{ WebkitTapHighlightColor: "transparent" }}
-              >
+                  rounded-md`} style={{
+            WebkitTapHighlightColor: "transparent"
+          }}>
                 <div className="relative flex items-center justify-center">
-                  <Icon
-                    className={`w-5 h-5 transition-transform duration-300 ease-out
+                  <Icon className={`w-5 h-5 transition-transform duration-300 ease-out
                       ${isActive ? 'scale-[1.07] text-obeyyo-pink animate-fade-in' : 'group-hover:scale-105 group-hover:text-obeyyo-blue'}
-                    `}
-                  />
+                    `} />
                   {/* Subtle badge, no bounce */}
-                  {item.badge && item.badge > 0 && (
-                    <Badge className="absolute -top-2 -right-2 h-5 w-5 p-0 flex items-center justify-center text-white text-xs bg-obeyyo-pink border-2 border-white shadow-md">
+                  {item.badge && item.badge > 0 && <Badge className="absolute -top-2 -right-2 h-5 w-5 p-0 flex items-center justify-center text-white text-xs bg-obeyyo-pink border-2 border-white shadow-md">
                       {item.badge}
-                    </Badge>
-                  )}
+                    </Badge>}
                 </div>
                 <span className={`text-xs font-medium transition-all duration-200 ease-out ${isActive ? 'animate-fade-in' : ''}`}>
                   {item.label}
                 </span>
                 {/* Animated, elegant indicator for active tab */}
-                {isActive && (
-                  <div className="absolute bottom-1 w-7 h-1.5 rounded-full bg-gradient-to-r from-obeyyo-pink to-obeyyo-blue animate-scale-in opacity-90 shadow-sm" />
-                )}
-              </Link>
-            );
-          })}
+                {isActive && <div className="absolute bottom-1 w-7 h-1.5 rounded-full bg-gradient-to-r from-obeyyo-pink to-obeyyo-blue animate-scale-in opacity-90 shadow-sm" />}
+              </Link>;
+        })}
         </div>
       </nav>
-    </div>
-  );
+    </div>;
 };
-
 export default Layout;
