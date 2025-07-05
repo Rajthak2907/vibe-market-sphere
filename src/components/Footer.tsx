@@ -1,12 +1,35 @@
+
 import { Link } from "react-router-dom";
 import { Facebook, Instagram, Twitter, Youtube } from "lucide-react";
+
 const Footer = () => {
-  return <footer className="bg-gray-900 text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 bg-zinc-500">
+  return (
+    <footer className="bg-gray-900 text-white">
+      {/* Hero tagline section inspired by the reference */}
+      <div className="bg-gradient-to-br from-gray-100 via-gray-200 to-gray-300 text-gray-800 py-16 px-4">
+        <div className="max-w-4xl mx-auto text-center">
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-black uppercase tracking-tight leading-tight mb-6">
+            INDIA'S BOLDEST<br />
+            STREETWEAR MARKETPLACE<br />
+            <span className="bg-gradient-to-r from-obeyyo-pink via-obeyyo-orange to-obeyyo-blue bg-clip-text text-transparent">
+              MADE FOR THE CULTURE.
+            </span>
+          </h1>
+          <p className="text-lg md:text-xl font-medium text-gray-600 mt-8">
+            Always, <span className="font-bold gradient-text-obeyyo">Team Obeyyo</span>
+          </p>
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
           {/* Company Info */}
           <div className="col-span-2 md:col-span-1">
-            <img src="/lovable-uploads/fcde6e4f-7f0d-4250-9eac-15f1c0e84293.png" alt="Obeyyo" className="h-8 w-auto mb-4 filter brightness-0 invert" />
+            <img 
+              src="/lovable-uploads/fcde6e4f-7f0d-4250-9eac-15f1c0e84293.png" 
+              alt="Obeyyo" 
+              className="h-8 w-auto mb-4 filter brightness-0 invert" 
+            />
             <p className="text-gray-300 text-sm mb-4">
               Your one-stop destination for fashion, electronics, and lifestyle products at amazing prices.
             </p>
@@ -66,6 +89,8 @@ const Footer = () => {
           </p>
         </div>
       </div>
-    </footer>;
+    </footer>
+  );
 };
+
 export default Footer;
