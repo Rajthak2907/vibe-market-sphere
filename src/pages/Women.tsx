@@ -360,6 +360,106 @@ const Women = () => {
 
   const highlightsProducts = products.slice(0, 3);
 
+  const brandsFlexData = [
+    { id: "bf1", name: "Zara", image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=100", link: "/women?brand=zara" },
+    { id: "bf2", name: "H&M", image: "https://images.unsplash.com/photo-1571945153237-4929e783af4a?w=100", link: "/women?brand=hm" },
+    { id: "bf3", name: "Forever 21", image: "https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=100", link: "/women?brand=forever21" },
+    { id: "bf4", name: "Mango", image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=100", link: "/women?brand=mango" }
+  ];
+
+  const topCategories = [
+    { id: "tc1", name: "T-Shirts", image: "https://images.unsplash.com/photo-1571945153237-4929e783af4a?w=100", link: "/women/tshirts" },
+    { id: "tc2", name: "Dresses", image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=100", link: "/women/dresses" },
+    { id: "tc3", name: "Jeans", image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=100", link: "/women/jeans" },
+    { id: "tc4", name: "Tops", image: "https://images.unsplash.com/photo-1571945153237-4929e783af4a?w=100", link: "/women/tops" }
+  ];
+
+  const couponsData = [
+    { code: "SAVE30", discount: "30% OFF", description: "On orders above ₹1999" },
+    { code: "FIRST15", discount: "15% OFF", description: "First time buyers" },
+    { code: "FLAT500", discount: "₹500 OFF", description: "On orders above ₹2999" }
+  ];
+
+  const biggestOfferProducts = products.slice(0, 4);
+
+  const everythingInOfferCategories = [
+    { id: "eio1", name: "All Fashion", image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=100", link: "/women/all" },
+    { id: "eio2", name: "Footwear", image: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=100", link: "/women/footwear" },
+    { id: "eio3", name: "Accessories", image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=100", link: "/women/accessories" }
+  ];
+
+  const beautyProducts = [
+    {
+      id: "bp1",
+      name: "Lipstick Set",
+      price: 899,
+      originalPrice: 1499,
+      rating: 4.5,
+      reviews: 234,
+      image: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=400",
+      brand: "BeautyBrand"
+    },
+    {
+      id: "bp2",
+      name: "Face Cream",
+      price: 1299,
+      originalPrice: 1999,
+      rating: 4.6,
+      reviews: 156,
+      image: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=400",
+      brand: "SkinCare"
+    }
+  ];
+
+  const footwearProducts = [
+    {
+      id: "fp1",
+      name: "Casual Sneakers",
+      price: 2499,
+      originalPrice: 3999,
+      rating: 4.4,
+      reviews: 189,
+      image: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400",
+      brand: "FootBrand"
+    },
+    {
+      id: "fp2",
+      name: "Formal Heels",
+      price: 1899,
+      originalPrice: 2999,
+      rating: 4.3,
+      reviews: 124,
+      image: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400",
+      brand: "HeelCo"
+    }
+  ];
+
+  const watchesProducts = [
+    {
+      id: "wp1",
+      name: "Smart Watch",
+      price: 5999,
+      originalPrice: 8999,
+      rating: 4.7,
+      reviews: 345,
+      image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400",
+      brand: "TechWatch"
+    }
+  ];
+
+  const perfumeProducts = [
+    {
+      id: "pp1",
+      name: "Floral Perfume",
+      price: 2999,
+      originalPrice: 4999,
+      rating: 4.8,
+      reviews: 278,
+      image: "https://images.unsplash.com/photo-1541643600914-78b084683601?w=400",
+      brand: "FragranceCo"
+    }
+  ];
+
   return (
     <Layout>
       <div className="space-y-2 bg-gray-50">
