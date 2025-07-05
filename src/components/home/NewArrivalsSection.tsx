@@ -42,7 +42,7 @@ const NewArrivalsSection = ({ isLoading }: NewArrivalsSectionProps) => {
   }];
 
   return (
-    <section className="bg-gradient-to-r from-obeyyo-blue to-obeyyo-pink mx-4 rounded-2xl p-4 bg-zinc-200">
+    <section className="bg-gradient-to-br from-blue-500 via-cyan-500 to-teal-500 mx-4 rounded-2xl p-4 shadow-2xl">
       <div className="mb-4">
         <SectionBanner
           title="New Arrivals"
@@ -52,12 +52,12 @@ const NewArrivalsSection = ({ isLoading }: NewArrivalsSectionProps) => {
         />
       </div>
 
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between mb-4 bg-black/20 backdrop-blur-sm rounded-xl px-4 py-3">
         <div className="flex items-center gap-2">
-          <span className="text-lg">🌟</span>
-          <h2 className="text-lg font-bold text-zinc-800">Latest Collection</h2>
+          <span className="text-lg animate-pulse">🌟</span>
+          <h2 className="text-lg font-bold text-white">Latest Collection</h2>
         </div>
-        <Link to="/new-arrivals" className="text-sm text-white/80 hover:text-white flex items-center gap-1 font-medium">
+        <Link to="/new-arrivals" className="text-sm text-white/90 hover:text-white flex items-center gap-1 font-medium transition-colors">
           View All <ChevronRight className="w-4 h-4" />
         </Link>
       </div>

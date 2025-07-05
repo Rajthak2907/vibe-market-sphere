@@ -54,7 +54,7 @@ const TrendyThisWeekSection = () => {
   ];
 
   return (
-    <section className="px-4 py-6 bg-gradient-to-r from-teal-50 to-cyan-50">
+    <section className="px-4 py-6 bg-gradient-to-br from-violet-50 via-purple-50 to-fuchsia-50">
       <div className="mb-4">
         <SectionBanner
           title="Trendy This Week"
@@ -73,7 +73,7 @@ const TrendyThisWeekSection = () => {
           <div key={product.id} className="flex-shrink-0 w-44">
             <div className="relative">
               <ProductCard product={product} />
-              <div className="absolute -top-2 -left-2 bg-orange-500 text-white text-xs px-2 py-1 rounded-full animate-pulse">
+              <div className="absolute -top-2 -left-2 bg-gradient-to-r from-pink-500 to-purple-600 text-white text-xs px-2 py-1 rounded-full animate-pulse shadow-lg">
                 🔥 Viral
               </div>
             </div>

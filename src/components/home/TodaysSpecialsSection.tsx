@@ -54,7 +54,7 @@ const TodaysSpecialsSection = () => {
   ];
 
   return (
-    <section className="px-4 py-6 bg-gradient-to-r from-red-50 to-pink-50">
+    <section className="px-4 py-6 bg-gradient-to-br from-red-50 via-orange-50 to-yellow-50">
       <div className="flex items-center justify-between mb-4">
         <div>
           <h2 className="text-xl font-bold text-gray-800 flex items-center gap-2">
@@ -64,21 +64,21 @@ const TodaysSpecialsSection = () => {
         </div>
         <div className="flex items-center space-x-2">
           <div className="text-center">
-            <div className="bg-red-500 text-white rounded-lg px-2 py-1 min-w-[40px]">
+            <div className="bg-gradient-to-r from-red-500 to-pink-500 text-white rounded-lg px-2 py-1 min-w-[40px] shadow-lg">
               <div className="text-sm font-bold">{String(timeLeft.hours).padStart(2, '0')}</div>
               <div className="text-xs">Hours</div>
             </div>
           </div>
-          <span className="text-red-500 font-bold">:</span>
+          <span className="text-red-500 font-bold animate-pulse">:</span>
           <div className="text-center">
-            <div className="bg-red-500 text-white rounded-lg px-2 py-1 min-w-[40px]">
+            <div className="bg-gradient-to-r from-red-500 to-pink-500 text-white rounded-lg px-2 py-1 min-w-[40px] shadow-lg">
               <div className="text-sm font-bold">{String(timeLeft.minutes).padStart(2, '0')}</div>
               <div className="text-xs">Min</div>
             </div>
           </div>
-          <span className="text-red-500 font-bold">:</span>
+          <span className="text-red-500 font-bold animate-pulse">:</span>
           <div className="text-center">
-            <div className="bg-red-500 text-white rounded-lg px-2 py-1 min-w-[40px]">
+            <div className="bg-gradient-to-r from-red-500 to-pink-500 text-white rounded-lg px-2 py-1 min-w-[40px] shadow-lg">
               <div className="text-sm font-bold">{String(timeLeft.seconds).padStart(2, '0')}</div>
               <div className="text-xs">Sec</div>
             </div>

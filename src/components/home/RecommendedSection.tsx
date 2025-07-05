@@ -39,7 +39,7 @@ const RecommendedSection = ({ isLoading }: RecommendedSectionProps) => {
   }];
 
   return (
-    <section className="bg-gradient-to-r from-obeyyo-pink to-obeyyo-red mx-4 rounded-2xl p-4 bg-amber-300">
+    <section className="bg-gradient-to-br from-pink-500 via-rose-500 to-red-500 mx-4 rounded-2xl p-4 shadow-2xl">
       <div className="mb-4">
         <SectionBanner
           title="Recommended for You"
@@ -49,12 +49,12 @@ const RecommendedSection = ({ isLoading }: RecommendedSectionProps) => {
         />
       </div>
 
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between mb-4 bg-black/20 backdrop-blur-sm rounded-xl px-4 py-3">
         <div className="flex items-center gap-2">
-          <span className="text-lg">🧠</span>
-          <h2 className="text-lg font-bold text-zinc-950">AI Curated</h2>
+          <span className="text-lg animate-pulse">🧠</span>
+          <h2 className="text-lg font-bold text-white">AI Curated</h2>
         </div>
-        <Link to="/recommended" className="text-sm text-white/80 hover:text-white flex items-center gap-1 font-medium">
+        <Link to="/recommended" className="text-sm text-white/90 hover:text-white flex items-center gap-1 font-medium transition-colors">
           View All <ChevronRight className="w-4 h-4" />
         </Link>
       </div>

@@ -1,3 +1,4 @@
+
 import { Link } from "react-router-dom";
 import { TrendingUp, ChevronRight } from "lucide-react";
 import ProductSlider from "@/components/ProductSlider";
@@ -43,7 +44,7 @@ const TrendingSection = ({
   }];
 
   return (
-    <section className="bg-gradient-to-r from-obeyyo-yellow to-obeyyo-orange rounded-2xl p-4 bg-zinc-800 px-0 mx-0">
+    <section className="bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 mx-4 rounded-2xl p-4 shadow-2xl">
       <div className="mb-4">
         <SectionBanner
           title="Trending Now"
@@ -53,12 +54,12 @@ const TrendingSection = ({
         />
       </div>
 
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between mb-4 bg-black/20 backdrop-blur-sm rounded-xl px-4 py-3">
         <div className="flex items-center gap-2">
-          <TrendingUp className="w-5 h-5 text-white" />
+          <TrendingUp className="w-5 h-5 text-white animate-bounce" />
           <h2 className="text-lg font-bold text-white">Popular Items</h2>
         </div>
-        <Link to="/trending" className="text-sm text-white/80 hover:text-white flex items-center gap-1 font-medium">
+        <Link to="/trending" className="text-sm text-white/90 hover:text-white flex items-center gap-1 font-medium transition-colors">
           View All <ChevronRight className="w-4 h-4" />
         </Link>
       </div>

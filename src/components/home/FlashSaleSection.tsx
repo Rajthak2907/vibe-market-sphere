@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Zap, Clock } from "lucide-react";
@@ -87,14 +88,16 @@ const FlashSaleSection = ({
     return () => clearInterval(timer);
   }, []);
 
-  const FlashSaleTimer = () => <div className="flex items-center gap-2 text-white">
+  const FlashSaleTimer = () => (
+    <div className="flex items-center gap-2 text-white">
       <Clock className="w-4 h-4" />
       <span className="text-sm font-semibold">
         {String(timeLeft.hours).padStart(2, '0')}:
         {String(timeLeft.minutes).padStart(2, '0')}:
         {String(timeLeft.seconds).padStart(2, '0')}
       </span>
-    </div>;
+    </div>
+  );
 
   const ProductGrid = ({
     products,
@@ -102,18 +105,26 @@ const FlashSaleSection = ({
     maxProducts = 4
   }) => {
     const displayProducts = products.slice(0, maxProducts);
-    return <div className="grid grid-cols-2 gap-3 px-4">
-        {showSkeleton ? Array.from({
-        length: maxProducts
-      }).map((_, i) => <div key={i}>
-              <SkeletonLoader type="product" />
-            </div>) : displayProducts.map(product => <div key={product.id}>
-              <ProductCard product={product} />
-            </div>)}
-      </div>;
+    return (
+      <div className="grid grid-cols-2 gap-3 px-4">
+        {showSkeleton 
+          ? Array.from({ length: maxProducts }).map((_, i) => (
+              <div key={i}>
+                <SkeletonLoader type="product" />
+              </div>
+            ))
+          : displayProducts.map(product => (
+              <div key={product.id}>
+                <ProductCard product={product} />
+              </div>
+            ))
+        }
+      </div>
+    );
   };
 
-  return <section className="bg-gradient-to-r from-obeyyo-red to-obeyyo-pink rounded-2xl p-4 bg-red-400 px-0 mx-[2px]">
+  return (
+    <section className="bg-gradient-to-br from-red-500 via-pink-500 to-purple-600 mx-4 rounded-2xl p-4 shadow-2xl">
       <div className="mb-4">
         <SectionBanner
           title="Flash Sale"
@@ -123,9 +134,9 @@ const FlashSaleSection = ({
         />
       </div>
       
-      <div className="flex items-center justify-between mb-4 bg-slate-900 px-[10px]">
+      <div className="flex items-center justify-between mb-4 bg-black/20 backdrop-blur-sm rounded-xl px-4 py-3">
         <div className="flex items-center gap-2">
-          <Zap className="w-5 h-5 text-white" />
+          <Zap className="w-5 h-5 text-white animate-pulse" />
           <span className="text-lg font-bold text-white">Ends In</span>
         </div>
         <FlashSaleTimer />
@@ -134,13 +145,18 @@ const FlashSaleSection = ({
       <ProductGrid products={flashSaleProducts} showSkeleton={isLoading} />
       
       <div className="mt-4 text-center">
-        <Button variant="outline" className="bg-white/20 border-white/30 text-white hover:bg-white/30 rounded-xl" asChild>
+        <Button 
+          variant="outline" 
+          className="bg-white/20 border-white/30 text-white hover:bg-white/30 rounded-xl backdrop-blur-sm font-semibold shadow-lg" 
+          asChild
+        >
           <Link to="/flash-sale">
             View All Flash Sale Products
           </Link>
         </Button>
       </div>
-    </section>;
+    </section>
+  );
 };
 
 export default FlashSaleSection;

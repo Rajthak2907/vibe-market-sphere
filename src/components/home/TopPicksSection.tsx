@@ -31,13 +31,13 @@ const TopPicksSection = ({ isLoading }: TopPicksSectionProps) => {
   }];
 
   return (
-    <section className="bg-gradient-to-r from-obeyyo-blue to-obeyyo-orange mx-4 rounded-2xl p-4 pb-6 bg-slate-800">
-      <div className="flex items-center justify-between mb-4">
+    <section className="bg-gradient-to-br from-slate-700 via-gray-800 to-zinc-900 mx-4 rounded-2xl p-4 shadow-2xl">
+      <div className="flex items-center justify-between mb-4 bg-white/10 backdrop-blur-sm rounded-xl px-4 py-3">
         <div className="flex items-center gap-2">
-          <span className="text-lg">🏆</span>
+          <span className="text-lg animate-bounce">🏆</span>
           <h2 className="text-lg font-bold text-white">Top Picks</h2>
         </div>
-        <Link to="/top-picks" className="text-sm text-white/80 hover:text-white flex items-center gap-1 font-medium">
+        <Link to="/top-picks" className="text-sm text-white/90 hover:text-white flex items-center gap-1 font-medium transition-colors">
           View All <ChevronRight className="w-4 h-4" />
         </Link>
       </div>
