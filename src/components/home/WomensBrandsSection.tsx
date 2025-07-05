@@ -3,6 +3,7 @@ import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import SectionBanner from "@/components/SectionBanner";
 
 const WomensBrandsSection = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -47,8 +48,17 @@ const WomensBrandsSection = () => {
 
   return (
     <section className="px-4 py-6 bg-white">
+      <div className="mb-4">
+        <SectionBanner
+          title="Women's Brands & Offers"
+          subtitle="Fashion forward styles for every occasion"
+          imageUrl="https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=800"
+          link="/women"
+          height="h-28"
+        />
+      </div>
+      
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl font-bold text-gray-800">👗 Women's Brands & Offers</h2>
         <div className="flex items-center space-x-2">
           <Button variant="outline" size="sm" onClick={() => scroll('left')} className="p-2">
             <ChevronLeft className="w-4 h-4" />
